@@ -1,0 +1,13 @@
+body {
+    padding: 50px;
+}
+@media (max-width: 767px) {
+    body {
+        padding: 16px;
+    }
+}
+
+
+.btn-guai {
+    background-color: rgb(255,255,50);
+}
