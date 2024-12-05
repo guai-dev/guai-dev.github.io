@@ -16,7 +16,12 @@ body {
 .paragraph {
     color: #726f6f; 
     font-weight: 300; 
-
+    padding-right: 16px;
 
 }
 
+.title-paragraph {
+
+    padding-right: 16px;
+
+}
