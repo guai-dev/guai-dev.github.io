@@ -1,0 +1,1853 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Guai — Brand Identity Guidelines</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      /* ── CORE PALETTE ── */
+      --bg:          #0A0C0F;
+      --bg-card:     #111318;
+      --bg-raised:   #16191F;
+      --border:      rgba(255,255,255,0.07);
+      --border-med:  rgba(255,255,255,0.12);
+
+      /* ── BRAND COLORS ── */
+      --accent:      #00E5A0;
+      --accent-dim:  rgba(0,229,160,0.12);
+      --accent-glow: rgba(0,229,160,0.25);
+      --yellow:      #F5C842;
+      --yellow-dim:  rgba(245,200,66,0.12);
+      --blue:        #5B8DEF;
+      --blue-dim:    rgba(91,141,239,0.12);
+
+      /* ── TEXT ── */
+      --text-1: #F0F2F5;
+      --text-2: #8D939F;
+      --text-3: #555C68;
+
+      /* ── SHAPE ── */
+      --radius:      14px;
+      --radius-lg:   24px;
+      --radius-pill: 100px;
+
+      /* ── TYPE ── */
+      --font-head: 'Syne', sans-serif;
+      --font-body: 'DM Sans', sans-serif;
+
+      /* ── SHADOWS ── */
+      --shadow-card: 0 2px 20px rgba(0,0,0,0.4);
+      --shadow-glow: 0 0 40px rgba(0,229,160,0.15);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text-1);
+      font-family: var(--font-body);
+      font-size: 16px;
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    ul { list-style: none; }
+
+    /* noise overlay */
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 9999;
+      opacity: 0.5;
+    }
+
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--border-med); border-radius: 3px; }
+
+    /* ══ LAYOUT ══ */
+    .container { max-width: 1100px; margin: 0 auto; padding: 0 32px; }
+
+    /* ══ SIDEBAR NAV ══ */
+    .sidebar {
+      position: fixed;
+      top: 0; left: 0;
+      width: 240px;
+      height: 100vh;
+      background: var(--bg-card);
+      border-right: 1px solid var(--border);
+      padding: 40px 0;
+      display: flex;
+      flex-direction: column;
+      z-index: 100;
+      overflow-y: auto;
+    }
+
+    .sidebar-logo {
+      padding: 0 28px 32px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 24px;
+    }
+
+    .sidebar-logo-mark {
+      font-family: var(--font-head);
+      font-size: 1.8rem;
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      color: var(--text-1);
+    }
+    .sidebar-logo-mark span { color: var(--accent); }
+
+    .sidebar-subtitle {
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--text-3);
+      margin-top: 4px;
+    }
+
+    .sidebar-section {
+      padding: 0 20px 4px;
+      font-size: 0.65rem;
+      font-family: var(--font-head);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--text-3);
+      margin-top: 16px;
+      margin-bottom: 6px;
+    }
+
+    .sidebar-link {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 20px;
+      font-size: 0.85rem;
+      color: var(--text-2);
+      transition: all 0.15s;
+      border-left: 2px solid transparent;
+    }
+    .sidebar-link:hover,
+    .sidebar-link.active {
+      color: var(--text-1);
+      background: var(--bg-raised);
+      border-left-color: var(--accent);
+    }
+    .sidebar-link .dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--border-med);
+      flex-shrink: 0;
+    }
+    .sidebar-link.active .dot,
+    .sidebar-link:hover .dot { background: var(--accent); }
+
+    /* ══ MAIN CONTENT ══ */
+    .main {
+      margin-left: 240px;
+      min-height: 100vh;
+    }
+
+    /* ══ COVER ══ */
+    .cover {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+      padding: 80px 0;
+    }
+
+    .cover-bg {
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 70% 60% at 70% 40%, rgba(0,229,160,0.1) 0%, transparent 60%),
+        radial-gradient(ellipse 40% 50% at 10% 70%, rgba(245,200,66,0.06) 0%, transparent 50%);
+    }
+
+    .cover-grid {
+      position: absolute; inset: 0;
+      background-image:
+        linear-gradient(var(--border) 1px, transparent 1px),
+        linear-gradient(90deg, var(--border) 1px, transparent 1px);
+      background-size: 60px 60px;
+      mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 0%, transparent 80%);
+    }
+
+    .cover-content { position: relative; z-index: 1; }
+
+    .cover-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--accent-dim);
+      border: 1px solid rgba(0,229,160,0.2);
+      border-radius: var(--radius-pill);
+      padding: 6px 14px;
+      font-family: var(--font-head);
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 28px;
+    }
+
+    .cover-title {
+      font-family: var(--font-head);
+      font-size: clamp(3rem, 7vw, 5.5rem);
+      font-weight: 800;
+      line-height: 1.0;
+      letter-spacing: -0.04em;
+      margin-bottom: 24px;
+    }
+
+    .cover-title em {
+      font-style: normal;
+      color: var(--accent);
+    }
+
+    .cover-desc {
+      font-size: 1.1rem;
+      color: var(--text-2);
+      line-height: 1.7;
+      max-width: 560px;
+      font-weight: 300;
+      margin-bottom: 40px;
+    }
+
+    .cover-meta {
+      display: flex;
+      gap: 40px;
+      font-size: 0.82rem;
+      color: var(--text-3);
+    }
+    .cover-meta strong {
+      display: block;
+      font-family: var(--font-head);
+      font-weight: 600;
+      color: var(--text-2);
+      font-size: 0.88rem;
+      margin-bottom: 2px;
+    }
+
+    /* ══ SECTIONS ══ */
+    .section {
+      padding: 100px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .section-label {
+      font-family: var(--font-head);
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 12px;
+    }
+
+    .section-title {
+      font-family: var(--font-head);
+      font-size: clamp(1.8rem, 3vw, 2.6rem);
+      font-weight: 800;
+      line-height: 1.1;
+      letter-spacing: -0.03em;
+      margin-bottom: 16px;
+    }
+
+    .section-desc {
+      font-size: 1rem;
+      color: var(--text-2);
+      max-width: 540px;
+      line-height: 1.7;
+      font-weight: 300;
+      margin-bottom: 60px;
+    }
+
+    /* ══ CARDS ══ */
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-med);
+      border-radius: var(--radius-lg);
+      padding: 32px;
+    }
+
+    .card-sm {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px;
+    }
+
+    /* ══ GRID ══ */
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+    .grid-4 { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 12px; }
+
+    /* ══ COLOR SWATCHES ══ */
+    .swatch-group { display: flex; flex-direction: column; gap: 8px; }
+
+    .swatch {
+      border-radius: var(--radius);
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+
+    .swatch-color {
+      height: 80px;
+    }
+
+    .swatch-info {
+      background: var(--bg-card);
+      padding: 14px 16px;
+    }
+
+    .swatch-name {
+      font-family: var(--font-head);
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--text-1);
+      margin-bottom: 2px;
+    }
+
+    .swatch-hex {
+      font-size: 0.78rem;
+      color: var(--text-3);
+      font-family: 'Courier New', monospace;
+    }
+
+    .swatch-role {
+      font-size: 0.72rem;
+      color: var(--text-3);
+      margin-top: 4px;
+    }
+
+    /* ══ TYPOGRAPHY SPECIMENS ══ */
+    .type-specimen {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 40px;
+      margin-bottom: 12px;
+    }
+
+    .type-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 20px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .type-tag {
+      background: var(--bg-raised);
+      border: 1px solid var(--border-med);
+      border-radius: var(--radius-pill);
+      padding: 4px 12px;
+      font-size: 0.72rem;
+      font-family: var(--font-head);
+      font-weight: 600;
+      color: var(--text-3);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .type-specs {
+      font-size: 0.78rem;
+      color: var(--text-3);
+      text-align: right;
+      line-height: 1.8;
+    }
+
+    /* ══ LOGO SECTION ══ */
+    .logo-display {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 60px 40px;
+      min-height: 180px;
+    }
+
+    .logo-wordmark {
+      font-family: var(--font-head);
+      font-weight: 800;
+      letter-spacing: -0.04em;
+    }
+
+    .logo-wordmark.size-xl { font-size: 5rem; }
+    .logo-wordmark.size-lg { font-size: 3rem; }
+    .logo-wordmark.size-md { font-size: 2rem; }
+    .logo-wordmark.size-sm { font-size: 1.2rem; }
+
+    .logo-wordmark span { color: var(--accent); }
+
+    .logo-display.dark { background: var(--bg); }
+    .logo-display.light {
+      background: #F0F2F5;
+    }
+    .logo-display.light .logo-wordmark { color: #0A0C0F; }
+    .logo-display.light .logo-wordmark span { color: #00B87A; }
+
+    .logo-display.accent-bg {
+      background: var(--accent);
+    }
+    .logo-display.accent-bg .logo-wordmark { color: #050706; }
+    .logo-display.accent-bg .logo-wordmark span { color: rgba(5,7,6,0.4); }
+
+    .clearzone-demo {
+      position: relative;
+      display: inline-block;
+    }
+    .clearzone-overlay {
+      position: absolute;
+      inset: -20px;
+      border: 1px dashed rgba(0,229,160,0.3);
+      border-radius: 4px;
+      pointer-events: none;
+    }
+    .clearzone-label {
+      position: absolute;
+      top: -28px; left: 50%;
+      transform: translateX(-50%);
+      font-size: 0.65rem;
+      color: var(--accent);
+      opacity: 0.7;
+      white-space: nowrap;
+      font-family: var(--font-head);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    /* ══ SPACING ══ */
+    .spacing-demo {
+      display: flex;
+      align-items: flex-end;
+      gap: 16px;
+    }
+
+    .spacing-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .spacing-block {
+      background: var(--accent-dim);
+      border: 1px solid rgba(0,229,160,0.3);
+      width: 40px;
+    }
+
+    .spacing-val {
+      font-size: 0.72rem;
+      color: var(--accent);
+      font-family: var(--font-head);
+      font-weight: 600;
+    }
+
+    .spacing-label {
+      font-size: 0.65rem;
+      color: var(--text-3);
+    }
+
+    /* ══ BORDER RADIUS ══ */
+    .radius-demo { display: flex; align-items: center; gap: 20px; flex-wrap: wrap; }
+    .radius-item { text-align: center; }
+    .radius-box {
+      width: 80px; height: 80px;
+      background: var(--bg-raised);
+      border: 1px solid var(--border-med);
+      margin: 0 auto 10px;
+    }
+
+    /* ══ SHADOW DEMO ══ */
+    .shadow-demo { display: flex; gap: 24px; flex-wrap: wrap; }
+    .shadow-item { text-align: center; }
+    .shadow-box {
+      width: 100px; height: 60px;
+      background: var(--bg-card);
+      border-radius: var(--radius);
+      margin: 0 auto 12px;
+    }
+
+    /* ══ BUTTONS ══ */
+    .btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 13px 26px;
+      border-radius: var(--radius-pill);
+      font-family: var(--font-head);
+      font-size: 0.88rem;
+      font-weight: 600;
+      letter-spacing: 0.01em;
+      cursor: pointer;
+      border: none;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+    }
+    .btn-primary { background: var(--accent); color: #050706; }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 30px var(--accent-glow); }
+    .btn-secondary {
+      background: var(--bg-raised);
+      color: var(--text-1);
+      border: 1px solid var(--border-med);
+    }
+    .btn-secondary:hover { border-color: var(--accent); color: var(--accent); }
+    .btn-ghost { background: transparent; color: var(--accent); padding: 0; font-size: 0.9rem; }
+    .btn-danger { background: rgba(239,68,68,0.15); color: #ef4444; border: 1px solid rgba(239,68,68,0.3); }
+
+    /* ══ BADGE / TAG ══ */
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 12px;
+      border-radius: var(--radius-pill);
+      font-family: var(--font-head);
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .badge-green { background: var(--accent-dim); color: var(--accent); border: 1px solid rgba(0,229,160,0.2); }
+    .badge-yellow { background: var(--yellow-dim); color: var(--yellow); border: 1px solid rgba(245,200,66,0.2); }
+    .badge-blue { background: var(--blue-dim); color: var(--blue); border: 1px solid rgba(91,141,239,0.2); }
+    .badge-neutral { background: var(--bg-raised); color: var(--text-2); border: 1px solid var(--border-med); }
+
+    /* ══ INPUT ══ */
+    .input {
+      width: 100%;
+      padding: 12px 16px;
+      background: var(--bg-raised);
+      border: 1px solid var(--border-med);
+      border-radius: var(--radius);
+      color: var(--text-1);
+      font-family: var(--font-body);
+      font-size: 0.9rem;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .input:focus { border-color: var(--accent); }
+    .input::placeholder { color: var(--text-3); }
+
+    /* ══ CARD VARIANTS ══ */
+    .feature-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 28px;
+      transition: border-color 0.25s;
+    }
+    .feature-card:hover { border-color: rgba(0,229,160,0.35); }
+
+    .feature-icon {
+      width: 44px; height: 44px;
+      background: var(--accent-dim);
+      border-radius: var(--radius);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem;
+      margin-bottom: 16px;
+    }
+
+    .stat-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 28px;
+    }
+    .stat-val {
+      font-family: var(--font-head);
+      font-size: 2.8rem;
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      color: var(--accent);
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+
+    /* ══ DIVIDER ══ */
+    .divider {
+      height: 1px;
+      background: var(--border);
+      margin: 40px 0;
+    }
+
+    /* ══ TOAST ══ */
+    .toast {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      border-radius: var(--radius);
+      padding: 12px 16px;
+      font-size: 0.88rem;
+    }
+    .toast-success { background: rgba(0,229,160,0.1); border: 1px solid rgba(0,229,160,0.25); }
+    .toast-warning { background: rgba(245,200,66,0.1); border: 1px solid rgba(245,200,66,0.25); }
+    .toast-error { background: rgba(239,68,68,0.1); border: 1px solid rgba(239,68,68,0.25); }
+
+    /* ══ AVATAR ══ */
+    .avatar {
+      width: 40px; height: 40px;
+      border-radius: 50%;
+      background: var(--accent-dim);
+      border: 1px solid rgba(0,229,160,0.3);
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-head);
+      font-weight: 700;
+      font-size: 0.8rem;
+      color: var(--accent);
+      flex-shrink: 0;
+    }
+
+    /* ══ PROGRESS ══ */
+    .progress-track {
+      height: 6px;
+      background: var(--bg-raised);
+      border-radius: 3px;
+      overflow: hidden;
+    }
+    .progress-fill {
+      height: 100%;
+      background: var(--accent);
+      border-radius: 3px;
+    }
+
+    /* ══ MOTION TOKENS ══ */
+    .motion-demo {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 32px;
+    }
+
+    .motion-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .motion-item:last-child { border-bottom: none; }
+
+    .motion-name {
+      font-family: var(--font-head);
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--text-1);
+    }
+    .motion-val {
+      font-size: 0.8rem;
+      color: var(--accent);
+      font-family: 'Courier New', monospace;
+      background: var(--accent-dim);
+      padding: 3px 10px;
+      border-radius: var(--radius-pill);
+    }
+
+    /* ══ DON'T DO ══ */
+    .dont-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .dont-item {
+      border-radius: var(--radius-lg);
+      padding: 28px;
+      position: relative;
+    }
+    .dont-item.do { background: rgba(0,229,160,0.05); border: 1px solid rgba(0,229,160,0.2); }
+    .dont-item.dont { background: rgba(239,68,68,0.05); border: 1px solid rgba(239,68,68,0.2); }
+
+    .dont-badge {
+      position: absolute;
+      top: -10px; left: 20px;
+      font-family: var(--font-head);
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 3px 10px;
+      border-radius: var(--radius-pill);
+    }
+    .do .dont-badge { background: var(--accent); color: #050706; }
+    .dont .dont-badge { background: #ef4444; color: #fff; }
+
+    /* ══ CODE BLOCK ══ */
+    .code-block {
+      background: #0D1117;
+      border: 1px solid var(--border-med);
+      border-radius: var(--radius);
+      padding: 20px 24px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.82rem;
+      line-height: 1.8;
+      overflow-x: auto;
+      color: var(--text-2);
+    }
+    .code-block .var { color: var(--accent); }
+    .code-block .prop { color: var(--blue); }
+    .code-block .val { color: var(--yellow); }
+    .code-block .comment { color: var(--text-3); }
+
+    /* ══ SECTION ANCHOR ══ */
+    [id] { scroll-margin-top: 32px; }
+
+    /* ══ RESPONSIVE ══ */
+    @media (max-width: 900px) {
+      .sidebar { display: none; }
+      .main { margin-left: 0; }
+      .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
+      .dont-grid { grid-template-columns: 1fr; }
+    }
+
+    /* ══ ANIMATIONS ══ */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .animate { animation: fadeUp 0.5s ease both; }
+    .delay-1 { animation-delay: 0.1s; }
+    .delay-2 { animation-delay: 0.2s; }
+    .delay-3 { animation-delay: 0.3s; }
+
+    /* ══ VOICE PRINCIPLES ══ */
+    .principle-item {
+      padding: 24px;
+      border-left: 3px solid var(--accent);
+      background: var(--bg-card);
+      border-radius: 0 var(--radius) var(--radius) 0;
+      margin-bottom: 12px;
+    }
+    .principle-title {
+      font-family: var(--font-head);
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--text-1);
+      margin-bottom: 6px;
+    }
+
+    /* ══ SECTION NUM ══ */
+    .section-num {
+      font-family: var(--font-head);
+      font-size: 0.72rem;
+      font-weight: 600;
+      color: var(--text-3);
+      letter-spacing: 0.08em;
+      margin-bottom: 8px;
+    }
+  </style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════
+     SIDEBAR
+═══════════════════════════════════════ -->
+<aside class="sidebar">
+  <div class="sidebar-logo">
+    <div class="sidebar-logo-mark">Guai<span>.</span></div>
+    <div class="sidebar-subtitle">Brand Identity v1.0</div>
+  </div>
+
+  <div class="sidebar-section">Fundamentos</div>
+  <a href="#cover" class="sidebar-link"><span class="dot"></span>Portada</a>
+  <a href="#identity" class="sidebar-link"><span class="dot"></span>Identidad de Marca</a>
+  <a href="#logo" class="sidebar-link"><span class="dot"></span>Logo & Wordmark</a>
+
+  <div class="sidebar-section">Visual</div>
+  <a href="#color" class="sidebar-link"><span class="dot"></span>Paleta de Color</a>
+  <a href="#typography" class="sidebar-link"><span class="dot"></span>Tipografía</a>
+  <a href="#spacing" class="sidebar-link"><span class="dot"></span>Espaciado & Forma</a>
+  <a href="#effects" class="sidebar-link"><span class="dot"></span>Efectos & Textura</a>
+
+  <div class="sidebar-section">Componentes</div>
+  <a href="#buttons" class="sidebar-link"><span class="dot"></span>Botones</a>
+  <a href="#badges" class="sidebar-link"><span class="dot"></span>Badges & Tags</a>
+  <a href="#cards" class="sidebar-link"><span class="dot"></span>Tarjetas</a>
+  <a href="#forms" class="sidebar-link"><span class="dot"></span>Formularios</a>
+  <a href="#feedback" class="sidebar-link"><span class="dot"></span>Feedback UI</a>
+
+  <div class="sidebar-section">Guidelines</div>
+  <a href="#voice" class="sidebar-link"><span class="dot"></span>Voz & Tono</a>
+  <a href="#motion" class="sidebar-link"><span class="dot"></span>Movimiento</a>
+  <a href="#dodonts" class="sidebar-link"><span class="dot"></span>Do's & Don'ts</a>
+  <a href="#tokens" class="sidebar-link"><span class="dot"></span>Design Tokens</a>
+</aside>
+
+
+<!-- ══════════════════════════════════════
+     MAIN
+═══════════════════════════════════════ -->
+<main class="main">
+
+  <!-- ── COVER ── -->
+  <section id="cover" class="cover">
+    <div class="cover-bg"></div>
+    <div class="cover-grid"></div>
+    <div class="container">
+      <div class="cover-content">
+        <div class="cover-label animate">
+          <svg width="8" height="8" viewBox="0 0 8 8" fill="currentColor"><circle cx="4" cy="4" r="4"/></svg>
+          Brand Identity Guidelines
+        </div>
+        <h1 class="cover-title animate delay-1">
+          Guai<em>.</em><br>
+          Design System
+        </h1>
+        <p class="cover-desc animate delay-2">
+          Guía completa de identidad visual para construir productos digitales consistentes, modernos y alineados con la marca Guai — automatización e IA para empresas.
+        </p>
+        <div class="cover-meta animate delay-3">
+          <div>
+            <strong>Versión</strong>
+            1.0 — 2025
+          </div>
+          <div>
+            <strong>Audiencia</strong>
+            Diseño & Desarrollo
+          </div>
+          <div>
+            <strong>Plataformas</strong>
+            Web · Mobile · Producto
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── 01. BRAND IDENTITY ── -->
+  <section id="identity" class="section">
+    <div class="container">
+      <div class="section-num">01</div>
+      <div class="section-label">Identidad de Marca</div>
+      <h2 class="section-title">¿Quiénes somos?</h2>
+      <p class="section-desc">La esencia de Guai se construye sobre una promesa clara: automatizar el trabajo repetitivo para liberar el potencial humano.</p>
+
+      <div class="grid-3" style="margin-bottom: 24px;">
+        <div class="card">
+          <div style="font-size:1.4rem;margin-bottom:16px;">⚡</div>
+          <h3 style="font-family:var(--font-head);font-size:1rem;font-weight:700;margin-bottom:8px;">Misión</h3>
+          <p style="font-size:0.88rem;color:var(--text-2);line-height:1.65;">Potenciar a las empresas con automatización e inteligencia artificial para que operen de forma más inteligente, rápida y escalable.</p>
+        </div>
+        <div class="card">
+          <div style="font-size:1.4rem;margin-bottom:16px;">🎯</div>
+          <h3 style="font-family:var(--font-head);font-size:1rem;font-weight:700;margin-bottom:8px;">Visión</h3>
+          <p style="font-size:0.88rem;color:var(--text-2);line-height:1.65;">Un mundo donde los equipos se enfoquen en lo que importa: crear, decidir y conectar — no en tareas repetitivas.</p>
+        </div>
+        <div class="card">
+          <div style="font-size:1.4rem;margin-bottom:16px;">🌱</div>
+          <h3 style="font-family:var(--font-head);font-size:1rem;font-weight:700;margin-bottom:8px;">Propósito</h3>
+          <p style="font-size:0.88rem;color:var(--text-2);line-height:1.65;">Democratizar el acceso a la IA empresarial para que cualquier empresa, sin importar su tamaño, pueda competir con tecnología de punta.</p>
+        </div>
+      </div>
+
+      <div class="grid-2">
+        <div class="card" style="border-left: 3px solid var(--accent);">
+          <div class="section-label" style="margin-bottom:16px;">Personalidad</div>
+          <div style="display:flex;flex-wrap:wrap;gap:8px;">
+            <span class="badge badge-green">Técnico, no frío</span>
+            <span class="badge badge-green">Directo</span>
+            <span class="badge badge-green">Confiable</span>
+            <span class="badge badge-green">Innovador</span>
+            <span class="badge badge-neutral">Cercano</span>
+            <span class="badge badge-neutral">Experto</span>
+            <span class="badge badge-neutral">Ágil</span>
+          </div>
+        </div>
+        <div class="card" style="border-left: 3px solid var(--yellow);">
+          <div class="section-label" style="color:var(--yellow);margin-bottom:16px;">Audiencia</div>
+          <p style="font-size:0.88rem;color:var(--text-2);line-height:1.65;">Empresas latinoamericanas en proceso de transformación digital. Equipos de operaciones, producto y tecnología que buscan eficiencia sin sacrificar control.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── 02. LOGO ── -->
+  <section id="logo" class="section">
+    <div class="container">
+      <div class="section-num">02</div>
+      <div class="section-label">Logo & Wordmark</div>
+      <h2 class="section-title">Logotipo</h2>
+      <p class="section-desc">El wordmark de Guai se construye exclusivamente con la tipografía Syne Bold 800. El punto verde actúa como símbolo de precisión, tecnología y vitalidad.</p>
+
+      <!-- Primary -->
+      <div style="margin-bottom:16px;">
+        <p style="font-size:0.78rem;color:var(--text-3);margin-bottom:10px;text-transform:uppercase;letter-spacing:0.1em;font-family:var(--font-head);">Versión Principal — Oscuro</p>
+        <div class="logo-display dark">
+          <div class="clearzone-demo">
+            <div class="clearzone-overlay"></div>
+            <div class="clearzone-label">Zona de respeto = x</div>
+            <div class="logo-wordmark size-xl">Guai<span>.</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid-2" style="margin-bottom:16px;">
+        <div>
+          <p style="font-size:0.78rem;color:var(--text-3);margin-bottom:10px;text-transform:uppercase;letter-spacing:0.1em;font-family:var(--font-head);">Sobre fondo claro</p>
+          <div class="logo-display light">
+            <div class="logo-wordmark size-xl">Guai<span>.</span></div>
+          </div>
+        </div>
+        <div>
+          <p style="font-size:0.78rem;color:var(--text-3);margin-bottom:10px;text-transform:uppercase;letter-spacing:0.1em;font-family:var(--font-head);">Sobre acento</p>
+          <div class="logo-display accent-bg">
+            <div class="logo-wordmark size-xl">Guai<span>.</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sizes -->
+      <div class="card" style="margin-bottom:16px;">
+        <p style="font-size:0.78rem;color:var(--text-3);margin-bottom:20px;text-transform:uppercase;letter-spacing:0.1em;font-family:var(--font-head);">Escala de tamaños</p>
+        <div style="display:flex;align-items:baseline;gap:32px;flex-wrap:wrap;">
+          <div>
+            <div class="logo-wordmark size-xl">Guai<span>.</span></div>
+            <div style="font-size:0.72rem;color:var(--text-3);margin-top:8px;">80px — Hero</div>
+          </div>
+          <div>
+            <div class="logo-wordmark size-lg">Guai<span>.</span></div>
+            <div style="font-size:0.72rem;color:var(--text-3);margin-top:8px;">48px — Header</div>
+          </div>
+          <div>
+            <div class="logo-wordmark size-md">Guai<span>.</span></div>
+            <div style="font-size:0.72rem;color:var(--text-3);margin-top:8px;">32px — Nav</div>
+          </div>
+          <div>
+            <div class="logo-wordmark size-sm">Guai<span>.</span></div>
+            <div style="font-size:0.72rem;color:var(--text-3);margin-top:8px;">20px — Mínimo</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Rules -->
+      <div class="dont-grid">
+        <div class="dont-item do">
+          <div class="dont-badge">✓ Correcto</div>
+          <div style="margin-top:8px;">
+            <div style="margin-bottom:12px;font-size:0.85rem;color:var(--text-2);">Usar solo sobre fondos oscuros, claros o de color sólido marcas aprobadas.</div>
+            <div style="margin-bottom:8px;font-size:0.85rem;color:var(--text-2);">Mantener proporción original. No distorsionar.</div>
+            <div style="font-size:0.85rem;color:var(--text-2);">Respetar zona de respeto mínima = altura de la "G".</div>
+          </div>
+        </div>
+        <div class="dont-item dont">
+          <div class="dont-badge">✗ Incorrecto</div>
+          <div style="margin-top:8px;">
+            <div style="margin-bottom:8px;font-size:0.85rem;color:var(--text-2);">No cambiar el color del punto ni del wordmark individualmente.</div>
+            <div style="margin-bottom:8px;font-size:0.85rem;color:var(--text-2);">No usar sobre fondos con bajo contraste o fotografías sin overlay.</div>
+            <div style="font-size:0.85rem;color:var(--text-2);">No agregar sombras, efectos o bordes al logotipo.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── 03. COLOR ── -->
+  <section id="color" class="section">
+    <div class="container">
+      <div class="section-num">03</div>
+      <div class="section-label">Sistema de Color</div>
+      <h2 class="section-title">Paleta de color</h2>
+      <p class="section-desc">Una paleta oscura y técnica con un acento verde vibrante como firma visual. El amarillo actúa como color funcional de apoyo.</p>
+
+      <!-- Brand colors -->
+      <p style="font-size:0.78rem;color:var(--text-3);margin-bottom:16px;text-transform:uppercase;letter-spacing:0.1em;font-family:var(--font-head);">Colores de marca</p>
+      <div class="grid-4" style="margin-bottom:40px;">
+        <div class="swatch">
+          <div class="swatch-color" style="background:#00E5A0;"></div>
+          <div class="swatch-info">
+            <div class="swatch-name">Guai Green</div>
+            <div class="swatch-hex">#00E5A0</div>
+            <div class="swatch-role">Acento principal · CTAs · Highlights</div>
+          </div>
+        </div>
+        <div class="swatch">
+          <div class="swatch-color" style="background:#F5C842;"></div>
+          <div class="swatch-info">
+            <div class="swatch-name">Amber</div>
+            <div class="swatch-hex">#F5C842</div>
+            <div class="swatch-role">Alertas · Métricas · Énfasis</div>
+          </div>
+        </div>
+        <div class="swatch">
+          <div class="swatch-color" style="background:#5B8DEF;"></div>
+          <div class="swatch-info">
+            <div class="swatch-name">Blue</div>
+            <div class="swatch-hex">#5B8DEF</div>
+            <div class="swatch-role">Categorías · Info · Secundario</div>
+          </div>
+        </div>
+        <div class="swatch">
+          <div class="swatch-color" style="background:#EF4444;"></div>
+          <div class="swatch-info">
+            <div class="swatch-name">Error Red</div>
+            <div class="swatch-hex">#EF4444</div>
+            <div class="swatch-role">Errores · Destrucción</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Neutrals -->
+      <p style="font-size:0.78rem;color:var(--text-3);margin-bottom:16px;text-transform:uppercase;letter-spacing:0.1em;font-family:var(--font-head);">Neutros & Fondos</p>
+      <div class="grid-4" style="margin-bottom:40px;">
+        <div class="swatch">
+          <div class="swatch-color" style="background:#0A0C0F;border-bottom:1px solid rgba(255,255,255,0.1);"></div>
+          <div class="swatch-info">
+            <div class="swatch-name">Base Dark</div>
+            <div class="swatch-hex">#0A0C0F</div>
+            <div class="swatch-role">Fondo base · Body background</div>
+          </div>
+        </div>
+        <div class="swatch">
+          <div class="swatch-color" style="background:#111318;"></div>
+          <div class="swatch-info">
+            <div class="swatch-name">Card Dark</div>
+            <div class="swatch-hex">#111318</div>
+            <div class="swatch-role">Tarjetas · Paneles</div>
+          </div>
+        </div>
+        <div class="swatch">
+          <div class="swatch-color" style="background:#16191F;"></div>
+          <div class="swatch-info">
+            <div class="swatch-name">Raised</div>
+            <div class="swatch-hex">#16191F</div>
+            <div class="swatch-role">Inputs · Elevaciones</div>
+          </div>
+        </div>
+        <div class="swatch">
+          <div class="swatch-color" style="background:#F0F2F5;"></div>
+          <div class="swatch-info" style="background:#2a2d33;">
+            <div class="swatch-name">Text Light</div>
+            <div class="swatch-hex">#F0F2F5</div>
+            <div class="swatch-role">Texto principal</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Text scale -->
+      <p style="font-size:0.78rem;color:var(--text-3);margin-bottom:16px;text-transform:uppercase;letter-spacing:0.1em;font-family:var(--font-head);">Escala de texto</p>
+      <div class="card">
+        <div style="display:flex;flex-direction:column;gap:16px;">
+          <div style="display:flex;align-items:center;gap:24px;">
+            <div style="width:20px;height:20px;border-radius:50%;background:#F0F2F5;flex-shrink:0;"></div>
+            <div>
+              <div style="font-size:0.88rem;font-weight:500;color:#F0F2F5;">Text-1 — Primario</div>
+              <div style="font-size:0.75rem;color:var(--text-3);">#F0F2F5 · Títulos, labels activos, texto cuerpo relevante</div>
+            </div>
+          </div>
+          <div style="display:flex;align-items:center;gap:24px;">
+            <div style="width:20px;height:20px;border-radius:50%;background:#8D939F;flex-shrink:0;"></div>
+            <div>
+              <div style="font-size:0.88rem;font-weight:500;color:#8D939F;">Text-2 — Secundario</div>
+              <div style="font-size:0.75rem;color:var(--text-3);">#8D939F · Descripciones, metadatos, subtítulos</div>
+            </div>
+          </div>
+          <div style="display:flex;align-items:center;gap:24px;">
+            <div style="width:20px;height:20px;border-radius:50%;background:#555C68;flex-shrink:0;"></div>
+            <div>
+              <div style="font-size:0.88rem;font-weight:500;color:#555C68;">Text-3 — Terciario</div>
+              <div style="font-size:0.75rem;color:var(--text-3);">#555C68 · Placeholders, datos desactivados, hints</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── 04. TIPOGRAFÍA ── -->
+  <section id="typography" class="section">
+    <div class="container">
+      <div class="section-num">04</div>
+      <div class="section-label">Tipografía</div>
+      <h2 class="section-title">Sistema tipográfico</h2>
+      <p class="section-desc">Dos fuentes complementarias construyen la voz de Guai: Syne para impacto y jerarquía, DM Sans para claridad y lectura.</p>
+
+      <!-- Font families -->
+      <div class="grid-2" style="margin-bottom: 32px;">
+        <div class="type-specimen">
+          <div class="type-meta">
+            <div>
+              <div style="font-size:0.72rem;color:var(--accent);letter-spacing:0.1em;text-transform:uppercase;font-family:var(--font-head);margin-bottom:4px;">Display · Headings</div>
+              <div style="font-family:var(--font-head);font-size:1.1rem;font-weight:700;color:var(--text-1);">Syne</div>
+            </div>
+            <div class="type-specs">
+              Weights: 400 · 500 · 600 · 700 · 800<br>
+              Google Fonts<br>
+              Variable
+            </div>
+          </div>
+          <div style="font-family:var(--font-head);font-size:3.5rem;font-weight:800;letter-spacing:-0.04em;line-height:1;color:var(--text-1);">
+            ABCDEFG<br>abcdefg<br>0123456
+          </div>
+        </div>
+        <div class="type-specimen">
+          <div class="type-meta">
+            <div>
+              <div style="font-size:0.72rem;color:var(--accent);letter-spacing:0.1em;text-transform:uppercase;font-family:var(--font-head);margin-bottom:4px;">Body · UI</div>
+              <div style="font-family:var(--font-head);font-size:1.1rem;font-weight:700;color:var(--text-1);">DM Sans</div>
+            </div>
+            <div class="type-specs">
+              Weights: 300 · 400 · 500<br>
+              Google Fonts<br>
+              Optical Size 9–40
+            </div>
+          </div>
+          <div style="font-family:var(--font-body);font-size:3.5rem;font-weight:400;letter-spacing:-0.02em;line-height:1;color:var(--text-1);">
+            ABCDEFG<br>abcdefg<br>0123456
+          </div>
+        </div>
+      </div>
+
+      <!-- Type scale -->
+      <p style="font-size:0.78rem;color:var(--text-3);margin-bottom:16px;text-transform:uppercase;letter-spacing:0.1em;font-family:var(--font-head);">Escala tipográfica</p>
+      <div class="card" style="display:flex;flex-direction:column;gap:0;">
+
+        <div style="padding:28px 0;border-bottom:1px solid var(--border);">
+          <div style="display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:12px;">
+            <div style="font-family:var(--font-head);font-size:clamp(2.8rem,6vw,5.2rem);font-weight:800;letter-spacing:-0.03em;line-height:1.05;">Display</div>
+            <div class="type-specs">Syne 800 · clamp(2.8rem–5.2rem) · tracking -0.03em · lh 1.05</div>
+          </div>
+          <div style="font-size:0.75rem;color:var(--text-3);margin-top:8px;">Hero headlines, portadas, grandes impactos visuales</div>
+        </div>
+
+        <div style="padding:24px 0;border-bottom:1px solid var(--border);">
+          <div style="display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:12px;">
+            <div style="font-family:var(--font-head);font-size:clamp(2rem,4vw,3.2rem);font-weight:700;letter-spacing:-0.025em;line-height:1.1;">Heading 1</div>
+            <div class="type-specs">Syne 700 · clamp(2rem–3.2rem) · tracking -0.025em · lh 1.1</div>
+          </div>
+          <div style="font-size:0.75rem;color:var(--text-3);margin-top:8px;">Títulos principales de sección</div>
+        </div>
+
+        <div style="padding:20px 0;border-bottom:1px solid var(--border);">
+          <div style="display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:12px;">
+            <div style="font-family:var(--font-head);font-size:clamp(1.4rem,2.5vw,2rem);font-weight:700;letter-spacing:-0.02em;line-height:1.2;">Heading 2</div>
+            <div class="type-specs">Syne 700 · clamp(1.4rem–2rem) · tracking -0.02em · lh 1.2</div>
+          </div>
+          <div style="font-size:0.75rem;color:var(--text-3);margin-top:8px;">Subtítulos, nombres de tarjeta destacadas</div>
+        </div>
+
+        <div style="padding:16px 0;border-bottom:1px solid var(--border);">
+          <div style="display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:12px;">
+            <div style="font-family:var(--font-head);font-size:1.15rem;font-weight:600;letter-spacing:-0.01em;">Heading 3</div>
+            <div class="type-specs">Syne 600 · 1.15rem · tracking -0.01em</div>
+          </div>
+          <div style="font-size:0.75rem;color:var(--text-3);margin-top:8px;">Títulos de card, módulos, acordeones</div>
+        </div>
+
+        <div style="padding:16px 0;border-bottom:1px solid var(--border);">
+          <div style="display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:12px;">
+            <div style="font-size:1.1rem;line-height:1.7;color:var(--text-2);font-weight:300;">Body Large — Texto introductorio de sección con mayor presencia visual y más espacio entre líneas para facilitar la lectura.</div>
+            <div class="type-specs">DM Sans 300 · 1.1rem · lh 1.7</div>
+          </div>
+        </div>
+
+        <div style="padding:16px 0;border-bottom:1px solid var(--border);">
+          <div style="display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:12px;">
+            <div style="font-size:0.97rem;color:var(--text-2);">Body Medium — Texto estándar para descripciones, párrafos de contenido, metadatos y UI en general.</div>
+            <div class="type-specs">DM Sans 400 · 0.97rem · lh 1.65</div>
+          </div>
+        </div>
+
+        <div style="padding:16px 0;border-bottom:1px solid var(--border);">
+          <div style="display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:12px;">
+            <div style="font-size:0.84rem;color:var(--text-3);">Body Small — Metadatos, fechas, captions, hints, textos terciarios.</div>
+            <div class="type-specs">DM Sans 400 · 0.84rem</div>
+          </div>
+        </div>
+
+        <div style="padding:16px 0;">
+          <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;">
+            <div style="font-family:var(--font-head);font-size:0.72rem;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:var(--accent);">LABEL — ETIQUETA DE SECCIÓN</div>
+            <div class="type-specs">Syne 600 · 0.72rem · tracking 0.14em · UPPERCASE</div>
+          </div>
+          <div style="font-size:0.75rem;color:var(--text-3);margin-top:8px;">Siempre en verde acento. Precede a títulos de sección.</div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ── 05. ESPACIADO & FORMA ── -->
+  <section id="spacing" class="section">
+    <div class="container">
+      <div class="section-num">05</div>
+      <div class="section-label">Espaciado & Forma</div>
+      <h2 class="section-title">Grid, espaciado y bordes</h2>
+      <p class="section-desc">Un sistema de 8pt estricto garantiza consistencia en todos los productos. Los bordes redondeados reflejan modernidad sin perder precisión.</p>
+
+      <!-- Spacing scale -->
+      <p style="font-size:0.78rem;color:var(--text-3);margin-bottom:20px;text-transform:uppercase;letter-spacing:0.1em;font-family:var(--font-head);">Escala de espaciado (base 8pt)</p>
+      <div class="card" style="margin-bottom:40px;">
+        <div class="spacing-demo" style="flex-wrap:wrap;">
+          <div class="spacing-item"><div class="spacing-block" style="height:4px;"></div><div class="spacing-val">4</div><div class="spacing-label">2xs</div></div>
+          <div class="spacing-item"><div class="spacing-block" style="height:8px;"></div><div class="spacing-val">8</div><div class="spacing-label">xs</div></div>
+          <div class="spacing-item"><div class="spacing-block" style="height:12px;"></div><div class="spacing-val">12</div><div class="spacing-label">sm</div></div>
+          <div class="spacing-item"><div class="spacing-block" style="height:16px;"></div><div class="spacing-val">16</div><div class="spacing-label">md</div></div>
+          <div class="spacing-item"><div class="spacing-block" style="height:24px;"></div><div class="spacing-val">24</div><div class="spacing-label">lg</div></div>
+          <div class="spacing-item"><div class="spacing-block" style="height:32px;"></div><div class="spacing-val">32</div><div class="spacing-label">xl</div></div>
+          <div class="spacing-item"><div class="spacing-block" style="height:40px;"></div><div class="spacing-val">40</div><div class="spacing-label">2xl</div></div>
+          <div class="spacing-item"><div class="spacing-block" style="height:60px;"></div><div class="spacing-val">60</div><div class="spacing-label">3xl</div></div>
+          <div class="spacing-item"><div class="spacing-block" style="height:80px;"></div><div class="spacing-val">80</div><div class="spacing-label">4xl</div></div>
+          <div class="spacing-item"><div class="spacing-block" style="height:100px;"></div><div class="spacing-val">100</div><div class="spacing-label">section</div></div>
+        </div>
+      </div>
+
+      <!-- Border radius -->
+      <p style="font-size:0.78rem;color:var(--text-3);margin-bottom:20px;text-transform:uppercase;letter-spacing:0.1em;font-family:var(--font-head);">Border radius</p>
+      <div class="card" style="margin-bottom:40px;">
+        <div class="radius-demo">
+          <div class="radius-item">
+            <div class="radius-box" style="border-radius:4px;"></div>
+            <div class="spacing-val">4px</div>
+            <div style="font-size:0.72rem;color:var(--text-3);">xs — micro</div>
+          </div>
+          <div class="radius-item">
+            <div class="radius-box" style="border-radius:8px;"></div>
+            <div class="spacing-val">8px</div>
+            <div style="font-size:0.72rem;color:var(--text-3);">sm — icon</div>
+          </div>
+          <div class="radius-item">
+            <div class="radius-box" style="border-radius:14px;"></div>
+            <div class="spacing-val">14px</div>
+            <div style="font-size:0.72rem;color:var(--text-3);">md — card</div>
+          </div>
+          <div class="radius-item">
+            <div class="radius-box" style="border-radius:24px;"></div>
+            <div class="spacing-val">24px</div>
+            <div style="font-size:0.72rem;color:var(--text-3);">lg — modal</div>
+          </div>
+          <div class="radius-item">
+            <div class="radius-box" style="border-radius:100px;width:100px;height:44px;"></div>
+            <div class="spacing-val">100px</div>
+            <div style="font-size:0.72rem;color:var(--text-3);">pill — botón/badge</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Grid -->
+      <p style="font-size:0.78rem;color:var(--text-3);margin-bottom:16px;text-transform:uppercase;letter-spacing:0.1em;font-family:var(--font-head);">Grid de layout</p>
+      <div class="card">
+        <div style="display:flex;flex-direction:column;gap:12px;font-size:0.88rem;color:var(--text-2);">
+          <div style="display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--border);">
+            <span style="font-family:var(--font-head);font-weight:600;color:var(--text-1);">Max width</span>
+            <span style="color:var(--accent);">1160px</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--border);">
+            <span style="font-family:var(--font-head);font-weight:600;color:var(--text-1);">Padding horizontal</span>
+            <span style="color:var(--accent);">28px (mobile: 16px)</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--border);">
+            <span style="font-family:var(--font-head);font-weight:600;color:var(--text-1);">Gap de columnas</span>
+            <span style="color:var(--accent);">16px — 24px</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--border);">
+            <span style="font-family:var(--font-head);font-weight:600;color:var(--text-1);">Columnas (desktop)</span>
+            <span style="color:var(--accent);">12 col · 80px cada una</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;padding:10px 0;">
+            <span style="font-family:var(--font-head);font-weight:600;color:var(--text-1);">Breakpoints</span>
+            <span style="color:var(--accent);">480 · 768 · 900 · 1160px</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── 06. EFECTOS ── -->
+  <section id="effects" class="section">
+    <div class="container">
+      <div class="section-num">06</div>
+      <div class="section-label">Efectos & Textura</div>
+      <h2 class="section-title">Atmósfera visual</h2>
+      <p class="section-desc">Tres capas visuales crean la profundidad y textura característica de Guai: ruido, gradientes radiales y grilla perspectivada.</p>
+
+      <div class="grid-3" style="margin-bottom:32px;">
+        <div class="card">
+          <div style="height:120px;margin-bottom:16px;border-radius:var(--radius);overflow:hidden;position:relative;background:#0A0C0F;">
+            <div style="position:absolute;inset:0;background-image:url('data:image/svg+xml,%3Csvg viewBox=\'0 0 256 256\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cfilter id=\'noise\'%3E%3CfeTurbulence type=\'fractalNoise\' baseFrequency=\'0.9\' numOctaves=\'4\' stitchTiles=\'stitch\'/%3E%3C/filter%3E%3Crect width=\'100%25\' height=\'100%25\' filter=\'url(%23noise)\' opacity=\'0.04\'/%3E%3C/svg%3E');opacity:0.6;"></div>
+            <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:var(--font-head);font-size:0.8rem;color:var(--text-2);">Noise overlay</div>
+          </div>
+          <h4 style="font-family:var(--font-head);font-size:0.9rem;font-weight:700;margin-bottom:6px;">Noise Texture</h4>
+          <p style="font-size:0.82rem;color:var(--text-2);">SVG fractalNoise fijo en pantalla. Opacidad 0.5. Da profundidad orgánica al fondo oscuro.</p>
+          <div style="margin-top:12px;font-size:0.75rem;color:var(--text-3);">z-index: 9999 · pointer-events: none</div>
+        </div>
+
+        <div class="card">
+          <div style="height:120px;margin-bottom:16px;border-radius:var(--radius);overflow:hidden;background:radial-gradient(ellipse 80% 60% at 60% 40%, rgba(0,229,160,0.15) 0%, transparent 60%), radial-gradient(ellipse 50% 40% at 20% 80%, rgba(245,200,66,0.08) 0%, transparent 50%),#0A0C0F;">
+            <div style="height:100%;display:flex;align-items:center;justify-content:center;font-family:var(--font-head);font-size:0.8rem;color:var(--text-2);">Gradient glow</div>
+          </div>
+          <h4 style="font-family:var(--font-head);font-size:0.9rem;font-weight:700;margin-bottom:6px;">Radial Gradients</h4>
+          <p style="font-size:0.82rem;color:var(--text-2);">Destellos radiales en verde y ámbar para crear iluminación direccional y contexto en secciones hero.</p>
+          <div style="margin-top:12px;font-size:0.75rem;color:var(--text-3);">8–15% opacity · blend mode normal</div>
+        </div>
+
+        <div class="card">
+          <div style="height:120px;margin-bottom:16px;border-radius:var(--radius);overflow:hidden;position:relative;background:#0A0C0F;">
+            <div style="position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,0.07) 1px, transparent 1px),linear-gradient(90deg, rgba(255,255,255,0.07) 1px, transparent 1px);background-size:30px 30px;mask-image:radial-gradient(ellipse 80% 80% at 50% 50%, black 0%, transparent 80%);"></div>
+            <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:var(--font-head);font-size:0.8rem;color:var(--text-2);">Grid perspectiva</div>
+          </div>
+          <h4 style="font-family:var(--font-head);font-size:0.9rem;font-weight:700;margin-bottom:6px;">Dot Grid</h4>
+          <p style="font-size:0.82rem;color:var(--text-2);">Grilla de 60×60px con máscara radial que la desvanece en los bordes. Solo en secciones hero.</p>
+          <div style="margin-top:12px;font-size:0.75rem;color:var(--text-3);">60px gap · 7% opacity · mask radial</div>
+        </div>
+      </div>
+
+      <!-- Glow effects -->
+      <p style="font-size:0.78rem;color:var(--text-3);margin-bottom:16px;text-transform:uppercase;letter-spacing:0.1em;font-family:var(--font-head);">Box shadows & glow</p>
+      <div class="card">
+        <div class="shadow-demo">
+          <div class="shadow-item">
+            <div class="shadow-box" style="box-shadow: 0 2px 20px rgba(0,0,0,0.4);"></div>
+            <div style="font-size:0.72rem;color:var(--text-3);">shadow-card</div>
+            <div style="font-size:0.68rem;color:var(--text-3);margin-top:2px;">Tarjetas UI</div>
+          </div>
+          <div class="shadow-item">
+            <div class="shadow-box" style="box-shadow: 0 0 40px rgba(0,229,160,0.15);background:var(--bg-card);border:1px solid rgba(0,229,160,0.3);"></div>
+            <div style="font-size:0.72rem;color:var(--text-3);">shadow-glow</div>
+            <div style="font-size:0.68rem;color:var(--text-3);margin-top:2px;">Tarjetas activas</div>
+          </div>
+          <div class="shadow-item">
+            <div class="shadow-box" style="box-shadow: 0 8px 30px rgba(0,229,160,0.25);background:var(--accent);"></div>
+            <div style="font-size:0.72rem;color:var(--text-3);">btn-hover-glow</div>
+            <div style="font-size:0.68rem;color:var(--text-3);margin-top:2px;">Botones primary hover</div>
+          </div>
+          <div class="shadow-item">
+            <div class="shadow-box" style="box-shadow: inset 0 1px 0 rgba(255,255,255,0.06);"></div>
+            <div style="font-size:0.72rem;color:var(--text-3);">inset-highlight</div>
+            <div style="font-size:0.68rem;color:var(--text-3);margin-top:2px;">Bordes superiores</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── 07. BUTTONS ── -->
+  <section id="buttons" class="section">
+    <div class="container">
+      <div class="section-num">07</div>
+      <div class="section-label">Componentes</div>
+      <h2 class="section-title">Botones</h2>
+      <p class="section-desc">Cuatro variantes de botón cubren todos los estados de acción. El pill-shape es parte de la firma visual.</p>
+
+      <div class="card" style="margin-bottom:16px;">
+        <p style="font-size:0.78rem;color:var(--text-3);margin-bottom:24px;text-transform:uppercase;letter-spacing:0.1em;font-family:var(--font-head);">Variantes</p>
+        <div style="display:flex;gap:16px;flex-wrap:wrap;align-items:center;">
+          <button class="btn btn-primary">
+            Comenzar ahora
+            <svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </button>
+          <button class="btn btn-secondary">Ver demostración</button>
+          <button class="btn btn-ghost">Leer más <svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></button>
+          <button class="btn btn-danger">Eliminar</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <p style="font-size:0.78rem;color:var(--text-3);margin-bottom:20px;text-transform:uppercase;letter-spacing:0.1em;font-family:var(--font-head);">Especificaciones</p>
+        <div style="display:flex;flex-direction:column;gap:0;">
+          <div style="display:grid;grid-template-columns:120px 1fr 1fr 1fr;gap:16px;padding:10px 0;border-bottom:1px solid var(--border);font-size:0.72rem;color:var(--text-3);font-family:var(--font-head);text-transform:uppercase;letter-spacing:0.08em;">
+            <div>Variante</div><div>Uso</div><div>Background</div><div>Texto</div>
+          </div>
+          <div style="display:grid;grid-template-columns:120px 1fr 1fr 1fr;gap:16px;padding:14px 0;border-bottom:1px solid var(--border);font-size:0.85rem;">
+            <div style="font-weight:600;color:var(--accent);">Primary</div>
+            <div style="color:var(--text-2);">CTA principal, una por pantalla</div>
+            <div style="color:var(--text-2);">#00E5A0</div>
+            <div style="color:var(--text-2);">#050706</div>
+          </div>
+          <div style="display:grid;grid-template-columns:120px 1fr 1fr 1fr;gap:16px;padding:14px 0;border-bottom:1px solid var(--border);font-size:0.85rem;">
+            <div style="font-weight:600;color:var(--text-1);">Secondary</div>
+            <div style="color:var(--text-2);">Acciones secundarias, pares</div>
+            <div style="color:var(--text-2);">#16191F</div>
+            <div style="color:var(--text-2);">#F0F2F5</div>
+          </div>
+          <div style="display:grid;grid-template-columns:120px 1fr 1fr 1fr;gap:16px;padding:14px 0;border-bottom:1px solid var(--border);font-size:0.85rem;">
+            <div style="font-weight:600;color:var(--accent);">Ghost</div>
+            <div style="color:var(--text-2);">Links contextuales dentro de contenido</div>
+            <div style="color:var(--text-2);">Transparente</div>
+            <div style="color:var(--text-2);">#00E5A0</div>
+          </div>
+          <div style="display:grid;grid-template-columns:120px 1fr 1fr 1fr;gap:16px;padding:14px 0;font-size:0.85rem;">
+            <div style="font-weight:600;color:#ef4444;">Danger</div>
+            <div style="color:var(--text-2);">Acciones destructivas irreversibles</div>
+            <div style="color:var(--text-2);">rgba(239,68,68,0.15)</div>
+            <div style="color:var(--text-2);">#ef4444</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── 08. BADGES ── -->
+  <section id="badges" class="section">
+    <div class="container">
+      <div class="section-num">08</div>
+      <div class="section-label">Componentes</div>
+      <h2 class="section-title">Badges & Tags</h2>
+      <p class="section-desc">Sistema de etiquetas para categorizar, indicar estado y resaltar información clave. Siempre en pill shape.</p>
+
+      <div class="card">
+        <p style="font-size:0.78rem;color:var(--text-3);margin-bottom:20px;text-transform:uppercase;letter-spacing:0.1em;font-family:var(--font-head);">Variantes de color</p>
+        <div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:28px;">
+          <span class="badge badge-green">● Activo</span>
+          <span class="badge badge-yellow">⚠ Pendiente</span>
+          <span class="badge badge-blue">📘 Guía técnica</span>
+          <span class="badge badge-neutral">Neutral</span>
+          <span class="badge badge-green">✓ Completado</span>
+          <span class="badge badge-yellow">Beta</span>
+          <span class="badge badge-blue">Nuevo</span>
+        </div>
+
+        <p style="font-size:0.78rem;color:var(--text-3);margin-bottom:16px;text-transform:uppercase;letter-spacing:0.1em;font-family:var(--font-head);">Uso semántico</p>
+        <div style="display:flex;flex-direction:column;gap:8px;font-size:0.85rem;">
+          <div style="display:flex;align-items:center;gap:16px;padding:10px 0;border-bottom:1px solid var(--border);">
+            <span class="badge badge-green" style="min-width:100px;justify-content:center;">Verde</span>
+            <span style="color:var(--text-2);">Estado activo, éxito, automatización, IA</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:16px;padding:10px 0;border-bottom:1px solid var(--border);">
+            <span class="badge badge-yellow" style="min-width:100px;justify-content:center;">Ámbar</span>
+            <span style="color:var(--text-2);">Advertencia, en progreso, caso de uso, énfasis</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:16px;padding:10px 0;border-bottom:1px solid var(--border);">
+            <span class="badge badge-blue" style="min-width:100px;justify-content:center;">Azul</span>
+            <span style="color:var(--text-2);">Informativo, categoría técnica, guías</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:16px;padding:10px 0;">
+            <span class="badge badge-neutral" style="min-width:100px;justify-content:center;">Neutro</span>
+            <span style="color:var(--text-2);">Categorías genéricas, inactivo, sin semántica</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── 09. CARDS ── -->
+  <section id="cards" class="section">
+    <div class="container">
+      <div class="section-num">09</div>
+      <div class="section-label">Componentes</div>
+      <h2 class="section-title">Tarjetas</h2>
+      <p class="section-desc">Las tarjetas son el contenedor primario de contenido. Tres variantes según jerarquía y contexto.</p>
+
+      <div class="grid-3" style="margin-bottom:24px;">
+        <div class="feature-card">
+          <div class="feature-icon">⚙️</div>
+          <h3 style="font-family:var(--font-head);font-size:1rem;font-weight:700;margin-bottom:8px;">Feature Card</h3>
+          <p style="font-size:0.85rem;color:var(--text-2);line-height:1.65;">Para destacar funcionalidades. Borde sutil que se ilumina en hover con acento verde.</p>
+          <div style="margin-top:16px;font-size:0.72rem;color:var(--text-3);">bg-card · border · hover:border-accent</div>
+        </div>
+        <div style="background:var(--bg-card);border:1px solid rgba(0,229,160,0.3);box-shadow:0 0 30px rgba(0,229,160,0.1);border-radius:var(--radius-lg);padding:28px;">
+          <div style="font-family:var(--font-head);font-size:0.72rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--accent);margin-bottom:8px;">Destacada</div>
+          <h3 style="font-family:var(--font-head);font-size:1rem;font-weight:700;margin-bottom:8px;">Feature Card</h3>
+          <p style="font-size:0.85rem;color:var(--text-2);line-height:1.65;">Versión resaltada con borde verde y glow. Para cards principales o featured.</p>
+          <div style="margin-top:16px;font-size:0.72rem;color:var(--text-3);">bg-card · border-accent · shadow-glow</div>
+        </div>
+        <div class="stat-card">
+          <div style="font-size:0.72rem;color:var(--text-3);text-transform:uppercase;letter-spacing:0.1em;font-family:var(--font-head);margin-bottom:6px;">Métrica clave</div>
+          <div class="stat-val">+75%</div>
+          <div style="font-size:0.85rem;color:var(--text-2);">Reducción de tiempo en proceso</div>
+          <div style="margin-top:16px;">
+            <div style="display:flex;justify-content:space-between;font-size:0.78rem;color:var(--text-3);margin-bottom:6px;"><span>Progreso</span><span style="color:var(--accent);">75%</span></div>
+            <div class="progress-track"><div class="progress-fill" style="width:75%;"></div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Testimonial card -->
+      <div class="card" style="max-width:480px;margin-bottom:24px;">
+        <div style="font-size:1.3rem;color:var(--accent);margin-bottom:12px;">❝</div>
+        <p style="font-size:0.95rem;color:var(--text-1);line-height:1.7;margin-bottom:20px;font-style:italic;">"Guai redujo el tiempo de nuestro proceso de ventas en un 60%. La implementación fue sorprendentemente rápida."</p>
+        <div style="display:flex;align-items:center;gap:12px;">
+          <div class="avatar">MR</div>
+          <div>
+            <div style="font-family:var(--font-head);font-size:0.88rem;font-weight:600;">María Rodríguez</div>
+            <div style="font-size:0.78rem;color:var(--text-3);">CEO — TechCorp Latam</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── 10. FORMS ── -->
+  <section id="forms" class="section">
+    <div class="container">
+      <div class="section-num">10</div>
+      <div class="section-label">Componentes</div>
+      <h2 class="section-title">Formularios</h2>
+      <p class="section-desc">Inputs, labels y estados de validación. El foco siempre se marca con el acento verde.</p>
+
+      <div class="grid-2">
+        <div>
+          <div style="margin-bottom:20px;">
+            <label style="display:block;font-family:var(--font-head);font-size:0.72rem;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:var(--accent);margin-bottom:8px;">Nombre</label>
+            <input class="input" type="text" placeholder="Tu nombre completo" />
+          </div>
+          <div style="margin-bottom:20px;">
+            <label style="display:block;font-family:var(--font-head);font-size:0.72rem;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:var(--accent);margin-bottom:8px;">Email</label>
+            <input class="input" type="email" placeholder="tu@empresa.com" />
+          </div>
+          <div style="margin-bottom:20px;">
+            <label style="display:block;font-family:var(--font-head);font-size:0.72rem;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:var(--accent);margin-bottom:8px;">Mensaje</label>
+            <textarea class="input" rows="4" placeholder="¿Cómo podemos ayudarte?" style="resize:vertical;"></textarea>
+          </div>
+          <button class="btn btn-primary" style="width:100%;justify-content:center;">Enviar mensaje</button>
+        </div>
+
+        <div>
+          <p style="font-size:0.78rem;color:var(--text-3);margin-bottom:16px;text-transform:uppercase;letter-spacing:0.1em;font-family:var(--font-head);">Estados</p>
+          <div style="display:flex;flex-direction:column;gap:16px;">
+            <div>
+              <div style="font-size:0.72rem;color:var(--text-3);margin-bottom:6px;">Default</div>
+              <input class="input" type="text" placeholder="Placeholder text" />
+            </div>
+            <div>
+              <div style="font-size:0.72rem;color:var(--text-3);margin-bottom:6px;">Focus (border acento)</div>
+              <input class="input" type="text" value="Texto activo" style="border-color:var(--accent);" />
+            </div>
+            <div>
+              <div style="font-size:0.72rem;color:var(--text-3);margin-bottom:6px;">Error</div>
+              <input class="input" type="text" value="email-invalido" style="border-color:#ef4444;" />
+              <div style="font-size:0.78rem;color:#ef4444;margin-top:6px;">Ingresa un email válido</div>
+            </div>
+            <div>
+              <div style="font-size:0.72rem;color:var(--text-3);margin-bottom:6px;">Success</div>
+              <input class="input" type="text" value="usuario@empresa.com" style="border-color:var(--accent);" />
+              <div style="font-size:0.78rem;color:var(--accent);margin-top:6px;">✓ Email verificado</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── 11. FEEDBACK UI ── -->
+  <section id="feedback" class="section">
+    <div class="container">
+      <div class="section-num">11</div>
+      <div class="section-label">Componentes</div>
+      <h2 class="section-title">Feedback & Notificaciones</h2>
+      <p class="section-desc">Toasts, avatares, indicadores de progreso y estados del sistema.</p>
+
+      <div class="grid-2" style="margin-bottom:24px;">
+        <div>
+          <p style="font-size:0.78rem;color:var(--text-3);margin-bottom:16px;text-transform:uppercase;letter-spacing:0.1em;font-family:var(--font-head);">Toasts</p>
+          <div style="display:flex;flex-direction:column;gap:10px;">
+            <div class="toast toast-success">
+              <span style="color:var(--accent);">✓</span>
+              <span style="color:var(--text-1);">Proceso automatizado correctamente</span>
+            </div>
+            <div class="toast toast-warning">
+              <span style="color:var(--yellow);">⚠</span>
+              <span style="color:var(--text-1);">Revisa los parámetros del flujo</span>
+            </div>
+            <div class="toast toast-error">
+              <span style="color:#ef4444;">✕</span>
+              <span style="color:var(--text-1);">Error en la conexión con la API</span>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <p style="font-size:0.78rem;color:var(--text-3);margin-bottom:16px;text-transform:uppercase;letter-spacing:0.1em;font-family:var(--font-head);">Progreso & Avatares</p>
+          <div style="display:flex;flex-direction:column;gap:20px;">
+            <div>
+              <div style="display:flex;justify-content:space-between;font-size:0.82rem;margin-bottom:6px;"><span style="color:var(--text-2);">Ahorro en tiempo operativo</span><span style="color:var(--accent);">75%</span></div>
+              <div class="progress-track"><div class="progress-fill" style="width:75%;"></div></div>
+            </div>
+            <div>
+              <div style="display:flex;justify-content:space-between;font-size:0.82rem;margin-bottom:6px;"><span style="color:var(--text-2);">Reducción de errores</span><span style="color:var(--accent);">92%</span></div>
+              <div class="progress-track"><div class="progress-fill" style="width:92%;"></div></div>
+            </div>
+            <div style="display:flex;gap:12px;align-items:center;margin-top:8px;">
+              <div class="avatar">AG</div>
+              <div class="avatar" style="background:var(--yellow-dim);border-color:rgba(245,200,66,0.3);color:var(--yellow);">MR</div>
+              <div class="avatar" style="background:var(--blue-dim);border-color:rgba(91,141,239,0.3);color:var(--blue);">LP</div>
+              <div class="avatar" style="background:var(--bg-raised);border-color:var(--border-med);color:var(--text-3);font-size:0.72rem;">+5</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── 12. VOZ & TONO ── -->
+  <section id="voice" class="section">
+    <div class="container">
+      <div class="section-num">12</div>
+      <div class="section-label">Voz & Tono</div>
+      <h2 class="section-title">Cómo habla Guai</h2>
+      <p class="section-desc">La comunicación de Guai es directa, experta y humana. Hablamos de resultados, no de tecnología por la tecnología.</p>
+
+      <div style="margin-bottom:32px;">
+        <div class="principle-item">
+          <div class="principle-title">Directo y concreto</div>
+          <p style="font-size:0.88rem;color:var(--text-2);">Evitamos jerga innecesaria. Decimos "reduce 75% del tiempo" no "optimiza los flujos de trabajo mediante automatización avanzada". Los números concretos ganan siempre.</p>
+        </div>
+        <div class="principle-item">
+          <div class="principle-title">Cercano sin ser informal</div>
+          <p style="font-size:0.88rem;color:var(--text-2);">Tuteamos al usuario. Somos accesibles y empáticos, pero mantenemos la precisión técnica. No usamos emojis en interfaces de producto excepto en contextos muy específicos.</p>
+        </div>
+        <div class="principle-item">
+          <div class="principle-title">Enfocado en el valor</div>
+          <p style="font-size:0.88rem;color:var(--text-2);">Siempre comunicamos el "¿qué ganas tú?" antes de explicar el "¿cómo funciona?". El usuario primero quiere saber el beneficio.</p>
+        </div>
+        <div class="principle-item">
+          <div class="principle-title">Confiado, nunca arrogante</div>
+          <p style="font-size:0.88rem;color:var(--text-2);">Afirmamos capacidades con evidencia. Evitamos hipérboles vacías como "la mejor solución del mercado". Preferimos "clientes que reducen costos 3x en 30 días".</p>
+        </div>
+      </div>
+
+      <div class="dont-grid">
+        <div class="dont-item do">
+          <div class="dont-badge">✓ Sí decimos</div>
+          <div style="margin-top:12px;display:flex;flex-direction:column;gap:10px;">
+            <div style="padding:12px;background:rgba(0,229,160,0.05);border-radius:8px;font-size:0.88rem;color:var(--text-1);">"Automatiza en 48 horas, sin código"</div>
+            <div style="padding:12px;background:rgba(0,229,160,0.05);border-radius:8px;font-size:0.88rem;color:var(--text-1);">"Tu equipo se enfoca en lo que importa"</div>
+            <div style="padding:12px;background:rgba(0,229,160,0.05);border-radius:8px;font-size:0.88rem;color:var(--text-1);">"Reducimos un 65% el tiempo de onboarding"</div>
+          </div>
+        </div>
+        <div class="dont-item dont">
+          <div class="dont-badge">✗ No decimos</div>
+          <div style="margin-top:12px;display:flex;flex-direction:column;gap:10px;">
+            <div style="padding:12px;background:rgba(239,68,68,0.05);border-radius:8px;font-size:0.88rem;color:var(--text-2);">"Solución de IA de clase mundial disruptiva"</div>
+            <div style="padding:12px;background:rgba(239,68,68,0.05);border-radius:8px;font-size:0.88rem;color:var(--text-2);">"Potenciamos sinergias con machine learning"</div>
+            <div style="padding:12px;background:rgba(239,68,68,0.05);border-radius:8px;font-size:0.88rem;color:var(--text-2);">"¡¡La mejor plataforma del mercado!!"</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── 13. MOTION ── -->
+  <section id="motion" class="section">
+    <div class="container">
+      <div class="section-num">13</div>
+      <div class="section-label">Movimiento</div>
+      <h2 class="section-title">Tokens de animación</h2>
+      <p class="section-desc">Las animaciones de Guai son sutiles, funcionales y propositivas. El movimiento refuerza la percepción de precisión y velocidad.</p>
+
+      <div class="motion-demo">
+        <div class="motion-item">
+          <div>
+            <div class="motion-name">transition-fast</div>
+            <div style="font-size:0.78rem;color:var(--text-3);margin-top:2px;">Hover states, micro-interacciones</div>
+          </div>
+          <div class="motion-val">0.15s ease</div>
+        </div>
+        <div class="motion-item">
+          <div>
+            <div class="motion-name">transition-base</div>
+            <div style="font-size:0.78rem;color:var(--text-3);margin-top:2px;">Botones, inputs, cambios de estado</div>
+          </div>
+          <div class="motion-val">0.2s ease</div>
+        </div>
+        <div class="motion-item">
+          <div>
+            <div class="motion-name">transition-slow</div>
+            <div style="font-size:0.78rem;color:var(--text-3);margin-top:2px;">Nav scroll, overlays, modales</div>
+          </div>
+          <div class="motion-val">0.3s ease</div>
+        </div>
+        <div class="motion-item">
+          <div>
+            <div class="motion-name">fadeUp — page load</div>
+            <div style="font-size:0.78rem;color:var(--text-3);margin-top:2px;">Entrada de elementos en hero</div>
+          </div>
+          <div class="motion-val">0.5s ease · translateY(20px→0)</div>
+        </div>
+        <div class="motion-item">
+          <div>
+            <div class="motion-name">stagger delay</div>
+            <div style="font-size:0.78rem;color:var(--text-3);margin-top:2px;">Elementos consecutivos en hero</div>
+          </div>
+          <div class="motion-val">+0.1s por elemento</div>
+        </div>
+        <div class="motion-item">
+          <div>
+            <div class="motion-name">btn-hover lift</div>
+            <div style="font-size:0.78rem;color:var(--text-3);margin-top:2px;">Botones primary en hover</div>
+          </div>
+          <div class="motion-val">translateY(-2px) + glow</div>
+        </div>
+        <div class="motion-item">
+          <div>
+            <div class="motion-name">nav-ghost arrow</div>
+            <div style="font-size:0.78rem;color:var(--text-3);margin-top:2px;">Flecha de ghost button en hover</div>
+          </div>
+          <div class="motion-val">translateX(3px)</div>
+        </div>
+      </div>
+
+      <div style="margin-top:16px;padding:20px 24px;background:var(--accent-dim);border:1px solid rgba(0,229,160,0.2);border-radius:var(--radius);">
+        <p style="font-size:0.88rem;color:var(--text-1);"><span style="color:var(--accent);font-weight:600;">Principio:</span> <span style="color:var(--text-2);">Nunca usar animaciones por decoración pura. Cada movimiento debe comunicar estado, dirección o retroalimentación. Reducir motion si el usuario lo prefiere con <code style="color:var(--accent);">prefers-reduced-motion</code>.</span></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── 14. DO'S & DON'TS ── -->
+  <section id="dodonts" class="section">
+    <div class="container">
+      <div class="section-num">14</div>
+      <div class="section-label">Guidelines</div>
+      <h2 class="section-title">Do's & Don'ts</h2>
+      <p class="section-desc">Reglas visuales clave para mantener coherencia en cualquier pieza de comunicación.</p>
+
+      <div class="dont-grid">
+        <div class="dont-item do">
+          <div class="dont-badge">✓ Hacer</div>
+          <div style="margin-top:14px;display:flex;flex-direction:column;gap:12px;">
+            <div style="display:flex;gap:10px;align-items:flex-start;font-size:0.85rem;color:var(--text-2);">
+              <span style="color:var(--accent);margin-top:2px;flex-shrink:0;">✓</span>
+              Usar siempre fondos oscuros (#0A0C0F o similares) como base
+            </div>
+            <div style="display:flex;gap:10px;align-items:flex-start;font-size:0.85rem;color:var(--text-2);">
+              <span style="color:var(--accent);margin-top:2px;flex-shrink:0;">✓</span>
+              Reservar el verde (#00E5A0) para elementos interactivos y CTAs
+            </div>
+            <div style="display:flex;gap:10px;align-items:flex-start;font-size:0.85rem;color:var(--text-2);">
+              <span style="color:var(--accent);margin-top:2px;flex-shrink:0;">✓</span>
+              Usar Syne para todos los títulos y DM Sans para cuerpo
+            </div>
+            <div style="display:flex;gap:10px;align-items:flex-start;font-size:0.85rem;color:var(--text-2);">
+              <span style="color:var(--accent);margin-top:2px;flex-shrink:0;">✓</span>
+              Mantener padding mínimo de 28px en todos los contenedores
+            </div>
+            <div style="display:flex;gap:10px;align-items:flex-start;font-size:0.85rem;color:var(--text-2);">
+              <span style="color:var(--accent);margin-top:2px;flex-shrink:0;">✓</span>
+              Incluir siempre la capa de noise texture en páginas principales
+            </div>
+            <div style="display:flex;gap:10px;align-items:flex-start;font-size:0.85rem;color:var(--text-2);">
+              <span style="color:var(--accent);margin-top:2px;flex-shrink:0;">✓</span>
+              Usar un solo botón Primary por pantalla o sección
+            </div>
+          </div>
+        </div>
+        <div class="dont-item dont">
+          <div class="dont-badge">✗ Evitar</div>
+          <div style="margin-top:14px;display:flex;flex-direction:column;gap:12px;">
+            <div style="display:flex;gap:10px;align-items:flex-start;font-size:0.85rem;color:var(--text-2);">
+              <span style="color:#ef4444;margin-top:2px;flex-shrink:0;">✗</span>
+              Usar gradientes de color brillante sobre fondos claros (antiestético a la marca)
+            </div>
+            <div style="display:flex;gap:10px;align-items:flex-start;font-size:0.85rem;color:var(--text-2);">
+              <span style="color:#ef4444;margin-top:2px;flex-shrink:0;">✗</span>
+              Saturar interfaces con el color verde (perderá su jerarquía)
+            </div>
+            <div style="display:flex;gap:10px;align-items:flex-start;font-size:0.85rem;color:var(--text-2);">
+              <span style="color:#ef4444;margin-top:2px;flex-shrink:0;">✗</span>
+              Usar fuentes distintas a Syne y DM Sans sin aprobación
+            </div>
+            <div style="display:flex;gap:10px;align-items:flex-start;font-size:0.85rem;color:var(--text-2);">
+              <span style="color:#ef4444;margin-top:2px;flex-shrink:0;">✗</span>
+              Colocar texto blanco puro (#FFFFFF) — usar siempre #F0F2F5
+            </div>
+            <div style="display:flex;gap:10px;align-items:flex-start;font-size:0.85rem;color:var(--text-2);">
+              <span style="color:#ef4444;margin-top:2px;flex-shrink:0;">✗</span>
+              Crear botones primarios con esquinas completamente rectas
+            </div>
+            <div style="display:flex;gap:10px;align-items:flex-start;font-size:0.85rem;color:var(--text-2);">
+              <span style="color:#ef4444;margin-top:2px;flex-shrink:0;">✗</span>
+              Animar elementos sin propósito funcional claro
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── 15. DESIGN TOKENS ── -->
+  <section id="tokens" class="section" style="border-bottom:none;">
+    <div class="container">
+      <div class="section-num">15</div>
+      <div class="section-label">Design Tokens</div>
+      <h2 class="section-title">CSS Variables</h2>
+      <p class="section-desc">El código fuente de verdad. Copiar este bloque en el :root de cualquier proyecto Guai para heredar toda la identidad.</p>
+
+      <div class="code-block">
+<span class="comment">/* ── GUAI DESIGN TOKENS v1.0 ── */</span>
+<span class="prop">:root</span> {
+
+  <span class="comment">/* Backgrounds */</span>
+  <span class="var">--bg</span>:          <span class="val">#0A0C0F</span>;
+  <span class="var">--bg-card</span>:    <span class="val">#111318</span>;
+  <span class="var">--bg-raised</span>:  <span class="val">#16191F</span>;
+
+  <span class="comment">/* Borders */</span>
+  <span class="var">--border</span>:      <span class="val">rgba(255,255,255,0.07)</span>;
+  <span class="var">--border-med</span>: <span class="val">rgba(255,255,255,0.12)</span>;
+
+  <span class="comment">/* Brand Colors */</span>
+  <span class="var">--accent</span>:      <span class="val">#00E5A0</span>;
+  <span class="var">--accent-dim</span>: <span class="val">rgba(0,229,160,0.12)</span>;
+  <span class="var">--accent-glow</span>:<span class="val">rgba(0,229,160,0.25)</span>;
+  <span class="var">--yellow</span>:      <span class="val">#F5C842</span>;
+  <span class="var">--yellow-dim</span>: <span class="val">rgba(245,200,66,0.12)</span>;
+  <span class="var">--blue</span>:        <span class="val">#5B8DEF</span>;
+  <span class="var">--blue-dim</span>:   <span class="val">rgba(91,141,239,0.12)</span>;
+
+  <span class="comment">/* Text Scale */</span>
+  <span class="var">--text-1</span>: <span class="val">#F0F2F5</span>;   <span class="comment">/* Primary */</span>
+  <span class="var">--text-2</span>: <span class="val">#8D939F</span>;   <span class="comment">/* Secondary */</span>
+  <span class="var">--text-3</span>: <span class="val">#555C68</span>;   <span class="comment">/* Tertiary / Disabled */</span>
+
+  <span class="comment">/* Shape */</span>
+  <span class="var">--radius</span>:      <span class="val">14px</span>;
+  <span class="var">--radius-lg</span>:  <span class="val">24px</span>;
+  <span class="var">--radius-pill</span>:<span class="val">100px</span>;
+
+  <span class="comment">/* Typography */</span>
+  <span class="var">--font-head</span>: <span class="val">'Syne', sans-serif</span>;
+  <span class="var">--font-body</span>: <span class="val">'DM Sans', sans-serif</span>;
+
+  <span class="comment">/* Shadows */</span>
+  <span class="var">--shadow-card</span>: <span class="val">0 2px 20px rgba(0,0,0,0.4)</span>;
+  <span class="var">--shadow-glow</span>: <span class="val">0 0 40px rgba(0,229,160,0.15)</span>;
+
+  <span class="comment">/* Transitions */</span>
+  <span class="var">--t-fast</span>: <span class="val">0.15s ease</span>;
+  <span class="var">--t-base</span>: <span class="val">0.2s ease</span>;
+  <span class="var">--t-slow</span>: <span class="val">0.3s ease</span>;
+}
+      </div>
+
+      <div style="margin-top:20px;padding:20px 24px;background:var(--bg-card);border:1px solid var(--border-med);border-radius:var(--radius);">
+        <p style="font-size:0.85rem;color:var(--text-2);">
+          <span style="color:var(--accent);font-weight:600;font-family:var(--font-head);">Google Fonts import:</span><br>
+          <span style="font-family:'Courier New',monospace;font-size:0.8rem;color:var(--text-3);">https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap</span>
+        </p>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<script>
+  // Sidebar active state on scroll
+  const sections = document.querySelectorAll('[id]');
+  const links = document.querySelectorAll('.sidebar-link');
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        links.forEach(l => l.classList.remove('active'));
+        const active = document.querySelector(`.sidebar-link[href="#${entry.target.id}"]`);
+        if (active) active.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-30% 0px -65% 0px' });
+
+  sections.forEach(s => observer.observe(s));
+</script>
+
+</body>
+</html>
