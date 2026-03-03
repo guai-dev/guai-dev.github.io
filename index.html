@@ -1,45 +1,41 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <link rel="icon" type="image/png" href="favicon.png">
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Guai — Automatización e IA para empresas</title>
+  <title>Manual C.R.E.C.E. — Automatiza tu empresa con IA | Guai</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet" />
 
   <style>
-    /* =====================================================
-       DESIGN TOKENS
-    ===================================================== */
+    /* ── TOKENS ── */
     :root {
-      --bg:         #0A0C0F;
-      --bg-card:    #111318;
-      --bg-raised:  #16191F;
-      --border:     rgba(255,255,255,0.07);
-      --border-med: rgba(255,255,255,0.12);
-      --accent:     #00E5A0;
-      --accent-dim: rgba(0,229,160,0.12);
-      --accent-glow:rgba(0,229,160,0.25);
-      --yellow:     #F5C842;
-      --text-1:     #F0F2F5;
-      --text-2:     #8D939F;
-      --text-3:     #555C68;
-      --radius:     14px;
-      --radius-lg:  24px;
-      --radius-pill:100px;
-      --font-head:  'Syne', sans-serif;
-      --font-body:  'DM Sans', sans-serif;
-      --shadow-card: 0 2px 20px rgba(0,0,0,0.4);
-      --shadow-glow: 0 0 40px rgba(0,229,160,0.15);
+      --bg:          #0A0C0F;
+      --bg-card:     #111318;
+      --bg-raised:   #16191F;
+      --border:      rgba(255,255,255,0.07);
+      --border-med:  rgba(255,255,255,0.12);
+      --accent:      #00E5A0;
+      --accent-dim:  rgba(0,229,160,0.12);
+      --accent-glow: rgba(0,229,160,0.25);
+      --yellow:      #F5C842;
+      --yellow-dim:  rgba(245,200,66,0.12);
+      --purple:      #A78BFA;
+      --purple-dim:  rgba(167,139,250,0.12);
+      --text-1:      #F0F2F5;
+      --text-2:      #8D939F;
+      --text-3:      #555C68;
+      --radius:      14px;
+      --radius-lg:   24px;
+      --radius-pill: 100px;
+      --font-head:   'Syne', sans-serif;
+      --font-body:   'DM Sans', sans-serif;
     }
 
-    /* =====================================================
-       RESET & BASE
-    ===================================================== */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
+
     body {
       background: var(--bg);
       color: var(--text-1);
@@ -49,129 +45,28 @@
       -webkit-font-smoothing: antialiased;
       overflow-x: hidden;
     }
+
     a { color: inherit; text-decoration: none; }
-    img { max-width: 100%; display: block; }
     ul { list-style: none; }
 
-    /* =====================================================
-       SCROLLBAR
-    ===================================================== */
-    ::-webkit-scrollbar { width: 6px; }
-    ::-webkit-scrollbar-track { background: var(--bg); }
-    ::-webkit-scrollbar-thumb { background: var(--border-med); border-radius: 3px; }
-
-    /* =====================================================
-       NOISE TEXTURE OVERLAY
-    ===================================================== */
+    /* noise */
     body::before {
       content: '';
       position: fixed; inset: 0;
       background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
       pointer-events: none;
       z-index: 9999;
-      opacity: 0.6;
+      opacity: 0.5;
     }
 
-    /* =====================================================
-       LAYOUT UTILS
-    ===================================================== */
-    .container {
-      max-width: 1160px;
-      margin: 0 auto;
-      padding: 0 28px;
-    }
-    .section { padding: 100px 0; }
-    .section--sm { padding: 60px 0; }
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--border-med); border-radius: 3px; }
 
-    /* =====================================================
-       TYPOGRAPHY
-    ===================================================== */
-    .display {
-      font-family: var(--font-head);
-      font-size: clamp(2.8rem, 6vw, 5.2rem);
-      font-weight: 800;
-      line-height: 1.05;
-      letter-spacing: -0.03em;
-    }
-    .heading-1 {
-      font-family: var(--font-head);
-      font-size: clamp(2rem, 4vw, 3.2rem);
-      font-weight: 700;
-      line-height: 1.1;
-      letter-spacing: -0.025em;
-    }
-    .heading-2 {
-      font-family: var(--font-head);
-      font-size: clamp(1.4rem, 2.5vw, 2rem);
-      font-weight: 700;
-      line-height: 1.2;
-      letter-spacing: -0.02em;
-    }
-    .heading-3 {
-      font-family: var(--font-head);
-      font-size: 1.15rem;
-      font-weight: 600;
-      letter-spacing: -0.01em;
-    }
-    .label {
-      font-family: var(--font-head);
-      font-size: 0.72rem;
-      font-weight: 600;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--accent);
-    }
-    .body-lg { font-size: 1.1rem; line-height: 1.7; color: var(--text-2); font-weight: 300; }
-    .body-md { font-size: 0.97rem; line-height: 1.65; color: var(--text-2); }
-    .body-sm { font-size: 0.84rem; color: var(--text-3); }
+    /* ── LAYOUT ── */
+    .container { max-width: 1100px; margin: 0 auto; padding: 0 28px; }
 
-    /* =====================================================
-       BUTTONS
-    ===================================================== */
-    .btn {
-      display: inline-flex; align-items: center; gap: 8px;
-      padding: 13px 26px;
-      border-radius: var(--radius-pill);
-      font-family: var(--font-head);
-      font-size: 0.88rem;
-      font-weight: 600;
-      letter-spacing: 0.01em;
-      cursor: pointer;
-      border: none;
-      transition: all 0.2s ease;
-      white-space: nowrap;
-    }
-    .btn-primary {
-      background: var(--accent);
-      color: #050706;
-      box-shadow: 0 0 0 0 var(--accent-glow);
-    }
-    .btn-primary:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 30px var(--accent-glow);
-    }
-    .btn-secondary {
-      background: var(--bg-raised);
-      color: var(--text-1);
-      border: 1px solid var(--border-med);
-    }
-    .btn-secondary:hover {
-      border-color: var(--accent);
-      color: var(--accent);
-    }
-    .btn-ghost {
-      background: transparent;
-      color: var(--accent);
-      padding: 0;
-      font-size: 0.9rem;
-    }
-    .btn-ghost:hover { gap: 12px; }
-    .btn-ghost svg { transition: transform 0.2s; }
-    .btn-ghost:hover svg { transform: translateX(3px); }
-
-    /* =====================================================
-       NAV
-    ===================================================== */
+    /* ── NAV ── */
     nav {
       position: fixed; top: 0; left: 0; right: 0;
       z-index: 100;
@@ -179,940 +74,852 @@
       transition: background 0.3s, border-color 0.3s;
     }
     nav.scrolled {
-      background: rgba(10,12,15,0.88);
+      background: rgba(10,12,15,0.9);
       backdrop-filter: blur(16px);
       border-bottom: 1px solid var(--border);
     }
-    .nav-inner {
-      display: flex; align-items: center; justify-content: space-between;
-    }
+    .nav-inner { display: flex; align-items: center; justify-content: space-between; }
     .nav-logo {
       font-family: var(--font-head);
-      font-size: 1.5rem;
-      font-weight: 800;
+      font-size: 1.4rem; font-weight: 800;
       letter-spacing: -0.04em;
     }
     .nav-logo span { color: var(--accent); }
-    .nav-links {
-      display: flex; align-items: center; gap: 32px;
-    }
-    .nav-links a {
-      font-size: 0.88rem;
-      font-weight: 500;
-      color: var(--text-2);
-      transition: color 0.2s;
-    }
+    .nav-links { display: flex; align-items: center; gap: 28px; }
+    .nav-links a { font-size: 0.85rem; font-weight: 500; color: var(--text-2); transition: color 0.2s; }
     .nav-links a:hover { color: var(--text-1); }
-    .nav-cta { display: flex; align-items: center; gap: 12px; }
+    .btn-nav {
+      display: inline-flex; align-items: center; gap: 7px;
+      padding: 10px 20px;
+      border-radius: var(--radius-pill);
+      font-family: var(--font-head);
+      font-size: 0.82rem; font-weight: 600;
+      background: var(--accent); color: #050706;
+      transition: all 0.2s;
+      border: none; cursor: pointer;
+    }
+    .btn-nav:hover { transform: translateY(-1px); box-shadow: 0 6px 20px var(--accent-glow); }
 
-    /* =====================================================
-       HERO
-    ===================================================== */
+    /* ── PROGRESS BAR ── */
+    .reading-bar {
+      position: fixed; top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--accent), #00B87A);
+      transform-origin: left;
+      transform: scaleX(0);
+      z-index: 200;
+      transition: transform 0.1s;
+    }
+
+    /* ── HERO ── */
     .hero {
       min-height: 100vh;
       display: flex; align-items: center;
       padding: 120px 0 80px;
-      position: relative;
-      overflow: hidden;
+      position: relative; overflow: hidden;
     }
+
     .hero-bg {
       position: absolute; inset: 0; z-index: 0;
-      background: 
-        radial-gradient(ellipse 80% 60% at 60% 40%, rgba(0,229,160,0.08) 0%, transparent 60%),
-        radial-gradient(ellipse 50% 40% at 20% 80%, rgba(245,200,66,0.05) 0%, transparent 50%);
+      background:
+        radial-gradient(ellipse 70% 60% at 65% 35%, rgba(0,229,160,0.09) 0%, transparent 60%),
+        radial-gradient(ellipse 40% 50% at 10% 70%, rgba(167,139,250,0.06) 0%, transparent 50%);
     }
+
     .hero-grid {
       position: absolute; inset: 0; z-index: 0;
-      background-image: 
+      background-image:
         linear-gradient(var(--border) 1px, transparent 1px),
         linear-gradient(90deg, var(--border) 1px, transparent 1px);
       background-size: 60px 60px;
       mask-image: radial-gradient(ellipse 80% 70% at 50% 50%, black 0%, transparent 75%);
     }
-    .hero-content {
+
+    .hero-inner {
       position: relative; z-index: 1;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 80px;
-      align-items: center;
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 80px; align-items: center;
     }
-    .hero-badge {
+
+    .hero-label {
       display: inline-flex; align-items: center; gap: 8px;
       padding: 6px 14px;
       background: var(--accent-dim);
       border: 1px solid rgba(0,229,160,0.25);
       border-radius: var(--radius-pill);
-      margin-bottom: 28px;
+      font-family: var(--font-head);
+      font-size: 0.72rem; font-weight: 600;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--accent); margin-bottom: 24px;
     }
-    .hero-badge-dot {
+
+    .hero-label-dot {
       width: 6px; height: 6px;
-      background: var(--accent);
-      border-radius: 50%;
+      background: var(--accent); border-radius: 50%;
       animation: pulse 2s ease-in-out infinite;
     }
+
     @keyframes pulse {
       0%, 100% { opacity: 1; transform: scale(1); }
-      50% { opacity: 0.5; transform: scale(0.8); }
+      50%       { opacity: 0.5; transform: scale(0.8); }
     }
-    .hero-title { margin-bottom: 24px; }
-    .hero-title .accent-word { color: var(--accent); }
-    .hero-desc { margin-bottom: 40px; max-width: 480px; }
-    .hero-actions { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
-    .hero-stats {
-      display: flex; gap: 32px; margin-top: 52px;
-      padding-top: 36px;
-      border-top: 1px solid var(--border);
-    }
-    .stat-val {
-      font-family: var(--font-head);
-      font-size: 2.2rem; font-weight: 800;
-      letter-spacing: -0.04em;
-      color: var(--text-1);
-    }
-    .stat-val span { color: var(--accent); }
-    .stat-label { font-size: 0.8rem; color: var(--text-3); margin-top: 2px; }
 
-    /* hero right panel */
-    .hero-panel {
+    .hero-title {
+      font-family: var(--font-head);
+      font-size: clamp(2.6rem, 5.5vw, 4.4rem);
+      font-weight: 800;
+      line-height: 1.03;
+      letter-spacing: -0.03em;
+      margin-bottom: 22px;
+    }
+
+    .hero-title .green { color: var(--accent); }
+    .hero-title .purple { color: var(--purple); }
+
+    .hero-desc {
+      font-size: 1.05rem; color: var(--text-2);
+      line-height: 1.75; font-weight: 300;
+      max-width: 480px; margin-bottom: 36px;
+    }
+
+    .hero-actions { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 14px 28px;
+      border-radius: var(--radius-pill);
+      font-family: var(--font-head);
+      font-size: 0.9rem; font-weight: 600;
+      background: var(--accent); color: #050706;
+      border: none; cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 30px var(--accent-glow); }
+
+    .btn-secondary {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 13px 26px;
+      border-radius: var(--radius-pill);
+      font-family: var(--font-head);
+      font-size: 0.88rem; font-weight: 600;
+      background: var(--bg-raised); color: var(--text-1);
+      border: 1px solid var(--border-med);
+      cursor: pointer; transition: all 0.2s;
+    }
+    .btn-secondary:hover { border-color: var(--accent); color: var(--accent); }
+
+    .hero-stats {
+      display: flex; gap: 28px; margin-top: 44px;
+      padding-top: 32px; border-top: 1px solid var(--border);
+    }
+
+    .stat-block-val {
+      font-family: var(--font-head);
+      font-size: 2rem; font-weight: 800;
+      letter-spacing: -0.04em; color: var(--text-1);
+    }
+    .stat-block-val span { color: var(--accent); }
+    .stat-block-label { font-size: 0.78rem; color: var(--text-3); margin-top: 2px; }
+
+    /* hero right — methodology visual */
+    .hero-visual {
       position: relative;
       animation: float 6s ease-in-out infinite;
     }
+
     @keyframes float {
       0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-12px); }
+      50%       { transform: translateY(-10px); }
     }
-    .hero-card {
+
+    .steps-card {
       background: var(--bg-card);
       border: 1px solid var(--border-med);
       border-radius: var(--radius-lg);
       padding: 28px;
-      box-shadow: var(--shadow-card);
+      box-shadow: 0 2px 20px rgba(0,0,0,0.4);
     }
-    .hero-card-header {
+
+    .steps-card-header {
       display: flex; align-items: center; justify-content: space-between;
-      margin-bottom: 20px;
+      margin-bottom: 22px;
     }
-    .hero-card-title { font-family: var(--font-head); font-weight: 700; font-size: 1rem; }
-    .status-pill {
-      display: flex; align-items: center; gap: 6px;
-      padding: 4px 10px;
-      background: rgba(0,229,160,0.1);
-      border-radius: var(--radius-pill);
-      font-size: 0.72rem; font-weight: 600; color: var(--accent);
+
+    .steps-card-title {
+      font-family: var(--font-head);
+      font-weight: 700; font-size: 0.9rem;
     }
-    .progress-list { display: flex; flex-direction: column; gap: 14px; }
-    .progress-item-label {
-      display: flex; justify-content: space-between;
-      font-size: 0.82rem;
-      margin-bottom: 6px;
-    }
-    .progress-item-label span:first-child { color: var(--text-2); }
-    .progress-item-label span:last-child { color: var(--text-1); font-weight: 600; }
-    .progress-track {
-      height: 6px; background: var(--bg-raised);
-      border-radius: 3px; overflow: hidden;
-    }
-    .progress-fill {
-      height: 100%;
-      border-radius: 3px;
-      background: linear-gradient(90deg, var(--accent), #00c278);
-      animation: fillIn 1.5s ease-out both;
-    }
-    @keyframes fillIn { from { width: 0 !important; } }
-    .hero-card-2 {
-      position: absolute;
-      bottom: -28px; left: -32px;
-      background: var(--bg-raised);
-      border: 1px solid var(--border-med);
-      border-radius: var(--radius);
-      padding: 16px 20px;
+
+    .steps-mini { display: flex; flex-direction: column; gap: 10px; }
+
+    .step-mini {
       display: flex; align-items: center; gap: 12px;
-      box-shadow: var(--shadow-card);
-      min-width: 200px;
-    }
-    .hero-card-2-icon {
-      width: 40px; height: 40px;
-      background: var(--accent-dim);
-      border-radius: 10px;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 1.2rem;
-    }
-    .hero-card-2-val {
-      font-family: var(--font-head);
-      font-size: 1.4rem; font-weight: 800;
-      letter-spacing: -0.03em;
-    }
-    .hero-card-2-sub { font-size: 0.75rem; color: var(--text-3); }
-
-    /* =====================================================
-       PAIN POINTS
-    ===================================================== */
-    .pain-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 24px;
-      margin-top: 52px;
-    }
-    .pain-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 24px 28px;
-      display: flex; gap: 16px; align-items: flex-start;
-      transition: border-color 0.2s, transform 0.2s;
-    }
-    .pain-card:hover { border-color: var(--border-med); transform: translateY(-2px); }
-    .pain-card.good { border-color: rgba(0,229,160,0.2); }
-    .pain-icon {
-      width: 40px; height: 40px; flex-shrink: 0;
-      border-radius: 10px;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 1.1rem;
-    }
-    .pain-icon.bad { background: rgba(255,80,80,0.12); }
-    .pain-icon.good { background: var(--accent-dim); }
-    .pain-text { font-size: 0.9rem; color: var(--text-2); line-height: 1.5; }
-    .pain-text strong { color: var(--text-1); font-weight: 500; }
-
-    /* =====================================================
-       SERVICES
-    ===================================================== */
-    .services-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 20px;
-      margin-top: 52px;
-    }
-    .service-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
-      padding: 36px 28px;
-      position: relative; overflow: hidden;
-      transition: all 0.3s ease;
-      cursor: pointer;
-    }
-    .service-card::before {
-      content: '';
-      position: absolute; top: 0; left: 0; right: 0;
-      height: 2px;
-      background: linear-gradient(90deg, transparent, var(--accent), transparent);
-      transform: scaleX(0);
-      transition: transform 0.3s ease;
-    }
-    .service-card:hover { border-color: var(--border-med); transform: translateY(-4px); box-shadow: var(--shadow-glow); }
-    .service-card:hover::before { transform: scaleX(1); }
-    .service-num {
-      font-family: var(--font-head);
-      font-size: 3rem; font-weight: 800;
-      color: var(--border-med);
-      line-height: 1;
-      margin-bottom: 20px;
-    }
-    .service-card h3 { margin-bottom: 12px; }
-    .service-card .body-md { margin-bottom: 24px; }
-    .service-tag {
-      display: inline-flex; align-items: center; gap: 6px;
-      padding: 5px 12px;
+      padding: 12px 14px;
       background: var(--bg-raised);
-      border-radius: var(--radius-pill);
-      font-size: 0.75rem; color: var(--text-3);
+      border-radius: var(--radius);
+      border: 1px solid transparent;
+      transition: border-color 0.3s;
     }
+    .step-mini.active { border-color: rgba(0,229,160,0.3); background: rgba(0,229,160,0.06); }
 
-    /* =====================================================
-       PROCESS
-    ===================================================== */
-    .process-steps {
-      display: grid;
-      grid-template-columns: repeat(5, 1fr);
-      gap: 0;
-      margin-top: 60px;
-      position: relative;
-    }
-    .process-steps::before {
-      content: '';
-      position: absolute;
-      top: 28px; left: 10%; right: 10%;
-      height: 1px;
-      background: linear-gradient(90deg, transparent, var(--border-med) 20%, var(--border-med) 80%, transparent);
-    }
-    .step {
-      display: flex; flex-direction: column; align-items: center; text-align: center;
-      padding: 0 12px;
-      position: relative;
-    }
-    .step-num {
-      width: 56px; height: 56px;
-      background: var(--bg-card);
-      border: 1px solid var(--border-med);
+    .step-mini-num {
+      width: 28px; height: 28px; flex-shrink: 0;
       border-radius: 50%;
       display: flex; align-items: center; justify-content: center;
-      font-family: var(--font-head);
-      font-size: 0.9rem; font-weight: 700;
-      color: var(--accent);
-      margin-bottom: 20px;
-      position: relative; z-index: 1;
-      transition: all 0.3s;
+      font-family: var(--font-head); font-size: 0.72rem; font-weight: 700;
+      background: var(--bg-card); color: var(--text-3);
+      border: 1px solid var(--border-med);
     }
-    .step:hover .step-num {
+    .step-mini.active .step-mini-num {
       background: var(--accent-dim);
-      border-color: var(--accent);
-      box-shadow: 0 0 20px var(--accent-glow);
+      color: var(--accent);
+      border-color: rgba(0,229,160,0.3);
     }
-    .step-icon { font-size: 1.6rem; margin-bottom: 12px; }
-    .step h4 { font-family: var(--font-head); font-size: 0.9rem; font-weight: 700; margin-bottom: 8px; }
-    .step p { font-size: 0.8rem; color: var(--text-3); line-height: 1.5; }
 
-    /* =====================================================
-       BENEFITS
-    ===================================================== */
-    .benefits-wrap {
-      display: grid; grid-template-columns: 1fr 1fr;
-      gap: 60px; align-items: center;
-      margin-top: 60px;
+    .step-mini-name {
+      font-family: var(--font-head);
+      font-size: 0.82rem; font-weight: 600;
+      color: var(--text-2);
     }
-    .benefits-list { display: flex; flex-direction: column; gap: 16px; }
-    .benefit-item {
-      display: flex; align-items: flex-start; gap: 16px;
-      padding: 20px;
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      transition: all 0.2s;
-    }
-    .benefit-item:hover { border-color: var(--accent); background: var(--bg-raised); }
-    .benefit-icon {
-      width: 44px; height: 44px; flex-shrink: 0;
+    .step-mini.active .step-mini-name { color: var(--text-1); }
+
+    .step-mini-tag {
+      margin-left: auto;
+      font-size: 0.68rem; font-weight: 600;
+      color: var(--accent);
       background: var(--accent-dim);
-      border-radius: 12px;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 1.2rem;
-    }
-    .benefit-val {
-      font-family: var(--font-head);
-      font-size: 1.4rem; font-weight: 800;
-      color: var(--accent);
-      letter-spacing: -0.03em;
-    }
-    .benefit-desc { font-size: 0.85rem; color: var(--text-3); }
-    .benefits-visual {
-      position: relative;
-      height: 460px;
-    }
-    .bv-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border-med);
-      border-radius: var(--radius-lg);
-      padding: 24px;
-      position: absolute;
-      box-shadow: var(--shadow-card);
-    }
-    .bv-card-main {
-      inset: 0;
-      display: flex; flex-direction: column; justify-content: space-between;
-    }
-    .chart-bars {
-      display: flex; align-items: flex-end; gap: 8px;
-      height: 140px;
-      margin-top: 20px;
-    }
-    .bar-group { display: flex; flex-direction: column; align-items: center; gap: 6px; flex: 1; }
-    .bar { width: 100%; border-radius: 4px 4px 0 0; position: relative; }
-    .bar-before { background: var(--bg-raised); }
-    .bar-after { background: linear-gradient(180deg, var(--accent), #00956a); }
-    .bar-label { font-size: 0.65rem; color: var(--text-3); }
-    .bv-card-float {
-      width: 180px;
-      top: 20px; right: -24px;
-    }
-    .bv-card-float2 {
-      width: 160px;
-      bottom: 60px; left: -24px;
-    }
-    .mini-stat-val {
-      font-family: var(--font-head);
-      font-size: 2rem; font-weight: 800;
-      letter-spacing: -0.04em;
-    }
-    .mini-stat-val.green { color: var(--accent); }
-    .mini-stat-val.yellow { color: var(--yellow); }
-
-    /* =====================================================
-       TESTIMONIAL
-    ===================================================== */
-    .testimonial-wrap {
-      background: var(--bg-card);
-      border: 1px solid var(--border-med);
-      border-radius: var(--radius-lg);
-      padding: 60px;
-      position: relative; overflow: hidden;
-      margin-top: 52px;
-    }
-    .testimonial-wrap::before {
-      content: '"';
-      position: absolute; top: -20px; left: 40px;
-      font-family: var(--font-head);
-      font-size: 20rem; font-weight: 800;
-      color: var(--border);
-      line-height: 1; pointer-events: none;
-    }
-    .testimonial-quote {
-      font-family: var(--font-head);
-      font-size: clamp(1.2rem, 2vw, 1.6rem);
-      font-weight: 500;
-      line-height: 1.4;
-      letter-spacing: -0.02em;
-      color: var(--text-1);
-      position: relative; z-index: 1;
-      max-width: 780px;
-      margin-bottom: 32px;
-    }
-    .testimonial-quote em { color: var(--accent); font-style: normal; }
-    .testimonial-author {
-      display: flex; align-items: center; gap: 16px;
-      position: relative; z-index: 1;
-    }
-    .author-avatar {
-      width: 48px; height: 48px;
-      background: linear-gradient(135deg, var(--accent), #00956a);
-      border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-      font-family: var(--font-head);
-      font-size: 1rem; font-weight: 700;
-      color: var(--bg);
-    }
-    .author-name { font-family: var(--font-head); font-weight: 700; font-size: 0.95rem; }
-    .author-role { font-size: 0.82rem; color: var(--text-3); }
-    .testimonial-metric {
-      position: absolute; top: 40px; right: 60px;
-      text-align: right;
-    }
-    .testimonial-metric-val {
-      font-family: var(--font-head);
-      font-size: 3.5rem; font-weight: 800;
-      letter-spacing: -0.05em;
-      color: var(--accent);
-      line-height: 1;
-    }
-    .testimonial-metric-label { font-size: 0.8rem; color: var(--text-3); }
-
-    /* =====================================================
-       TOOLS
-    ===================================================== */
-    .tools-grid {
-      display: grid;
-      grid-template-columns: repeat(6, 1fr);
-      gap: 16px;
-      margin-top: 52px;
-    }
-    .tool-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 24px 16px;
-      text-align: center;
-      transition: all 0.2s;
-    }
-    .tool-card:hover { border-color: var(--border-med); transform: translateY(-3px); }
-    .tool-icon { font-size: 2rem; margin-bottom: 10px; }
-    .tool-name { font-family: var(--font-head); font-size: 0.8rem; font-weight: 700; color: var(--text-2); }
-
-    /* =====================================================
-       ACELERADOR IA SECTION
-    ===================================================== */
-    --purple:     #A78BFA;
-    --purple-dim: rgba(167,139,250,0.12);
-
-    /* (token added to :root via inline; used below) */
-    .ai-hero-band {
-      background: linear-gradient(135deg, #0e0b1a 0%, #0a0c0f 60%);
-      border-top: 1px solid rgba(167,139,250,0.15);
-      border-bottom: 1px solid rgba(167,139,250,0.15);
-      position: relative; overflow: hidden;
-    }
-    .ai-hero-band::before {
-      content: '';
-      position: absolute; inset: 0;
-      background: radial-gradient(ellipse 70% 80% at 80% 50%, rgba(167,139,250,0.08) 0%, transparent 65%);
-      pointer-events: none;
-    }
-    .ai-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 80px;
-      align-items: center;
-    }
-    .ai-label {
-      font-family: var(--font-head);
-      font-size: 0.72rem;
-      font-weight: 600;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: #A78BFA;
-    }
-    .ai-badge {
-      display: inline-flex; align-items: center; gap: 8px;
-      padding: 6px 14px;
-      background: rgba(167,139,250,0.12);
-      border: 1px solid rgba(167,139,250,0.25);
       border-radius: var(--radius-pill);
-      margin-bottom: 24px;
+      padding: 2px 8px;
     }
-    .ai-badge-dot {
-      width: 6px; height: 6px;
-      background: #A78BFA;
-      border-radius: 50%;
-      animation: pulse 2s ease-in-out infinite;
-    }
-    .ai-accent { color: #A78BFA; }
-    .ai-phases {
-      display: flex; flex-direction: column; gap: 16px;
-      margin-top: 40px;
-    }
-    .ai-phase {
-      display: flex; gap: 20px; align-items: flex-start;
-      padding: 22px 24px;
-      background: rgba(167,139,250,0.06);
-      border: 1px solid rgba(167,139,250,0.12);
-      border-radius: var(--radius);
-      transition: all 0.25s;
-      cursor: default;
-    }
-    .ai-phase:hover {
-      border-color: rgba(167,139,250,0.3);
-      background: rgba(167,139,250,0.1);
-      transform: translateX(4px);
-    }
-    .ai-phase-num {
-      width: 36px; height: 36px; flex-shrink: 0;
-      background: rgba(167,139,250,0.15);
-      border: 1px solid rgba(167,139,250,0.3);
-      border-radius: 10px;
-      display: flex; align-items: center; justify-content: center;
-      font-family: var(--font-head);
-      font-size: 0.78rem; font-weight: 700;
-      color: #A78BFA;
-    }
-    .ai-phase-title {
-      font-family: var(--font-head);
-      font-weight: 700; font-size: 0.95rem;
-      margin-bottom: 4px;
-    }
-    .ai-phase-desc { font-size: 0.84rem; color: var(--text-3); line-height: 1.55; }
-    /* Right panel — diagnostic card */
-    .ai-panel {
-      position: relative;
-    }
-    .ai-card {
-      background: #0e0b1a;
-      border: 1px solid rgba(167,139,250,0.2);
-      border-radius: var(--radius-lg);
-      padding: 32px;
-      box-shadow: 0 8px 40px rgba(0,0,0,0.5);
-    }
-    .ai-card-header {
-      display: flex; align-items: center; justify-content: space-between;
-      margin-bottom: 24px;
-    }
-    .ai-card-title { font-family: var(--font-head); font-weight: 700; font-size: 0.95rem; }
-    .ai-status {
-      display: flex; align-items: center; gap: 6px;
-      padding: 4px 10px;
-      background: rgba(167,139,250,0.1);
-      border-radius: var(--radius-pill);
-      font-size: 0.72rem; font-weight: 600; color: #A78BFA;
-    }
-    .ai-radar {
-      display: grid; grid-template-columns: 1fr 1fr;
-      gap: 12px;
-      margin-bottom: 20px;
-    }
-    .ai-radar-item {
-      background: rgba(255,255,255,0.03);
-      border: 1px solid rgba(255,255,255,0.06);
-      border-radius: var(--radius);
-      padding: 14px;
-    }
-    .ai-radar-label { font-size: 0.72rem; color: var(--text-3); margin-bottom: 8px; }
-    .ai-radar-bar-track {
-      height: 5px; background: rgba(255,255,255,0.05);
-      border-radius: 3px; overflow: hidden;
-    }
-    .ai-radar-bar-fill {
-      height: 100%; border-radius: 3px;
-      background: linear-gradient(90deg, #A78BFA, #7c5cfa);
-      animation: fillIn 1.8s ease-out both;
-    }
-    .ai-radar-val {
-      font-family: var(--font-head);
-      font-size: 1.1rem; font-weight: 800;
-      color: #A78BFA; margin-top: 6px;
-    }
-    .ai-card-cta {
-      background: rgba(167,139,250,0.12);
-      border: 1px solid rgba(167,139,250,0.25);
-      border-radius: var(--radius);
-      padding: 14px 18px;
-      display: flex; align-items: center; justify-content: space-between;
-    }
-    .ai-card-cta span { font-size: 0.84rem; font-weight: 500; color: #A78BFA; }
-    .btn-ai {
-      background: #A78BFA;
-      color: #0e0b1a;
-      box-shadow: 0 0 0 0 rgba(167,139,250,0.3);
-    }
-    .btn-ai:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 30px rgba(167,139,250,0.3);
-    }
-    .ai-float-card {
+
+    .hero-float-card {
       position: absolute;
       bottom: -24px; left: -28px;
-      background: #0e0b1a;
-      border: 1px solid rgba(167,139,250,0.2);
+      background: var(--bg-raised);
+      border: 1px solid var(--border-med);
       border-radius: var(--radius);
       padding: 14px 18px;
       display: flex; align-items: center; gap: 10px;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.4);
-      min-width: 190px;
+      box-shadow: 0 2px 20px rgba(0,0,0,0.4);
     }
-    .ai-float-icon {
+
+    .float-icon {
       width: 36px; height: 36px;
-      background: rgba(167,139,250,0.15);
-      border-radius: 9px;
+      background: var(--purple-dim);
+      border-radius: 10px;
       display: flex; align-items: center; justify-content: center;
       font-size: 1rem;
     }
-    .ai-float-val {
+
+    .float-val {
       font-family: var(--font-head);
-      font-size: 1.3rem; font-weight: 800;
-      letter-spacing: -0.03em; color: #A78BFA;
-    }
-    .ai-float-sub { font-size: 0.72rem; color: var(--text-3); }
-    /* manual card */
-    .manual-card {
-      background: linear-gradient(135deg, rgba(167,139,250,0.08), rgba(0,229,160,0.06));
-      border: 1px solid rgba(167,139,250,0.2);
-      border-radius: var(--radius-lg);
-      padding: 40px 48px;
-      display: flex; align-items: center; gap: 40px;
-      margin-top: 60px;
-      position: relative; overflow: hidden;
-    }
-    .manual-card::before {
-      content: '';
-      position: absolute; top:-60px; right:-60px;
-      width:200px; height:200px;
-      background: radial-gradient(circle, rgba(167,139,250,0.12), transparent 70%);
-    }
-    .manual-icon-big {
-      font-size: 3.5rem; flex-shrink: 0;
-      position: relative; z-index: 1;
-    }
-    .manual-card h3 { margin-bottom: 8px; }
-    .manual-card p { font-size: 0.9rem; color: var(--text-2); margin-bottom: 20px; line-height: 1.6; }
-    .manual-tags { display: flex; gap: 8px; flex-wrap: wrap; }
-    .manual-tag {
-      padding: 4px 10px;
-      border-radius: var(--radius-pill);
-      font-size: 0.72rem; font-weight: 600;
-      font-family: var(--font-head);
-      letter-spacing: 0.05em;
-    }
-    .manual-tag.green { background: var(--accent-dim); color: var(--accent); }
-    .manual-tag.purple { background: rgba(167,139,250,0.12); color: #A78BFA; }
-    @media (max-width: 960px) {
-      .ai-grid { grid-template-columns: 1fr; gap: 48px; }
-      .ai-panel { display: none; }
-      .manual-card { flex-direction: column; gap: 20px; padding: 32px 24px; }
+      font-size: 1.2rem; font-weight: 800;
+      color: var(--purple);
+      letter-spacing: -0.03em;
     }
 
-    /* =====================================================
-       BLOG
-    ===================================================== */
-    .blog-header {
-      display: flex; justify-content: space-between; align-items: flex-end;
-      margin-bottom: 40px;
+    .float-sub { font-size: 0.72rem; color: var(--text-3); }
+
+    /* ── SECTION ── */
+    .section { padding: 100px 0; }
+    .section-sm { padding: 64px 0; }
+    .divider { height: 1px; background: var(--border); }
+
+    .section-label {
+      font-family: var(--font-head);
+      font-size: 0.72rem; font-weight: 600;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--accent); margin-bottom: 12px;
     }
-    .blog-grid {
-      display: grid;
-      grid-template-columns: 1.4fr 1fr 1fr;
-      gap: 20px;
+
+    .section-title {
+      font-family: var(--font-head);
+      font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+      font-weight: 800;
+      line-height: 1.1; letter-spacing: -0.03em;
+      margin-bottom: 16px;
     }
-    .blog-card {
+
+    .section-desc {
+      font-size: 1.05rem; color: var(--text-2);
+      max-width: 560px; line-height: 1.75;
+      font-weight: 300; margin-bottom: 56px;
+    }
+
+    /* ── INTRO BAND ── */
+    .intro-band {
+      background: var(--bg-card);
+      border: 1px solid var(--border-med);
+      border-radius: var(--radius-lg);
+      padding: 48px 52px;
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 52px; align-items: center;
+    }
+
+    .intro-quote {
+      font-family: var(--font-head);
+      font-size: 1.25rem; font-weight: 600;
+      line-height: 1.45; letter-spacing: -0.02em;
+      color: var(--text-1); margin-bottom: 20px;
+    }
+    .intro-quote em { color: var(--accent); font-style: normal; }
+
+    .intro-stat-row { display: flex; gap: 28px; margin-top: 24px; }
+
+    .intro-stat-val {
+      font-family: var(--font-head);
+      font-size: 2.4rem; font-weight: 800;
+      letter-spacing: -0.04em; color: var(--accent);
+      line-height: 1;
+    }
+
+    .intro-stat-label { font-size: 0.8rem; color: var(--text-3); margin-top: 4px; }
+
+    .intro-problems { display: flex; flex-direction: column; gap: 10px; }
+
+    .prob-item {
+      display: flex; align-items: flex-start; gap: 12px;
+      padding: 14px 16px;
+      border-radius: var(--radius);
+      font-size: 0.88rem; line-height: 1.5;
+    }
+
+    .prob-item.bad { background: rgba(239,68,68,0.05); border: 1px solid rgba(239,68,68,0.15); color: var(--text-2); }
+    .prob-item.good { background: var(--accent-dim); border: 1px solid rgba(0,229,160,0.2); color: var(--text-1); }
+
+    .prob-icon { flex-shrink: 0; font-size: 1rem; margin-top: 1px; }
+
+    /* ── STEP SECTIONS ── */
+    .step-section {
+      padding: 80px 0;
+      border-bottom: 1px solid var(--border);
+      position: relative;
+    }
+
+    .step-section:last-of-type { border-bottom: none; }
+
+    .step-grid {
+      display: grid; grid-template-columns: 280px 1fr;
+      gap: 72px; align-items: start;
+    }
+
+    /* left sticky panel */
+    .step-panel {
+      position: sticky; top: 100px;
+    }
+
+    .step-number-big {
+      font-family: var(--font-head);
+      font-size: 5rem; font-weight: 800;
+      letter-spacing: -0.05em;
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+
+    .step-number-big.c { color: rgba(0,229,160,0.2); }
+    .step-number-big.r { color: rgba(245,200,66,0.2); }
+    .step-number-big.e1 { color: rgba(91,141,239,0.2); }
+    .step-number-big.c2 { color: rgba(167,139,250,0.2); }
+    .step-number-big.e2 { color: rgba(0,229,160,0.2); }
+
+    .step-letter-label {
+      font-family: var(--font-head);
+      font-size: 0.72rem; font-weight: 600;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+
+    .step-letter-label.c  { color: var(--accent); }
+    .step-letter-label.r  { color: var(--yellow); }
+    .step-letter-label.e1 { color: #5B8DEF; }
+    .step-letter-label.c2 { color: var(--purple); }
+    .step-letter-label.e2 { color: var(--accent); }
+
+    .step-name {
+      font-family: var(--font-head);
+      font-size: 1.8rem; font-weight: 800;
+      letter-spacing: -0.03em; line-height: 1.1;
+      margin-bottom: 14px;
+    }
+
+    .step-summary { font-size: 0.9rem; color: var(--text-2); line-height: 1.7; }
+
+    .step-time-badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      margin-top: 20px;
+      padding: 6px 12px;
+      background: var(--bg-raised);
+      border: 1px solid var(--border-med);
+      border-radius: var(--radius-pill);
+      font-size: 0.75rem; font-weight: 500; color: var(--text-3);
+    }
+
+    /* right content area */
+    .step-content { display: flex; flex-direction: column; gap: 16px; }
+
+    /* objective card */
+    .obj-card {
       background: var(--bg-card);
       border: 1px solid var(--border);
       border-radius: var(--radius-lg);
-      overflow: hidden;
-      transition: all 0.3s ease;
-      cursor: pointer;
+      padding: 28px 32px;
     }
-    .blog-card:hover { border-color: var(--border-med); transform: translateY(-4px); box-shadow: var(--shadow-card); }
-    .blog-img {
-      height: 200px;
-      background: var(--bg-raised);
-      position: relative; overflow: hidden;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 3rem;
-    }
-    .blog-card--featured .blog-img { height: 260px; }
-    .blog-img::after {
-      content: '';
-      position: absolute; inset: 0;
-      background: linear-gradient(to top, var(--bg-card) 0%, transparent 60%);
-    }
-    .blog-img-accent {
-      position: absolute; inset: 0;
-      opacity: 0.15;
-    }
-    .blog-body { padding: 24px; }
-    .blog-category {
-      display: inline-block;
-      padding: 4px 10px;
-      background: var(--accent-dim);
-      color: var(--accent);
-      border-radius: var(--radius-pill);
+
+    .obj-title {
+      font-family: var(--font-head);
       font-size: 0.72rem; font-weight: 600;
-      font-family: var(--font-head);
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
-      margin-bottom: 12px;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--text-3); margin-bottom: 10px;
     }
-    .blog-title {
-      font-family: var(--font-head);
-      font-size: 1.05rem; font-weight: 700;
-      line-height: 1.3; letter-spacing: -0.01em;
-      margin-bottom: 10px;
-      color: var(--text-1);
+
+    .obj-text {
+      font-size: 1rem; color: var(--text-1);
+      line-height: 1.7; font-weight: 400;
     }
-    .blog-card--featured .blog-title { font-size: 1.3rem; }
-    .blog-excerpt { font-size: 0.84rem; color: var(--text-3); line-height: 1.6; margin-bottom: 16px; }
-    .blog-meta {
-      display: flex; align-items: center; gap: 10px;
-      padding-top: 16px;
-      border-top: 1px solid var(--border);
+
+    /* action cards */
+    .action-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 28px 32px;
     }
-    .blog-avatar {
-      width: 28px; height: 28px;
-      background: linear-gradient(135deg, var(--accent), #00956a);
+
+    .action-card-head {
+      display: flex; align-items: center; gap: 14px;
+      margin-bottom: 18px;
+    }
+
+    .action-num {
+      width: 32px; height: 32px; flex-shrink: 0;
       border-radius: 50%;
       display: flex; align-items: center; justify-content: center;
-      font-size: 0.65rem; font-weight: 700; color: var(--bg);
-      font-family: var(--font-head);
+      font-family: var(--font-head); font-size: 0.8rem; font-weight: 700;
+      background: var(--accent-dim); color: var(--accent);
+      border: 1px solid rgba(0,229,160,0.3);
     }
-    .blog-author { font-size: 0.78rem; font-weight: 500; color: var(--text-2); }
-    .blog-date { font-size: 0.75rem; color: var(--text-3); margin-left: auto; }
 
-    /* =====================================================
-       CTA SECTION
-    ===================================================== */
-    .cta-section {
-      padding: 100px 0;
+    .action-num.yellow { background: var(--yellow-dim); color: var(--yellow); border-color: rgba(245,200,66,0.3); }
+    .action-num.blue { background: rgba(91,141,239,0.12); color: #5B8DEF; border-color: rgba(91,141,239,0.3); }
+    .action-num.purple { background: var(--purple-dim); color: var(--purple); border-color: rgba(167,139,250,0.3); }
+
+    .action-title {
+      font-family: var(--font-head);
+      font-size: 1rem; font-weight: 700;
+      color: var(--text-1);
     }
-    .cta-inner {
-      background: linear-gradient(135deg, var(--bg-card) 0%, var(--bg-raised) 100%);
+
+    .action-body { font-size: 0.9rem; color: var(--text-2); line-height: 1.7; }
+
+    /* tool pills */
+    .tool-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+
+    .tool-pill {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 5px 12px;
+      background: var(--bg-raised);
       border: 1px solid var(--border-med);
-      border-radius: 32px;
-      padding: 80px;
-      text-align: center;
+      border-radius: var(--radius-pill);
+      font-size: 0.78rem; color: var(--text-2);
+      font-family: var(--font-head); font-weight: 500;
+    }
+
+    /* scoring table */
+    .score-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.85rem;
+      margin-top: 4px;
+    }
+
+    .score-table th {
+      padding: 10px 14px;
+      text-align: left;
+      font-family: var(--font-head);
+      font-size: 0.68rem; font-weight: 600;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--text-3);
+      border-bottom: 1px solid var(--border-med);
+    }
+
+    .score-table td {
+      padding: 14px 14px;
+      border-bottom: 1px solid var(--border);
+      color: var(--text-2);
+      vertical-align: middle;
+    }
+
+    .score-table tr:last-child td { border-bottom: none; }
+    .score-table tr:hover td { background: var(--bg-raised); }
+
+    .score-badge {
+      display: inline-block;
+      padding: 3px 10px;
+      border-radius: var(--radius-pill);
+      font-family: var(--font-head);
+      font-size: 0.72rem; font-weight: 700;
+    }
+    .score-alta { background: var(--accent-dim); color: var(--accent); }
+    .score-media { background: var(--yellow-dim); color: var(--yellow); }
+    .score-baja { background: var(--bg-raised); color: var(--text-3); }
+
+    /* checklist */
+    .checklist { display: flex; flex-direction: column; gap: 10px; margin-top: 4px; }
+
+    .check-item {
+      display: flex; align-items: flex-start; gap: 12px;
+      padding: 12px 16px;
+      background: var(--bg-raised);
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      font-size: 0.88rem; color: var(--text-2);
+      line-height: 1.55;
+    }
+
+    .check-icon { flex-shrink: 0; font-size: 0.9rem; margin-top: 2px; color: var(--accent); }
+
+    /* AI highlight */
+    .ai-highlight {
+      background: linear-gradient(135deg, rgba(167,139,250,0.08) 0%, rgba(0,229,160,0.05) 100%);
+      border: 1px solid rgba(167,139,250,0.2);
+      border-radius: var(--radius-lg);
+      padding: 28px 32px;
+    }
+
+    .ai-highlight-label {
+      font-family: var(--font-head);
+      font-size: 0.72rem; font-weight: 600;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--purple); margin-bottom: 10px;
+    }
+
+    .ai-highlight-title {
+      font-family: var(--font-head);
+      font-size: 1rem; font-weight: 700;
+      color: var(--text-1); margin-bottom: 8px;
+    }
+
+    .ai-highlight-body { font-size: 0.9rem; color: var(--text-2); line-height: 1.7; }
+
+    .ai-tools { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+
+    .ai-tool {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 5px 12px;
+      background: var(--purple-dim);
+      border: 1px solid rgba(167,139,250,0.2);
+      border-radius: var(--radius-pill);
+      font-size: 0.78rem; color: var(--purple);
+      font-family: var(--font-head); font-weight: 500;
+    }
+
+    /* route card */
+    .route-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
+
+    .route-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px;
+      transition: border-color 0.2s;
+    }
+    .route-card:hover { border-color: var(--border-med); }
+
+    .route-num {
+      font-family: var(--font-head);
+      font-size: 0.65rem; font-weight: 700;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--text-3); margin-bottom: 8px;
+    }
+
+    .route-title {
+      font-family: var(--font-head);
+      font-size: 0.9rem; font-weight: 700;
+      color: var(--text-1); margin-bottom: 6px;
+    }
+
+    .route-desc { font-size: 0.82rem; color: var(--text-2); line-height: 1.6; }
+    .route-examples { font-size: 0.75rem; color: var(--text-3); margin-top: 10px; font-style: italic; }
+
+    /* indicator card */
+    .kpi-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+
+    .kpi-card {
+      background: var(--bg-raised);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 16px 18px;
+    }
+
+    .kpi-label { font-size: 0.78rem; color: var(--text-3); margin-bottom: 6px; }
+
+    .kpi-val {
+      font-family: var(--font-head);
+      font-size: 1.5rem; font-weight: 800;
+      letter-spacing: -0.03em; color: var(--accent);
+    }
+
+    .kpi-desc { font-size: 0.78rem; color: var(--text-2); margin-top: 4px; }
+
+    /* ── PROGRAMA CTA ── */
+    .programa-band {
+      background: linear-gradient(135deg, rgba(167,139,250,0.07) 0%, rgba(0,229,160,0.05) 100%);
+      border: 1px solid rgba(167,139,250,0.2);
+      border-radius: var(--radius-lg);
+      padding: 60px 56px;
+      display: grid; grid-template-columns: 1fr auto;
+      gap: 48px; align-items: center;
       position: relative; overflow: hidden;
     }
-    .cta-inner::before {
-      content: '';
-      position: absolute;
-      top: -100px; left: 50%; transform: translateX(-50%);
-      width: 600px; height: 300px;
-      background: radial-gradient(ellipse, rgba(0,229,160,0.12) 0%, transparent 70%);
-      pointer-events: none;
-    }
-    .cta-inner h2 { margin-bottom: 16px; position: relative; z-index: 1; }
-    .cta-inner p { margin-bottom: 36px; max-width: 500px; margin-left: auto; margin-right: auto; position: relative; z-index: 1; }
-    .cta-actions { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; position: relative; z-index: 1; }
-    .cta-contact {
-      display: flex; justify-content: center; gap: 40px;
-      margin-top: 40px; position: relative; z-index: 1;
-    }
-    .contact-item { display: flex; align-items: center; gap: 8px; font-size: 0.85rem; color: var(--text-3); }
-    .contact-item a { color: var(--text-2); transition: color 0.2s; }
-    .contact-item a:hover { color: var(--accent); }
 
-    /* =====================================================
-       FOOTER
-    ===================================================== */
-    footer {
-      border-top: 1px solid var(--border);
-      padding: 40px 0;
+    .programa-band::before {
+      content: '🤖';
+      position: absolute;
+      font-size: 12rem;
+      right: 48px; top: 50%;
+      transform: translateY(-50%);
+      opacity: 0.04;
     }
+
+    .programa-label {
+      font-family: var(--font-head);
+      font-size: 0.72rem; font-weight: 600;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--purple); margin-bottom: 12px;
+    }
+
+    .programa-title {
+      font-family: var(--font-head);
+      font-size: clamp(1.6rem, 3vw, 2.4rem);
+      font-weight: 800; letter-spacing: -0.03em;
+      line-height: 1.1; margin-bottom: 14px;
+    }
+
+    .programa-title span { color: var(--purple); }
+
+    .programa-desc { font-size: 0.95rem; color: var(--text-2); line-height: 1.7; max-width: 560px; }
+
+    .programa-phases {
+      display: flex; flex-direction: column; gap: 8px;
+      margin-top: 20px;
+    }
+
+    .programa-phase {
+      display: flex; align-items: center; gap: 10px;
+      font-size: 0.85rem; color: var(--text-2);
+    }
+
+    .programa-phase-dot {
+      width: 6px; height: 6px; flex-shrink: 0;
+      border-radius: 50%; background: var(--purple);
+    }
+
+    .btn-purple {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 14px 28px;
+      border-radius: var(--radius-pill);
+      font-family: var(--font-head);
+      font-size: 0.9rem; font-weight: 600;
+      background: var(--purple); color: #0A0C0F;
+      border: none; cursor: pointer;
+      transition: all 0.2s;
+      white-space: nowrap;
+    }
+    .btn-purple:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(167,139,250,0.3); }
+
+    /* ── FOOTER ── */
+    .footer {
+      padding: 48px 0;
+      border-top: 1px solid var(--border);
+    }
+
     .footer-inner {
       display: flex; align-items: center; justify-content: space-between;
     }
-    .footer-copy { font-size: 0.82rem; color: var(--text-3); }
+
+    .footer-logo {
+      font-family: var(--font-head);
+      font-size: 1.3rem; font-weight: 800;
+      letter-spacing: -0.04em;
+    }
+    .footer-logo span { color: var(--accent); }
+
     .footer-links { display: flex; gap: 24px; }
     .footer-links a { font-size: 0.82rem; color: var(--text-3); transition: color 0.2s; }
     .footer-links a:hover { color: var(--text-2); }
 
-    /* =====================================================
-       SECTION DIVIDER
-    ===================================================== */
-    .divider {
-      width: 100%;
-      height: 1px;
-      background: linear-gradient(90deg, transparent, var(--border-med), transparent);
-      margin: 0;
-    }
+    .footer-copy { font-size: 0.78rem; color: var(--text-3); }
 
-    /* =====================================================
-       SECTION HEADER
-    ===================================================== */
-    .section-header { max-width: 640px; }
-    .section-header .label { margin-bottom: 12px; }
-    .section-header p { margin-top: 16px; }
-
-    /* =====================================================
-       ANIMATIONS ON SCROLL
-    ===================================================== */
+    /* ── ANIMATIONS ── */
     .reveal {
       opacity: 0;
       transform: translateY(24px);
       transition: opacity 0.6s ease, transform 0.6s ease;
     }
-    .reveal.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
     .reveal-delay-1 { transition-delay: 0.1s; }
     .reveal-delay-2 { transition-delay: 0.2s; }
     .reveal-delay-3 { transition-delay: 0.3s; }
-    .reveal-delay-4 { transition-delay: 0.4s; }
 
-    /* =====================================================
-       RESPONSIVE
-    ===================================================== */
-    @media (max-width: 960px) {
-      .hero-content { grid-template-columns: 1fr; gap: 52px; }
-      .hero-panel { display: none; }
-      .services-grid { grid-template-columns: 1fr; }
-      .benefits-wrap { grid-template-columns: 1fr; }
-      .benefits-visual { height: 300px; }
-      .tools-grid { grid-template-columns: repeat(3, 1fr); }
-      .blog-grid { grid-template-columns: 1fr; }
-      .process-steps { grid-template-columns: 1fr; }
-      .process-steps::before { display: none; }
-      .pain-grid { grid-template-columns: 1fr; }
-      .cta-inner { padding: 40px 28px; }
-      .testimonial-metric { display: none; }
-      nav .nav-links { display: none; }
+    /* ── STEP INDICATOR ── */
+    .step-progress {
+      position: fixed;
+      right: 28px; top: 50%;
+      transform: translateY(-50%);
+      display: flex; flex-direction: column;
+      gap: 10px; z-index: 50;
     }
 
-    /* =====================================================
-       COMPONENT TEMPLATES (bottom of file)
-       These are pre-built, ready-to-use blocks
-    ===================================================== */
+    .sp-item {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--border-med);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .sp-item.active { background: var(--accent); transform: scale(1.5); }
+    .sp-item:hover { background: var(--text-3); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      .hero-inner { grid-template-columns: 1fr; gap: 40px; }
+      .hero-visual { display: none; }
+      .step-grid { grid-template-columns: 1fr; gap: 32px; }
+      .step-panel { position: static; }
+      .step-number-big { font-size: 3rem; }
+      .intro-band { grid-template-columns: 1fr; gap: 32px; padding: 32px; }
+      .route-grid { grid-template-columns: 1fr; }
+      .kpi-grid { grid-template-columns: 1fr; }
+      .programa-band { grid-template-columns: 1fr; padding: 36px 28px; }
+      .programa-band::before { display: none; }
+      .step-progress { display: none; }
+      .footer-inner { flex-direction: column; gap: 20px; text-align: center; }
+      .nav-links { display: none; }
+    }
   </style>
 </head>
 <body>
 
-<!-- =====================================================
-     NAV
-===================================================== -->
-<nav id="navbar">
-  <div class="container nav-inner">
-    <div class="nav-logo">Guai<span>.</span></div>
-    <ul class="nav-links">
-      <li><a href="#problemas">Problemas</a></li>
-      <li><a href="#servicios">Servicios</a></li>
-      <li><a href="#programa-ia" style="color:#A78BFA;">Programa de IA ✦</a></li>
-      <li><a href="#proceso">Proceso</a></li>
-      <li><a href="#blog">Blog</a></li>
-      <li><a href="#contacto">Contacto</a></li>
-    </ul>
-    <div class="nav-cta">
-      <a href="https://calendar.app.google/hHncXtamjVKs5ye89" class="btn btn-primary" target="_blank">
-        Agenda consulta
-        <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+<!-- progress bar -->
+<div class="reading-bar" id="readingBar"></div>
+
+<!-- step indicator -->
+<nav id="mainNav">
+  <div class="container">
+    <div class="nav-inner">
+      <a href="/" class="nav-logo">Guai<span>.</span></a>
+      <div class="nav-links">
+        <a href="#paso-1">Comprender</a>
+        <a href="#paso-2">Revisar</a>
+        <a href="#paso-3">Estructurar</a>
+        <a href="#paso-4">Conectar</a>
+        <a href="#paso-5">Evaluar</a>
+      </div>
+      <a href="https://wa.me/573219201708" class="btn-nav">
+        Agendar consulta
+        <svg width="12" height="12" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
       </a>
     </div>
   </div>
 </nav>
 
-<!-- =====================================================
+<!-- step side indicators -->
+<div class="step-progress" id="stepProgress">
+  <div class="sp-item active" data-step="hero" title="Inicio"></div>
+  <div class="sp-item" data-step="paso-1" title="Comprender"></div>
+  <div class="sp-item" data-step="paso-2" title="Revisar"></div>
+  <div class="sp-item" data-step="paso-3" title="Estructurar"></div>
+  <div class="sp-item" data-step="paso-4" title="Conectar"></div>
+  <div class="sp-item" data-step="paso-5" title="Evaluar"></div>
+  <div class="sp-item" data-step="cta" title="Programa IA"></div>
+</div>
+
+
+<!-- ══════════════════════════════════════
      HERO
-===================================================== -->
-<section class="hero">
+═══════════════════════════════════════ -->
+<section id="hero" class="hero">
   <div class="hero-bg"></div>
   <div class="hero-grid"></div>
   <div class="container">
-    <div class="hero-content">
-      <!-- Left -->
+    <div class="hero-inner">
+      <!-- left -->
       <div>
-        <div class="hero-badge reveal">
-          <span class="hero-badge-dot"></span>
-          <span class="label" style="color:var(--accent); letter-spacing:0.1em;">Automatización Industrial</span>
+        <div class="hero-label reveal">
+          <div class="hero-label-dot"></div>
+          Metodología C.R.E.C.E. · Guai
         </div>
-        <h1 class="display hero-title reveal">
-          Automatiza.<br>
-          <span class="accent-word">Acelera.</span><br>
-          Escala.
+        <h1 class="hero-title reveal reveal-delay-1">
+          Manual para<br>
+          <span class="green">automatizar</span><br>
+          con <span class="purple">IA</span> tu empresa
         </h1>
-        <p class="body-lg hero-desc reveal reveal-delay-1">
-          Ayudamos a empresas del sector eléctrico y de construcción a eliminar trabajo manual, aumentar productividad y coordinar equipos con IA y automatización.
+        <p class="hero-desc reveal reveal-delay-2">
+          Una guía práctica, paso a paso, para identificar, priorizar e implementar automatizaciones inteligentes en tu negocio — sin necesidad de ser técnico.
         </p>
-        <div class="hero-actions reveal reveal-delay-2">
-          <a href="https://calendar.app.google/hHncXtamjVKs5ye89" class="btn btn-primary" target="_blank">
-            Agenda consulta gratuita
-            <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        <div class="hero-actions reveal reveal-delay-3">
+          <a href="#paso-1" class="btn-primary">
+            Comenzar el manual
+            <svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
           </a>
-          <a href="#servicios" class="btn btn-secondary">Ver servicios</a>
+          <a href="#cta" class="btn-secondary">Ver Programa IA</a>
         </div>
         <div class="hero-stats reveal reveal-delay-3">
           <div>
-            <div class="stat-val">50<span>%</span></div>
-            <div class="stat-label">Reducción en tareas repetitivas</div>
+            <div class="stat-block-val">+12<span>h</span></div>
+            <div class="stat-block-label">semanales recuperadas</div>
           </div>
           <div>
-            <div class="stat-val">30<span>%</span></div>
-            <div class="stat-label">Ahorro en horas hombre</div>
+            <div class="stat-block-val"><span>↓</span>70<span>%</span></div>
+            <div class="stat-block-label">menos tiempo en tareas repetitivas</div>
           </div>
           <div>
-            <div class="stat-val">70<span>%</span></div>
-            <div class="stat-label">Menos tiempo en reportes</div>
+            <div class="stat-block-val">3.4<span>×</span></div>
+            <div class="stat-block-label">ROI promedio en 6 meses</div>
           </div>
         </div>
       </div>
-      <!-- Right panel -->
-      <div class="hero-panel reveal reveal-delay-2">
-        <div class="hero-card">
-          <div class="hero-card-header">
-            <div class="hero-card-title">Productividad del equipo</div>
-            <div class="status-pill">
-              <span style="width:6px;height:6px;background:var(--accent);border-radius:50%;"></span>
-              En vivo
-            </div>
+
+      <!-- right visual -->
+      <div class="hero-visual reveal reveal-delay-2">
+        <div class="steps-card">
+          <div class="steps-card-header">
+            <span class="steps-card-title">Metodología C.R.E.C.E.</span>
+            <span style="font-size:0.72rem;color:var(--text-3);">5 pasos</span>
           </div>
-          <div class="progress-list">
-            <div>
-              <div class="progress-item-label"><span>Diligenciamiento de permisos</span><span>↓70%</span></div>
-              <div class="progress-track"><div class="progress-fill" style="width:70%"></div></div>
+          <div class="steps-mini">
+            <div class="step-mini active">
+              <div class="step-mini-num">01</div>
+              <div class="step-mini-name">Comprender</div>
+              <div class="step-mini-tag">Identificar</div>
             </div>
-            <div>
-              <div class="progress-item-label"><span>Horas en reportes Excel</span><span>↓55%</span></div>
-              <div class="progress-track"><div class="progress-fill" style="width:55%"></div></div>
+            <div class="step-mini">
+              <div class="step-mini-num">02</div>
+              <div class="step-mini-name">Revisar</div>
+              <div class="step-mini-tag">Priorizar</div>
             </div>
-            <div>
-              <div class="progress-item-label"><span>Errores en entrega de datos</span><span>↓80%</span></div>
-              <div class="progress-track"><div class="progress-fill" style="width:80%"></div></div>
+            <div class="step-mini">
+              <div class="step-mini-num">03</div>
+              <div class="step-mini-name">Estructurar</div>
+              <div class="step-mini-tag">Documentar</div>
             </div>
-            <div>
-              <div class="progress-item-label"><span>Tiempo coordinación obra-oficina</span><span>↓45%</span></div>
-              <div class="progress-track"><div class="progress-fill" style="width:45%"></div></div>
+            <div class="step-mini">
+              <div class="step-mini-num">04</div>
+              <div class="step-mini-name">Conectar</div>
+              <div class="step-mini-tag">Implementar</div>
+            </div>
+            <div class="step-mini">
+              <div class="step-mini-num">05</div>
+              <div class="step-mini-name">Evaluar</div>
+              <div class="step-mini-tag">Medir</div>
             </div>
           </div>
         </div>
-        <div class="hero-card-2">
-          <div class="hero-card-2-icon">⚡</div>
+        <div class="hero-float-card">
+          <div class="float-icon">🤖</div>
           <div>
-            <div class="hero-card-2-val">+12</div>
-            <div class="hero-card-2-sub">horas/semana recuperadas</div>
+            <div class="float-val">IA + Auto</div>
+            <div class="float-sub">Programa para empresas</div>
           </div>
         </div>
       </div>
@@ -1120,457 +927,52 @@
   </div>
 </section>
 
-<div class="divider"></div>
 
-<!-- =====================================================
-     PAIN POINTS
-===================================================== -->
-<section class="section" id="problemas">
+<!-- ══════════════════════════════════════
+     INTRO BAND
+═══════════════════════════════════════ -->
+<section class="section-sm">
   <div class="container">
-    <div class="section-header reveal">
-      <div class="label">¿Te suena familiar?</div>
-      <h2 class="heading-1">El costo invisible del trabajo manual</h2>
-      <p class="body-lg">Estas son las fricciones más comunes que frenan el crecimiento de empresas en construcción y sector eléctrico.</p>
-    </div>
-    <div class="pain-grid">
-      <div class="pain-card reveal">
-        <div class="pain-icon bad">✗</div>
-        <div>
-          <p class="pain-text"><strong>Horas perdidas en planillas.</strong> El equipo dedica tiempo valioso diligenciando permisos, planillas y reportes que podrían automatizarse.</p>
-        </div>
-      </div>
-      <div class="pain-card reveal reveal-delay-1">
-        <div class="pain-icon bad">✗</div>
-        <div>
-          <p class="pain-text"><strong>Excel como sistema operativo.</strong> Toda la operación corre sobre hojas de cálculo propensas a errores, duplicados y pérdida de datos.</p>
-        </div>
-      </div>
-      <div class="pain-card reveal reveal-delay-2">
-        <div class="pain-icon bad">✗</div>
-        <div>
-          <p class="pain-text"><strong>Comunicación perdida en WhatsApp.</strong> Las decisiones críticas se diluyen en grupos de chat sin trazabilidad ni historial claro.</p>
-        </div>
-      </div>
-      <div class="pain-card good reveal reveal-delay-3">
-        <div class="pain-icon good">✓</div>
-        <div>
-          <p class="pain-text"><strong>Todo esto puede cambiar.</strong> Con automatización inteligente, tus procesos funcionan solos, sin errores y con visibilidad total.</p>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<div class="divider"></div>
-
-<!-- =====================================================
-     SERVICES
-===================================================== -->
-<section class="section" id="servicios">
-  <div class="container">
-    <div class="section-header reveal">
-      <div class="label">Nuestros servicios</div>
-      <h2 class="heading-1">Cuatro formas de transformar tu operación</h2>
-      <p class="body-lg">Desde automatización de procesos hasta adopción estratégica de inteligencia artificial, adaptadas al tamaño y ritmo de tu empresa.</p>
-    </div>
-    <div class="services-grid" style="grid-template-columns:repeat(2,1fr);">
-      <div class="service-card reveal">
-        <div class="service-num">01</div>
-        <h3 class="heading-3">Automatizaciones a medida</h3>
-        <p class="body-md">Diseñamos e implementamos flujos de automatización adaptados exactamente a tus procesos, herramientas y equipo existente.</p>
-        <div class="service-tag">🔧 Personalizado</div>
-      </div>
-      <div class="service-card reveal reveal-delay-1">
-        <div class="service-num">02</div>
-        <h3 class="heading-3">Paquetes listos para usar</h3>
-        <p class="body-md">Soluciones pre-configuradas para las automatizaciones más comunes. Implementación en tiempo récord, resultados desde el día uno.</p>
-        <div class="service-tag">⚡ Rápido</div>
-      </div>
-      <div class="service-card reveal reveal-delay-2">
-        <div class="service-num">03</div>
-        <h3 class="heading-3">Software adaptable</h3>
-        <p class="body-md">Desarrollamos herramientas digitales sobre plantillas probadas, personalizadas en un 10–20% a las necesidades únicas de tu empresa.</p>
-        <div class="service-tag">🚀 Escalable</div>
-      </div>
-      <div class="service-card reveal reveal-delay-3" style="border-color:rgba(167,139,250,0.2);background:linear-gradient(135deg,#0e0b1a 0%,var(--bg-card) 100%);">
-        <div class="service-num" style="color:rgba(167,139,250,0.25);">04</div>
-        <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
-          <h3 class="heading-3" style="margin:0;">Programa de IA para Empresas</h3>
-          <span style="padding:3px 9px;background:rgba(167,139,250,0.12);border-radius:var(--radius-pill);font-size:0.68rem;font-weight:700;color:#A78BFA;font-family:var(--font-head);letter-spacing:0.08em;text-transform:uppercase;">Nuevo</span>
-        </div>
-        <p class="body-md">Diagnóstico personalizado del estado de tu empresa frente a la IA, seguido de un programa de capacitación a la medida. Tu equipo no se queda atrás.</p>
-        <div class="service-tag" style="background:rgba(167,139,250,0.1);color:#A78BFA;">🤖 IA para empresas</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<div class="divider"></div>
-
-<!-- =====================================================
-     PROCESS
-===================================================== -->
-<section class="section" id="proceso">
-  <div class="container">
-    <div class="section-header reveal">
-      <div class="label">Cómo trabajamos</div>
-      <h2 class="heading-1">De proceso manual a flujo automático</h2>
-      <p class="body-lg">Nuestra metodología probada en 5 pasos transforma cualquier tarea repetitiva en un sistema que funciona solo.</p>
-    </div>
-    <div class="process-steps">
-      <div class="step reveal">
-        <div class="step-num">01</div>
-        <div class="step-icon">🔍</div>
-        <h4>Comprender</h4>
-        <p>Identificamos tareas repetitivas que más tiempo y recursos consumen.</p>
-      </div>
-      <div class="step reveal reveal-delay-1">
-        <div class="step-num">02</div>
-        <div class="step-icon">📊</div>
-        <h4>Revisar</h4>
-        <p>Priorizamos según frecuencia, tiempo invertido y costo real.</p>
-      </div>
-      <div class="step reveal reveal-delay-2">
-        <div class="step-num">03</div>
-        <div class="step-icon">📋</div>
-        <h4>Estructurar</h4>
-        <p>Documentamos cada proceso generando un POE claro y accionable.</p>
-      </div>
-      <div class="step reveal reveal-delay-3">
-        <div class="step-num">04</div>
-        <div class="step-icon">🔗</div>
-        <h4>Conectar</h4>
-        <p>Implementamos las automatizaciones basadas en procesos documentados.</p>
-      </div>
-      <div class="step reveal reveal-delay-4">
-        <div class="step-num">05</div>
-        <div class="step-icon">📈</div>
-        <h4>Evaluar</h4>
-        <p>Medimos el desempeño y generamos reportes para seguimiento continuo.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<div class="divider"></div>
-
-<!-- =====================================================
-     BENEFITS
-===================================================== -->
-<section class="section">
-  <div class="container">
-    <div class="benefits-wrap">
+    <div class="intro-band reveal">
       <div>
-        <div class="section-header reveal">
-          <div class="label">Beneficios clave</div>
-          <h2 class="heading-1">Resultados medibles en pocas semanas</h2>
-        </div>
-        <div class="benefits-list" style="margin-top:36px;">
-          <div class="benefit-item reveal">
-            <div class="benefit-icon">🕑</div>
-            <div>
-              <div class="benefit-val">50%</div>
-              <div class="body-sm" style="color:var(--text-2);font-size:0.88rem;">Reducción en tareas repetitivas</div>
-            </div>
-          </div>
-          <div class="benefit-item reveal reveal-delay-1">
-            <div class="benefit-icon">💰</div>
-            <div>
-              <div class="benefit-val">30%</div>
-              <div class="body-sm" style="color:var(--text-2);font-size:0.88rem;">Ahorro en horas hombre</div>
-            </div>
-          </div>
-          <div class="benefit-item reveal reveal-delay-2">
-            <div class="benefit-icon">📈</div>
-            <div>
-              <div class="benefit-val">100%</div>
-              <div class="body-sm" style="color:var(--text-2);font-size:0.88rem;">Visibilidad del avance en obra y oficina</div>
-            </div>
-          </div>
-          <div class="benefit-item reveal reveal-delay-3">
-            <div class="benefit-icon">✅</div>
-            <div>
-              <div class="benefit-val">↓90%</div>
-              <div class="body-sm" style="color:var(--text-2);font-size:0.88rem;">Errores en reportes y entregas</div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="benefits-visual reveal reveal-delay-2">
-        <div class="bv-card bv-card-main">
-          <div>
-            <div class="label">Desempeño de procesos</div>
-            <p class="body-sm" style="margin-top:6px;">Antes vs. después de automatizar</p>
-          </div>
-          <div class="chart-bars">
-            <div class="bar-group">
-              <div class="bar bar-before" style="height:70%"></div>
-              <div class="bar bar-after" style="height:30%"></div>
-              <div class="bar-label">Permisos</div>
-            </div>
-            <div class="bar-group">
-              <div class="bar bar-before" style="height:85%"></div>
-              <div class="bar bar-after" style="height:25%"></div>
-              <div class="bar-label">Reportes</div>
-            </div>
-            <div class="bar-group">
-              <div class="bar bar-before" style="height:60%"></div>
-              <div class="bar bar-after" style="height:20%"></div>
-              <div class="bar-label">Coord.</div>
-            </div>
-            <div class="bar-group">
-              <div class="bar bar-before" style="height:75%"></div>
-              <div class="bar bar-after" style="height:35%"></div>
-              <div class="bar-label">Errores</div>
-            </div>
-            <div class="bar-group">
-              <div class="bar bar-before" style="height:90%"></div>
-              <div class="bar bar-after" style="height:40%"></div>
-              <div class="bar-label">Planillas</div>
-            </div>
-          </div>
-          <div style="display:flex;gap:16px;margin-top:12px;">
-            <div style="display:flex;align-items:center;gap:6px;">
-              <div style="width:10px;height:10px;background:var(--bg-raised);border-radius:2px;"></div>
-              <span class="body-sm">Antes</span>
-            </div>
-            <div style="display:flex;align-items:center;gap:6px;">
-              <div style="width:10px;height:10px;background:var(--accent);border-radius:2px;"></div>
-              <span class="body-sm">Después</span>
-            </div>
-          </div>
-        </div>
-        <div class="bv-card bv-card-float">
-          <div class="label" style="margin-bottom:6px;">Ahorro semanal</div>
-          <div class="mini-stat-val green">+12h</div>
-          <div class="body-sm" style="margin-top:4px;">por persona en promedio</div>
-        </div>
-        <div class="bv-card bv-card-float2">
-          <div class="label" style="margin-bottom:6px;">ROI promedio</div>
-          <div class="mini-stat-val yellow">3.4×</div>
-          <div class="body-sm" style="margin-top:4px;">en primeros 6 meses</div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<div class="divider"></div>
-
-<!-- =====================================================
-     TESTIMONIAL
-===================================================== -->
-<section class="section--sm">
-  <div class="container">
-    <div class="testimonial-wrap reveal">
-      <div class="testimonial-metric">
-        <div class="testimonial-metric-val">70%</div>
-        <div class="testimonial-metric-label">reducción en tiempo<br>de diligenciamiento</div>
-      </div>
-      <p class="testimonial-quote">
-        "Redujimos en un <em>70% el tiempo de diligenciamiento</em> de los permisos de seguridad y salud en el trabajo, y ahora tenemos <em>control en tiempo real</em> desde la oficina."
-      </p>
-      <div class="testimonial-author">
-        <div class="author-avatar">CA</div>
-        <div>
-          <div class="author-name">Carolina Acosta</div>
-          <div class="author-role">UW Proyectos — Directora de Operaciones</div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<div class="divider"></div>
-
-<!-- =====================================================
-     TOOLS
-===================================================== -->
-<section class="section">
-  <div class="container">
-    <div class="section-header reveal">
-      <div class="label">Stack tecnológico</div>
-      <h2 class="heading-1">Herramientas de clase mundial</h2>
-      <p class="body-lg">Usamos las mejores plataformas no-code para conectar, automatizar y escalar tus procesos.</p>
-    </div>
-    <div class="tools-grid">
-      <div class="tool-card reveal">
-        <!-- <div class="tool-icon">🔷</div> -->
-        <div class="tool-name">Bubble</div>
-      </div>
-      <div class="tool-card reveal reveal-delay-1">
-        <!-- <div class="tool-icon">⚙️</div> -->
-        <div class="tool-name">Make</div>
-      </div>
-      <div class="tool-card reveal reveal-delay-2">
-        <!-- <div class="tool-icon">🔗</div> -->
-        <div class="tool-name">Zapier</div>
-      </div>
-      <div class="tool-card reveal reveal-delay-3">
-        <!-- <div class="tool-icon">📊</div> -->
-        <div class="tool-name">Google Sheets</div>
-      </div>
-      <div class="tool-card reveal">
-        <!-- <div class="tool-icon">🗂️</div> -->
-        <div class="tool-name">Airtable</div>
-      </div>
-      <div class="tool-card reveal reveal-delay-1">
-        <!-- <div class="tool-icon">🪟</div> -->
-        <div class="tool-name">Power Automate</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<div class="divider"></div>
-
-<!-- =====================================================
-     PROGRAMA DE IA PARA EMPRESAS
-===================================================== -->
-<section class="section ai-hero-band" id="programa-ia">
-  <div class="container">
-    <div class="ai-grid">
-      <!-- Left -->
-      <div>
-        <div class="ai-badge reveal">
-          <span class="ai-badge-dot"></span>
-          <span class="ai-label">Nuevo servicio</span>
-        </div>
-        <h2 class="heading-1 reveal" style="margin-bottom:16px;">
-          Tu empresa necesita un<br><span class="ai-accent">Programa de IA</span>
-        </h2>
-        <p class="body-lg reveal reveal-delay-1">
-          La IA está transformando el sector eléctrico y la construcción ahora mismo. El problema no es acceder a las herramientas — es saber cuáles usar, cómo adoptarlas en cada rol y llevarlas a la práctica. El <strong style="color:var(--text-1);">Programa de IA para Empresas</strong> cubre todo: diagnóstico, capacitación e implementación real, ajustado a cada nivel de tu organización.
+        <p class="intro-quote">
+          "La IA no reemplaza tu negocio — reemplaza las partes <em>que más tiempo te consumen</em> y menos valor te generan."
         </p>
-        <div class="ai-phases reveal reveal-delay-2">
-          <div class="ai-phase">
-            <div class="ai-phase-num">01</div>
-            <div>
-              <div class="ai-phase-title">Diagnóstico de madurez IA</div>
-              <div class="ai-phase-desc">Evaluamos el estado actual de tu empresa — procesos, herramientas, equipo y brecha frente al potencial de la IA. Entregamos un informe claro con prioridades y oportunidades concretas.</div>
-            </div>
-          </div>
-          <div class="ai-phase">
-            <div class="ai-phase-num">02</div>
-            <div>
-              <div class="ai-phase-title">Hoja de ruta personalizada</div>
-              <div class="ai-phase-desc">Definimos exactamente qué herramientas de IA adoptar, en qué orden y con qué impacto esperado. Una hoja de ruta distinta para directivos, supervisores y equipos operativos.</div>
-            </div>
-          </div>
-          <div class="ai-phase">
-            <div class="ai-phase-num">03</div>
-            <div>
-              <div class="ai-phase-title">Capacitación práctica por rol</div>
-              <div class="ai-phase-desc">Talleres ajustados a cada nivel — no cursos genéricos. Gerentes aprenden a tomar decisiones con IA. Supervisores y personal de campo aprenden a usarla en sus tareas diarias reales.</div>
-            </div>
-          </div>
-          <div class="ai-phase">
-            <div class="ai-phase-num">04</div>
-            <div>
-              <div class="ai-phase-title">Implementación acompañada</div>
-              <div class="ai-phase-desc">Acompañamos la puesta en marcha de las primeras herramientas de IA en tu operación — integrándolas con tus flujos de automatización existentes para maximizar el impacto.</div>
-            </div>
-          </div>
-          <div class="ai-phase">
-            <div class="ai-phase-num">05</div>
-            <div>
-              <div class="ai-phase-title">Seguimiento y mejora continua</div>
-              <div class="ai-phase-desc">Revisamos el avance, resolvemos fricciones de adopción y actualizamos la hoja de ruta a medida que el ecosistema de IA evoluciona.</div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Audience pills -->
-        <div style="margin-top:28px;padding:20px 24px;background:rgba(167,139,250,0.05);border:1px solid rgba(167,139,250,0.1);border-radius:var(--radius);" class="reveal reveal-delay-3">
-          <div class="ai-label" style="margin-bottom:14px;">El programa está diseñado para todos los niveles</div>
-          <div style="display:flex;flex-wrap:wrap;gap:8px;">
-            <span style="display:inline-flex;align-items:center;gap:7px;padding:7px 14px;background:rgba(167,139,250,0.12);border:1px solid rgba(167,139,250,0.2);border-radius:var(--radius-pill);font-size:0.8rem;font-weight:500;color:#C4B5FD;">
-              <span style="font-size:1rem;">👔</span> Directivos y gerentes
-            </span>
-            <span style="display:inline-flex;align-items:center;gap:7px;padding:7px 14px;background:rgba(167,139,250,0.12);border:1px solid rgba(167,139,250,0.2);border-radius:var(--radius-pill);font-size:0.8rem;font-weight:500;color:#C4B5FD;">
-              <span style="font-size:1rem;">🦺</span> Jefes de obra y supervisores
-            </span>
-            <span style="display:inline-flex;align-items:center;gap:7px;padding:7px 14px;background:rgba(167,139,250,0.12);border:1px solid rgba(167,139,250,0.2);border-radius:var(--radius-pill);font-size:0.8rem;font-weight:500;color:#C4B5FD;">
-              <span style="font-size:1rem;">⚙️</span> Personal operativo en campo
-            </span>
-            <span style="display:inline-flex;align-items:center;gap:7px;padding:7px 14px;background:rgba(167,139,250,0.12);border:1px solid rgba(167,139,250,0.2);border-radius:var(--radius-pill);font-size:0.8rem;font-weight:500;color:#C4B5FD;">
-              <span style="font-size:1rem;">💻</span> Equipo de oficina y administración
-            </span>
-          </div>
-        </div>
-
-        <div style="margin-top:28px;" class="reveal reveal-delay-3">
-          <a href="https://calendar.app.google/hHncXtamjVKs5ye89" class="btn btn-ai" target="_blank">
-            Solicita tu diagnóstico gratuito
-            <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-          </a>
-        </div>
-      </div>
-      <!-- Right panel -->
-      <div class="ai-panel reveal reveal-delay-2">
-        <div class="ai-card">
-          <div class="ai-card-header">
-            <div class="ai-card-title">Diagnóstico IA — Empresa ejemplo</div>
-            <div class="ai-status">
-              <span style="width:6px;height:6px;background:#A78BFA;border-radius:50%;"></span>
-              Resultado
-            </div>
-          </div>
-          <div class="ai-radar">
-            <div class="ai-radar-item">
-              <div class="ai-radar-label">Automatización actual</div>
-              <div class="ai-radar-bar-track"><div class="ai-radar-bar-fill" style="width:35%"></div></div>
-              <div class="ai-radar-val">Bajo</div>
-            </div>
-            <div class="ai-radar-item">
-              <div class="ai-radar-label">Madurez de datos</div>
-              <div class="ai-radar-bar-track"><div class="ai-radar-bar-fill" style="width:50%"></div></div>
-              <div class="ai-radar-val">Medio</div>
-            </div>
-            <div class="ai-radar-item">
-              <div class="ai-radar-label">Capacidad del equipo</div>
-              <div class="ai-radar-bar-track"><div class="ai-radar-bar-fill" style="width:25%"></div></div>
-              <div class="ai-radar-val">Inicial</div>
-            </div>
-            <div class="ai-radar-item">
-              <div class="ai-radar-label">Potencial de impacto</div>
-              <div class="ai-radar-bar-track"><div class="ai-radar-bar-fill" style="width:90%"></div></div>
-              <div class="ai-radar-val" style="color:#00E5A0;">Alto ✦</div>
-            </div>
-          </div>
-          <div class="ai-card-cta">
-            <span>3 quick wins identificados →</span>
-            <span style="font-size:0.78rem;color:var(--text-3);">Ver hoja de ruta</span>
-          </div>
-        </div>
-        <div class="ai-float-card">
-          <div class="ai-float-icon">🧠</div>
+        <p style="font-size:0.9rem;color:var(--text-2);line-height:1.7;">
+          Este manual te guía por los 5 pasos de la metodología <strong style="color:var(--text-1);">C.R.E.C.E.</strong> de Guai para que, al terminarlo, tengas un plan concreto de automatización listo para ejecutar — con o sin ayuda de nuestro equipo.
+        </p>
+        <div class="intro-stat-row">
           <div>
-            <div class="ai-float-val">+8 h/sem</div>
-            <div class="ai-float-sub">recuperadas con IA generativa</div>
+            <div class="intro-stat-val">30'</div>
+            <div class="intro-stat-label">para completar el manual</div>
+          </div>
+          <div>
+            <div class="intro-stat-val" style="color:var(--yellow);">1</div>
+            <div class="intro-stat-label">plan de acción al finalizar</div>
+          </div>
+          <div>
+            <div class="intro-stat-val" style="color:var(--purple);">0</div>
+            <div class="intro-stat-label">conocimiento técnico requerido</div>
           </div>
         </div>
       </div>
-    </div>
-
-    <!-- Manual actualizado card -->
-    <div class="manual-card reveal">
-      <div class="manual-icon-big">📘</div>
-      <div style="position:relative;z-index:1;flex:1;">
-        <h3 class="heading-2">Manual actualizado: Automatización e IA para tu empresa</h3>
-        <p>El manual original de automatización de tareas repetitivas ahora incluye una nueva sección sobre cómo integrar IA generativa en tus procesos — desde la selección de herramientas hasta los primeros flujos con IA.</p>
-        <div class="manual-tags">
-          <span class="manual-tag green">✓ Automatización convencional</span>
-          <span class="manual-tag purple">✦ Nuevo: Adopción de IA</span>
-          <span class="manual-tag green">✓ Guía paso a paso</span>
-          <span class="manual-tag purple">✦ Casos del sector eléctrico y construcción</span>
+      <div class="intro-problems">
+        <div class="prob-item bad">
+          <div class="prob-icon">✗</div>
+          <div>Horas perdidas en planillas, Excel y WhatsApp como sistema operativo</div>
         </div>
-      </div>
-      <div style="flex-shrink:0;position:relative;z-index:1;">
-        <a href="guai-manual-crece.html" class="btn btn-secondary" style="white-space:nowrap;">
-          Acceder gratis
-          <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-        </a>
+        <div class="prob-item bad">
+          <div class="prob-icon">✗</div>
+          <div>Errores manuales que se descubren cuando ya afectaron al cliente</div>
+        </div>
+        <div class="prob-item bad">
+          <div class="prob-icon">✗</div>
+          <div>Tu equipo haciendo lo mismo cada semana sin que nadie lo resuelva</div>
+        </div>
+        <div class="prob-item good">
+          <div class="prob-icon">✓</div>
+          <div><strong>Esto tiene solución.</strong> Y más sencilla de lo que crees.</div>
+        </div>
       </div>
     </div>
   </div>
@@ -1578,594 +980,684 @@
 
 <div class="divider"></div>
 
-<!-- =====================================================
-     BLOG
-===================================================== -->
-<section class="section" id="blog">
+
+<!-- ══════════════════════════════════════
+     PASO 1 — COMPRENDER
+═══════════════════════════════════════ -->
+<section id="paso-1" class="step-section">
   <div class="container">
-    <div class="blog-header">
+    <div class="step-grid">
+      <!-- left panel -->
+      <div class="step-panel">
+        <div class="step-letter-label c">C · Paso 01</div>
+        <div class="step-number-big c">01</div>
+        <div class="step-name">Comprender</div>
+        <p class="step-summary">Antes de automatizar, necesitas ver con claridad qué tareas te están robando más tiempo y energía.</p>
+        <div class="step-time-badge">
+          <svg width="12" height="12" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+          5–10 minutos
+        </div>
+      </div>
+
+      <!-- right content -->
+      <div class="step-content">
+        <div class="obj-card reveal">
+          <div class="obj-title">Objetivo del paso</div>
+          <div class="obj-text">Listar todas las tareas repetitivas de tu operación y cuantificar cuánto tiempo les dedicas cada semana. Sin este mapa, cualquier esfuerzo de automatización es un disparo a ciegas.</div>
+        </div>
+
+        <div class="action-card reveal reveal-delay-1">
+          <div class="action-card-head">
+            <div class="action-num">1</div>
+            <div class="action-title">Haz tu lista de tareas repetitivas</div>
+          </div>
+          <div class="action-body">
+            Pregúntate: <em style="color:var(--text-1);">"¿Qué hago (o hace mi equipo) de manera repetida cada día, semana o mes?"</em><br><br>
+            Algunos ejemplos comunes en empresas:
+          </div>
+          <div class="checklist" style="margin-top:14px;">
+            <div class="check-item"><div class="check-icon">→</div>Enviar cotizaciones o propuestas</div>
+            <div class="check-item"><div class="check-icon">→</div>Diligenciar informes, permisos o formatos de SST</div>
+            <div class="check-item"><div class="check-icon">→</div>Responder preguntas frecuentes por WhatsApp o email</div>
+            <div class="check-item"><div class="check-icon">→</div>Registrar datos en hojas de cálculo o sistemas</div>
+            <div class="check-item"><div class="check-icon">→</div>Hacer seguimiento a clientes, proveedores o proyectos</div>
+            <div class="check-item"><div class="check-icon">→</div>Programar y confirmar reuniones o visitas</div>
+            <div class="check-item"><div class="check-icon">→</div>Generar reportes de avance o resultados</div>
+          </div>
+        </div>
+
+        <div class="action-card reveal reveal-delay-2">
+          <div class="action-card-head">
+            <div class="action-num">2</div>
+            <div class="action-title">Cuantifica el tiempo de cada tarea</div>
+          </div>
+          <div class="action-body">
+            Para cada tarea, anota: <strong style="color:var(--text-1);">¿cuántos minutos toma? × ¿cuántas veces ocurre a la semana?</strong><br><br>
+            Eso te dará el total de horas semanales que esa tarea consume. Un proceso que toma 10 minutos 5 veces al día = <strong style="color:var(--accent);">4+ horas a la semana</strong> por persona.
+          </div>
+          <div class="tool-row">
+            <span class="tool-pill">📋 Hoja de papel o Google Docs</span>
+            <span class="tool-pill">📊 Google Sheets</span>
+            <span class="tool-pill">🗒️ Notion o Airtable</span>
+          </div>
+        </div>
+
+        <div class="ai-highlight reveal reveal-delay-3">
+          <div class="ai-highlight-label">🤖 IA en este paso</div>
+          <div class="ai-highlight-title">Usa IA para completar tu lista más rápido</div>
+          <div class="ai-highlight-body">
+            Abre ChatGPT o Claude y escribe: <em style="color:var(--text-1);">"Soy [tu cargo] en una empresa de [tu sector]. ¿Cuáles son las 10 tareas más repetitivas típicas en mi rol que podrían automatizarse?"</em><br><br>
+            Complementa la lista generada con tu propia experiencia. En 5 minutos tendrás un inventario completo.
+          </div>
+          <div class="ai-tools">
+            <span class="ai-tool">ChatGPT</span>
+            <span class="ai-tool">Claude</span>
+            <span class="ai-tool">Gemini</span>
+          </div>
+        </div>
+
+        <div class="action-card reveal" style="border-color:rgba(0,229,160,0.2);background:rgba(0,229,160,0.04);">
+          <div class="action-card-head">
+            <div class="action-num">✓</div>
+            <div class="action-title">Entregable del paso</div>
+          </div>
+          <div class="action-body">
+            Al terminar este paso debes tener: <strong style="color:var(--text-1);">una lista de 5 a 15 tareas repetitivas con su tiempo estimado semanal.</strong> Con eso pasas al siguiente paso.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════
+     PASO 2 — REVISAR
+═══════════════════════════════════════ -->
+<section id="paso-2" class="step-section">
+  <div class="container">
+    <div class="step-grid">
+      <div class="step-panel">
+        <div class="step-letter-label r">R · Paso 02</div>
+        <div class="step-number-big r">02</div>
+        <div class="step-name">Revisar</div>
+        <p class="step-summary">No todas las tareas se automatizan igual de fácil ni generan el mismo impacto. Aquí decides qué atacar primero.</p>
+        <div class="step-time-badge">
+          <svg width="12" height="12" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+          10–15 minutos
+        </div>
+      </div>
+
+      <div class="step-content">
+        <div class="obj-card reveal">
+          <div class="obj-title">Objetivo del paso</div>
+          <div class="obj-text">Asignar una puntuación a cada tarea según 4 criterios y obtener una lista priorizada. Las tareas con mayor puntaje son las primeras en automatizarse.</div>
+        </div>
+
+        <div class="action-card reveal reveal-delay-1">
+          <div class="action-card-head">
+            <div class="action-num action-num" style="background:var(--yellow-dim);color:var(--yellow);border-color:rgba(245,200,66,0.3);">1</div>
+            <div class="action-title">Puntúa cada tarea del 1 al 5</div>
+          </div>
+          <div class="action-body">Evalúa cada tarea según estos 4 criterios. El total máximo posible es 20 puntos.</div>
+          <div class="kpi-grid" style="margin-top:16px;">
+            <div class="kpi-card">
+              <div class="kpi-label">Frecuencia</div>
+              <div style="font-size:0.85rem;color:var(--text-2);line-height:1.6;">¿Cuántas veces ocurre?<br><em style="color:var(--text-3);">1 = raro · 5 = diario</em></div>
+            </div>
+            <div class="kpi-card">
+              <div class="kpi-label">Tiempo invertido</div>
+              <div style="font-size:0.85rem;color:var(--text-2);line-height:1.6;">¿Cuánto tiempo consume?<br><em style="color:var(--text-3);">1 = minutos · 5 = horas</em></div>
+            </div>
+            <div class="kpi-card">
+              <div class="kpi-label">Costo operativo</div>
+              <div style="font-size:0.85rem;color:var(--text-2);line-height:1.6;">¿Qué valor tiene en dinero?<br><em style="color:var(--text-3);">1 = bajo · 5 = alto</em></div>
+            </div>
+            <div class="kpi-card">
+              <div class="kpi-label">Potencial de automatización</div>
+              <div style="font-size:0.85rem;color:var(--text-2);line-height:1.6;">¿Qué tan viable es?<br><em style="color:var(--text-3);">1 = difícil · 3 = parcial · 5 = viable</em></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="action-card reveal reveal-delay-2">
+          <div class="action-card-head">
+            <div class="action-num" style="background:var(--yellow-dim);color:var(--yellow);border-color:rgba(245,200,66,0.3);">2</div>
+            <div class="action-title">Tabla de priorización (ejemplo)</div>
+          </div>
+          <div class="action-body" style="margin-bottom:16px;">Suma los 4 puntajes y clasifica: <strong style="color:var(--accent);">Alta (16–20)</strong>, <strong style="color:var(--yellow);">Media (11–15)</strong>, <strong style="color:var(--text-3);">Baja (4–10)</strong></div>
+          <div style="overflow-x:auto;">
+            <table class="score-table">
+              <thead>
+                <tr>
+                  <th>Tarea</th>
+                  <th>Frec.</th>
+                  <th>Tiempo</th>
+                  <th>Costo</th>
+                  <th>Pot. Auto.</th>
+                  <th>Total</th>
+                  <th>Prioridad</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="color:var(--text-1);">Enviar cotizaciones</td>
+                  <td>4</td><td>5</td><td>5</td><td>4</td>
+                  <td style="color:var(--accent);font-weight:700;">18</td>
+                  <td><span class="score-badge score-alta">Alta</span></td>
+                </tr>
+                <tr>
+                  <td style="color:var(--text-1);">Responder WhatsApp</td>
+                  <td>5</td><td>4</td><td>3</td><td>4</td>
+                  <td style="color:var(--accent);font-weight:700;">16</td>
+                  <td><span class="score-badge score-alta">Alta</span></td>
+                </tr>
+                <tr>
+                  <td style="color:var(--text-1);">Informe semanal</td>
+                  <td>2</td><td>4</td><td>3</td><td>4</td>
+                  <td style="color:var(--yellow);font-weight:700;">13</td>
+                  <td><span class="score-badge score-media">Media</span></td>
+                </tr>
+                <tr>
+                  <td style="color:var(--text-1);">Agendar reuniones</td>
+                  <td>3</td><td>2</td><td>2</td><td>5</td>
+                  <td style="color:var(--yellow);font-weight:700;">12</td>
+                  <td><span class="score-badge score-media">Media</span></td>
+                </tr>
+                <tr>
+                  <td style="color:var(--text-1);">Revisar facturas</td>
+                  <td>2</td><td>2</td><td>3</td><td>2</td>
+                  <td style="color:var(--text-3);font-weight:700;">9</td>
+                  <td><span class="score-badge score-baja">Baja</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="ai-highlight reveal reveal-delay-3">
+          <div class="ai-highlight-label">🤖 IA en este paso</div>
+          <div class="ai-highlight-title">Pide a la IA que puntúe tus tareas</div>
+          <div class="ai-highlight-body">
+            Comparte tu lista con ChatGPT o Claude y pide: <em style="color:var(--text-1);">"Aquí están mis tareas: [lista]. Puntúa cada una del 1 al 5 en frecuencia, tiempo invertido, costo y potencial de automatización. Explica brevemente cada puntaje."</em><br><br>
+            Tendrás tu tabla de priorización en minutos. Ajusta los puntajes según tu conocimiento del negocio.
+          </div>
+          <div class="ai-tools">
+            <span class="ai-tool">ChatGPT</span>
+            <span class="ai-tool">Claude</span>
+          </div>
+        </div>
+
+        <div class="action-card reveal" style="border-color:rgba(0,229,160,0.2);background:rgba(0,229,160,0.04);">
+          <div class="action-card-head">
+            <div class="action-num">✓</div>
+            <div class="action-title">Entregable del paso</div>
+          </div>
+          <div class="action-body">
+            Al terminar: <strong style="color:var(--text-1);">tus tareas ordenadas por prioridad, con al menos 2–3 en categoría Alta.</strong> Esas son las que documentarás en el siguiente paso.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════
+     PASO 3 — ESTRUCTURAR
+═══════════════════════════════════════ -->
+<section id="paso-3" class="step-section">
+  <div class="container">
+    <div class="step-grid">
+      <div class="step-panel">
+        <div class="step-letter-label e1">E · Paso 03</div>
+        <div class="step-number-big e1">03</div>
+        <div class="step-name">Estructurar</div>
+        <p class="step-summary">Una automatización sin proceso documentado es una automatización que falla. Este paso es el más importante de todo el manual.</p>
+        <div class="step-time-badge">
+          <svg width="12" height="12" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+          15–30 minutos
+        </div>
+      </div>
+
+      <div class="step-content">
+        <div class="obj-card reveal">
+          <div class="obj-title">Objetivo del paso</div>
+          <div class="obj-text">Documentar el paso a paso exacto de cada tarea de Alta prioridad. Este documento — llamado <strong style="color:var(--accent);">POE (Procedimiento Operativo Estándar)</strong> — será la base técnica para construir la automatización.</div>
+        </div>
+
+        <div class="action-card reveal reveal-delay-1">
+          <div class="action-card-head">
+            <div class="action-num" style="background:rgba(91,141,239,0.12);color:#5B8DEF;border-color:rgba(91,141,239,0.3);">1</div>
+            <div class="action-title">Escribe el proceso como una receta de cocina</div>
+          </div>
+          <div class="action-body">
+            Para cada tarea de Alta prioridad, documenta:
+          </div>
+          <div class="checklist" style="margin-top:14px;">
+            <div class="check-item"><div class="check-icon">→</div><strong style="color:var(--text-1);">Disparador:</strong> ¿Qué evento inicia esta tarea? (ej.: llega un email, un cliente llena un formulario, son las 9am del lunes)</div>
+            <div class="check-item"><div class="check-icon">→</div><strong style="color:var(--text-1);">Pasos en orden:</strong> Escribe cada acción que realizas, en secuencia, sin saltarte ninguna.</div>
+            <div class="check-item"><div class="check-icon">→</div><strong style="color:var(--text-1);">Herramientas usadas:</strong> WhatsApp, Excel, Gmail, CRM, etc. en cada paso.</div>
+            <div class="check-item"><div class="check-icon">→</div><strong style="color:var(--text-1);">Decisiones:</strong> Marca los pasos donde hay condiciones: "si X, entonces Y".</div>
+            <div class="check-item"><div class="check-icon">→</div><strong style="color:var(--text-1);">Resultado final:</strong> ¿Cómo sabes que la tarea quedó bien ejecutada?</div>
+          </div>
+        </div>
+
+        <div class="action-card reveal reveal-delay-2">
+          <div class="action-card-head">
+            <div class="action-num" style="background:rgba(91,141,239,0.12);color:#5B8DEF;border-color:rgba(91,141,239,0.3);">2</div>
+            <div class="action-title">Clasifica cada paso según su automatización</div>
+          </div>
+          <div class="action-body">Una vez documentado el proceso, etiqueta cada paso:</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-top:14px;">
+            <div style="padding:14px;background:var(--accent-dim);border:1px solid rgba(0,229,160,0.2);border-radius:var(--radius);text-align:center;">
+              <div style="font-size:1.1rem;margin-bottom:6px;">🟢</div>
+              <div style="font-family:var(--font-head);font-size:0.8rem;font-weight:700;color:var(--accent);margin-bottom:4px;">Automatizable</div>
+              <div style="font-size:0.75rem;color:var(--text-3);">Sin intervención humana</div>
+            </div>
+            <div style="padding:14px;background:var(--yellow-dim);border:1px solid rgba(245,200,66,0.2);border-radius:var(--radius);text-align:center;">
+              <div style="font-size:1.1rem;margin-bottom:6px;">🟡</div>
+              <div style="font-family:var(--font-head);font-size:0.8rem;font-weight:700;color:var(--yellow);margin-bottom:4px;">Semi-auto</div>
+              <div style="font-size:0.75rem;color:var(--text-3);">IA + revisión humana</div>
+            </div>
+            <div style="padding:14px;background:var(--bg-raised);border:1px solid var(--border-med);border-radius:var(--radius);text-align:center;">
+              <div style="font-size:1.1rem;margin-bottom:6px;">🔴</div>
+              <div style="font-family:var(--font-head);font-size:0.8rem;font-weight:700;color:var(--text-2);margin-bottom:4px;">Manual</div>
+              <div style="font-size:0.75rem;color:var(--text-3);">Requiere criterio humano</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="ai-highlight reveal reveal-delay-3">
+          <div class="ai-highlight-label">🤖 IA en este paso — el más poderoso</div>
+          <div class="ai-highlight-title">La IA puede escribir tu POE en minutos</div>
+          <div class="ai-highlight-body">
+            Describe tu proceso en lenguaje natural a ChatGPT o Claude: <em style="color:var(--text-1);">"Cuando recibo una solicitud de cotización por WhatsApp hago lo siguiente: primero reviso el mensaje, luego abro Excel y busco los precios, luego escribo un PDF con Word, luego lo envío al cliente. A veces espero confirmación antes de agendar. ¿Puedes convertir esto en un POE detallado y marcar qué pasos son automatizables?"</em><br><br>
+            La IA devolverá un proceso estructurado, clasificado y listo para llevar al siguiente paso.
+          </div>
+          <div class="ai-tools">
+            <span class="ai-tool">ChatGPT</span>
+            <span class="ai-tool">Claude</span>
+            <span class="ai-tool">Gemini</span>
+            <span class="ai-tool">Notion AI</span>
+          </div>
+        </div>
+
+        <div class="action-card reveal" style="border-color:rgba(0,229,160,0.2);background:rgba(0,229,160,0.04);">
+          <div class="action-card-head">
+            <div class="action-num">✓</div>
+            <div class="action-title">Entregable del paso</div>
+          </div>
+          <div class="action-body">
+            Al terminar: <strong style="color:var(--text-1);">un POE por cada tarea de Alta prioridad, con cada paso etiquetado como automatizable, semi-auto o manual.</strong> Este documento es lo que un desarrollador o plataforma de automatización necesita para implementar.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════
+     PASO 4 — CONECTAR
+═══════════════════════════════════════ -->
+<section id="paso-4" class="step-section">
+  <div class="container">
+    <div class="step-grid">
+      <div class="step-panel">
+        <div class="step-letter-label c2">C · Paso 04</div>
+        <div class="step-number-big c2">04</div>
+        <div class="step-name">Conectar</div>
+        <p class="step-summary">Tus procesos documentados ahora se convierten en flujos reales que funcionan solos. Es hora de elegir las herramientas correctas.</p>
+        <div class="step-time-badge">
+          <svg width="12" height="12" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+          Variable (días a semanas)
+        </div>
+      </div>
+
+      <div class="step-content">
+        <div class="obj-card reveal">
+          <div class="obj-title">Objetivo del paso</div>
+          <div class="obj-text">Seleccionar e implementar la herramienta o solución correcta para cada proceso documentado. No existe una sola respuesta — la elección depende de la complejidad, tu presupuesto y las herramientas que ya usas.</div>
+        </div>
+
+        <div class="action-card reveal reveal-delay-1">
+          <div class="action-card-head">
+            <div class="action-num" style="background:var(--purple-dim);color:var(--purple);border-color:rgba(167,139,250,0.3);">1</div>
+            <div class="action-title">Las 3 vías de implementación</div>
+          </div>
+          <div class="route-grid" style="margin-top:4px;">
+            <div class="route-card">
+              <div class="route-num">Vía 01</div>
+              <div class="route-title">Software especializado</div>
+              <div class="route-desc">Aplicaciones diseñadas para resolver tareas específicas con funcionalidades propias.</div>
+              <div class="route-examples">HubSpot, Calendly, Notion, Slack, Typeform</div>
+            </div>
+            <div class="route-card">
+              <div class="route-num">Vía 02</div>
+              <div class="route-title">Plataformas de integración</div>
+              <div class="route-desc">Conectan diferentes herramientas entre sí y automatizan flujos con reglas "si pasa X, haz Y".</div>
+              <div class="route-examples">Make, Zapier, n8n, Power Automate</div>
+            </div>
+            <div class="route-card">
+              <div class="route-num">Vía 03</div>
+              <div class="route-title">Desarrollo a medida</div>
+              <div class="route-desc">Solución personalizada cuando no existe una herramienta estándar que resuelva el proceso exacto.</div>
+              <div class="route-examples">Bubble, código personalizado, Guai</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="action-card reveal reveal-delay-2">
+          <div class="action-card-head">
+            <div class="action-num" style="background:var(--purple-dim);color:var(--purple);border-color:rgba(167,139,250,0.3);">2</div>
+            <div class="action-title">Pasos para implementar cada automatización</div>
+          </div>
+          <div class="checklist">
+            <div class="check-item"><div class="check-icon">1</div>Selecciona la vía de implementación según tu proceso y presupuesto.</div>
+            <div class="check-item"><div class="check-icon">2</div>Configura la herramienta usando el POE del Paso 3 como guía exacta.</div>
+            <div class="check-item"><div class="check-icon">3</div>Prueba el flujo de extremo a extremo con datos reales o de prueba.</div>
+            <div class="check-item"><div class="check-icon">4</div>Involucra a las personas que ejecutaban esa tarea para validar resultados.</div>
+            <div class="check-item"><div class="check-icon">5</div>Ajusta y corrige hasta que la automatización funcione sin intervención manual.</div>
+          </div>
+        </div>
+
+        <div class="ai-highlight reveal reveal-delay-3">
+          <div class="ai-highlight-label">🤖 IA en este paso</div>
+          <div class="ai-highlight-title">La IA como parte de la automatización misma</div>
+          <div class="ai-highlight-body">
+            En este paso, la IA no solo te ayuda a planear — puede ser una pieza activa dentro del flujo:<br><br>
+            Un <strong style="color:var(--text-1);">agente de IA</strong> puede leer mensajes entrantes, clasificarlos, redactar respuestas personalizadas, extraer datos de documentos o generar reportes automáticamente. Estas capacidades se integran directamente en Make, n8n o Zapier como un paso más del flujo.
+          </div>
+          <div class="ai-tools">
+            <span class="ai-tool">OpenAI API</span>
+            <span class="ai-tool">Claude API</span>
+            <span class="ai-tool">Make + IA</span>
+            <span class="ai-tool">n8n + IA</span>
+            <span class="ai-tool">Zapier AI</span>
+          </div>
+        </div>
+
+        <div class="action-card reveal" style="border-color:rgba(0,229,160,0.2);background:rgba(0,229,160,0.04);">
+          <div class="action-card-head">
+            <div class="action-num">✓</div>
+            <div class="action-title">Entregable del paso</div>
+          </div>
+          <div class="action-body">
+            Al terminar: <strong style="color:var(--text-1);">al menos una automatización en producción, funcionando de extremo a extremo, validada por el equipo que antes la hacía manualmente.</strong>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════
+     PASO 5 — EVALUAR
+═══════════════════════════════════════ -->
+<section id="paso-5" class="step-section">
+  <div class="container">
+    <div class="step-grid">
+      <div class="step-panel">
+        <div class="step-letter-label e2">E · Paso 05</div>
+        <div class="step-number-big e2">05</div>
+        <div class="step-name">Evaluar</div>
+        <p class="step-summary">La automatización que no se mide, se rompe sin que nadie lo note. Mantén el control a través de datos.</p>
+        <div class="step-time-badge">
+          <svg width="12" height="12" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+          Revisión semanal · 15 min
+        </div>
+      </div>
+
+      <div class="step-content">
+        <div class="obj-card reveal">
+          <div class="obj-title">Objetivo del paso</div>
+          <div class="obj-text">Definir indicadores por cada automatización, establecer rangos esperados y revisar periódicamente que todo funcione. Una automatización bien medida se convierte en ventaja competitiva sostenible.</div>
+        </div>
+
+        <div class="action-card reveal reveal-delay-1">
+          <div class="action-card-head">
+            <div class="action-num">1</div>
+            <div class="action-title">Define al menos un indicador por automatización</div>
+          </div>
+          <div class="action-body">Cada automatización debe tener un número que te diga si está funcionando bien o mal. Ejemplos:</div>
+          <div class="kpi-grid" style="margin-top:14px;">
+            <div class="kpi-card">
+              <div class="kpi-label">Cotizaciones enviadas</div>
+              <div class="kpi-val">48</div>
+              <div class="kpi-desc">esta semana · rango esperado: 40+</div>
+            </div>
+            <div class="kpi-card">
+              <div class="kpi-label">Tiempo de respuesta</div>
+              <div class="kpi-val" style="color:var(--yellow);">8 min</div>
+              <div class="kpi-desc">promedio · rango esperado: &lt;15 min</div>
+            </div>
+            <div class="kpi-card">
+              <div class="kpi-label">Formularios procesados</div>
+              <div class="kpi-val">127</div>
+              <div class="kpi-desc">sin errores · rango esperado: 100+</div>
+            </div>
+            <div class="kpi-card">
+              <div class="kpi-label">Horas recuperadas</div>
+              <div class="kpi-val">+12h</div>
+              <div class="kpi-desc">por persona/semana · meta: 8h+</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="action-card reveal reveal-delay-2">
+          <div class="action-card-head">
+            <div class="action-num">2</div>
+            <div class="action-title">Establece tu rutina de monitoreo</div>
+          </div>
+          <div class="checklist">
+            <div class="check-item"><div class="check-icon">📆</div><strong style="color:var(--text-1);">Diario (2 min):</strong> Revisa alertas automáticas. Si la automatización falló, recibirás una notificación.</div>
+            <div class="check-item"><div class="check-icon">📆</div><strong style="color:var(--text-1);">Semanal (15 min):</strong> Revisa el dashboard de indicadores. ¿Están dentro del rango esperado? ¿Hubo errores?</div>
+            <div class="check-item"><div class="check-icon">📆</div><strong style="color:var(--text-1);">Mensual (30 min):</strong> Evalúa el impacto real. ¿Cuántas horas se recuperaron? ¿El ROI es positivo? ¿Qué mejorar?</div>
+          </div>
+        </div>
+
+        <div class="action-card reveal reveal-delay-2">
+          <div class="action-card-head">
+            <div class="action-num">3</div>
+            <div class="action-title">Señales de alerta a vigilar</div>
+          </div>
+          <div class="checklist">
+            <div class="check-item" style="border-color:rgba(239,68,68,0.2);">
+              <div class="check-icon" style="color:#ef4444;">⚠</div>
+              El indicador cae por debajo del rango esperado varios días seguidos
+            </div>
+            <div class="check-item" style="border-color:rgba(239,68,68,0.2);">
+              <div class="check-icon" style="color:#ef4444;">⚠</div>
+              Alguien del equipo dice "tuve que hacerlo manualmente porque falló"
+            </div>
+            <div class="check-item" style="border-color:rgba(239,68,68,0.2);">
+              <div class="check-icon" style="color:#ef4444;">⚠</div>
+              El proceso de origen cambió (nuevo formulario, nuevo sistema) y la automatización no se actualizó
+            </div>
+          </div>
+        </div>
+
+        <div class="ai-highlight reveal reveal-delay-3">
+          <div class="ai-highlight-label">🤖 IA en este paso</div>
+          <div class="ai-highlight-title">Reportes automáticos con IA integrada</div>
+          <div class="ai-highlight-body">
+            Configura un agente de IA que recopile los datos de tus automatizaciones cada semana, los analice y te envíe un resumen con alertas y recomendaciones directamente a tu email o WhatsApp. Sin abrir ningún dashboard — la IA te avisa lo que importa.
+          </div>
+          <div class="ai-tools">
+            <span class="ai-tool">Make + OpenAI</span>
+            <span class="ai-tool">n8n + Claude</span>
+            <span class="ai-tool">Looker Studio</span>
+            <span class="ai-tool">Google Sheets AI</span>
+          </div>
+        </div>
+
+        <div class="action-card reveal" style="border-color:rgba(0,229,160,0.2);background:rgba(0,229,160,0.04);">
+          <div class="action-card-head">
+            <div class="action-num">✓</div>
+            <div class="action-title">Entregable del paso</div>
+          </div>
+          <div class="action-body">
+            Al terminar: <strong style="color:var(--text-1);">un dashboard simple (puede ser en Google Sheets) con los indicadores clave de cada automatización activa, con rangos esperados definidos y alertas configuradas.</strong>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<div class="divider"></div>
+
+
+<!-- ══════════════════════════════════════
+     PROGRAMA IA CTA
+═══════════════════════════════════════ -->
+<section id="cta" class="section">
+  <div class="container">
+
+    <!-- resumen metodología -->
+    <div style="text-align:center;margin-bottom:52px;">
+      <div class="section-label" style="text-align:center;">Completaste el manual</div>
+      <h2 class="section-title" style="text-align:center;margin-bottom:12px;">Tienes el mapa. Ahora viene la ejecución.</h2>
+      <p style="font-size:1rem;color:var(--text-2);max-width:520px;margin:0 auto 40px;line-height:1.7;font-weight:300;">Hacer esto solo es posible. Hacerlo con Guai es más rápido, más eficiente y con resultados garantizados.</p>
+
+      <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:0;max-width:800px;margin:0 auto;" class="reveal">
+        <div style="text-align:center;padding:20px 10px;border-right:1px solid var(--border);">
+          <div style="width:40px;height:40px;border-radius:50%;background:var(--accent-dim);border:1px solid rgba(0,229,160,0.3);display:flex;align-items:center;justify-content:center;font-family:var(--font-head);font-size:0.8rem;font-weight:700;color:var(--accent);margin:0 auto 10px;">C</div>
+          <div style="font-family:var(--font-head);font-size:0.82rem;font-weight:700;">Comprender</div>
+          <div style="font-size:0.72rem;color:var(--text-3);margin-top:2px;">Lista de tareas</div>
+        </div>
+        <div style="text-align:center;padding:20px 10px;border-right:1px solid var(--border);">
+          <div style="width:40px;height:40px;border-radius:50%;background:var(--yellow-dim);border:1px solid rgba(245,200,66,0.3);display:flex;align-items:center;justify-content:center;font-family:var(--font-head);font-size:0.8rem;font-weight:700;color:var(--yellow);margin:0 auto 10px;">R</div>
+          <div style="font-family:var(--font-head);font-size:0.82rem;font-weight:700;">Revisar</div>
+          <div style="font-size:0.72rem;color:var(--text-3);margin-top:2px;">Priorización</div>
+        </div>
+        <div style="text-align:center;padding:20px 10px;border-right:1px solid var(--border);">
+          <div style="width:40px;height:40px;border-radius:50%;background:rgba(91,141,239,0.12);border:1px solid rgba(91,141,239,0.3);display:flex;align-items:center;justify-content:center;font-family:var(--font-head);font-size:0.8rem;font-weight:700;color:#5B8DEF;margin:0 auto 10px;">E</div>
+          <div style="font-family:var(--font-head);font-size:0.82rem;font-weight:700;">Estructurar</div>
+          <div style="font-size:0.72rem;color:var(--text-3);margin-top:2px;">POE por tarea</div>
+        </div>
+        <div style="text-align:center;padding:20px 10px;border-right:1px solid var(--border);">
+          <div style="width:40px;height:40px;border-radius:50%;background:var(--purple-dim);border:1px solid rgba(167,139,250,0.3);display:flex;align-items:center;justify-content:center;font-family:var(--font-head);font-size:0.8rem;font-weight:700;color:var(--purple);margin:0 auto 10px;">C</div>
+          <div style="font-family:var(--font-head);font-size:0.82rem;font-weight:700;">Conectar</div>
+          <div style="font-size:0.72rem;color:var(--text-3);margin-top:2px;">Automatizaciones</div>
+        </div>
+        <div style="text-align:center;padding:20px 10px;">
+          <div style="width:40px;height:40px;border-radius:50%;background:var(--accent-dim);border:1px solid rgba(0,229,160,0.3);display:flex;align-items:center;justify-content:center;font-family:var(--font-head);font-size:0.8rem;font-weight:700;color:var(--accent);margin:0 auto 10px;">E</div>
+          <div style="font-family:var(--font-head);font-size:0.82rem;font-weight:700;">Evaluar</div>
+          <div style="font-size:0.72rem;color:var(--text-3);margin-top:2px;">Dashboard KPIs</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- programa IA band -->
+    <div class="programa-band reveal">
       <div>
-        <div class="label reveal">Blog</div>
-        <h2 class="heading-1 reveal" style="margin-top:8px;">Recursos e insights</h2>
-      </div>
-      <a href="#blog" class="btn btn-ghost reveal">
-        Ver todos los artículos
-        <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-      </a>
-    </div>
-    <div class="blog-grid" style="grid-template-columns:1.4fr 1fr 1fr;grid-template-rows:auto auto;">
-      <!-- Featured post -->
-      <div class="blog-card blog-card--featured reveal" style="grid-row:1/3;">
-        <div class="blog-img" style="background:linear-gradient(135deg,#0d1f1a,#0a1510);height:100%;min-height:260px;">
-          <div class="blog-img-accent" style="background:radial-gradient(circle at 30% 50%, var(--accent), transparent 60%);"></div>
-          <span style="position:relative;z-index:1;font-size:3.5rem;">⚡</span>
-        </div>
-        <div class="blog-body">
-          <span class="blog-category">Guía práctica</span>
-          <h3 class="blog-title" style="font-size:1.3rem;">Manual completo: automatización e IA para empresas de construcción y sector eléctrico</h3>
-          <p class="blog-excerpt">Todo lo que necesitas para identificar, priorizar e implementar tus primeras automatizaciones — ahora con una nueva sección sobre cómo integrar IA generativa en tus procesos sin necesidad de saber programar.</p>
-          <div class="blog-meta">
-            <div class="blog-avatar">CT</div>
-            <span class="blog-author">Cristian Torres</span>
-            <span class="blog-date">Mar 2025</span>
-          </div>
+        <div class="programa-label">🤖 Nuevo servicio · Guai</div>
+        <h2 class="programa-title">Programa de <span>IA</span> para Empresas</h2>
+        <p class="programa-desc">
+          Ya sabes qué automatizar. El siguiente nivel es integrar inteligencia artificial real en tu operación — no solo herramientas, sino un sistema que aprende y mejora contigo. El Programa de IA de Guai cubre diagnóstico, hoja de ruta personalizada, capacitación por rol e implementación acompañada.
+        </p>
+        <div class="programa-phases">
+          <div class="programa-phase"><div class="programa-phase-dot"></div>Diagnóstico de madurez IA · estado actual de tu empresa</div>
+          <div class="programa-phase"><div class="programa-phase-dot"></div>Hoja de ruta por rol · directivos, supervisores y operativos</div>
+          <div class="programa-phase"><div class="programa-phase-dot"></div>Capacitación práctica · no cursos genéricos, sino aplicación real</div>
+          <div class="programa-phase"><div class="programa-phase-dot"></div>Implementación acompañada · de la mano con tu equipo</div>
+          <div class="programa-phase"><div class="programa-phase-dot"></div>Seguimiento y mejora continua</div>
         </div>
       </div>
-      <!-- Post IA — nuevo -->
-      <div class="blog-card reveal reveal-delay-1" style="border-color:rgba(167,139,250,0.2);">
-        <div class="blog-img" style="background:linear-gradient(135deg,#0e0b1a,#0a0c14);">
-          <div class="blog-img-accent" style="background:radial-gradient(circle at 60% 40%, #A78BFA, transparent 60%);"></div>
-          <span style="position:relative;z-index:1;font-size:2.5rem;">🤖</span>
-        </div>
-        <div class="blog-body">
-          <span class="blog-category" style="background:rgba(167,139,250,0.12);color:#A78BFA;">Inteligencia Artificial</span>
-          <h3 class="blog-title">5 formas en que la IA ya está cambiando la gestión de obra en Colombia</h3>
-          <p class="blog-excerpt">Desde generación automática de informes hasta detección de riesgos en campo: casos reales del sector.</p>
-          <div class="blog-meta">
-            <div class="blog-avatar" style="background:linear-gradient(135deg,#A78BFA,#7c5cfa);">CT</div>
-            <span class="blog-author">Cristian Torres</span>
-            <span class="blog-date">Mar 2025</span>
-          </div>
-        </div>
-      </div>
-      <!-- Post 2 -->
-      <div class="blog-card reveal reveal-delay-2">
-        <div class="blog-img" style="background:linear-gradient(135deg,#0f1620,#0a0f1a);">
-          <div class="blog-img-accent" style="background:radial-gradient(circle at 70% 50%, #5b8def, transparent 60%);"></div>
-          <span style="position:relative;z-index:1;font-size:2.5rem;">📋</span>
-        </div>
-        <div class="blog-body">
-          <span class="blog-category">Casos de uso</span>
-          <h3 class="blog-title">Cómo eliminar el Excel de tu operación en 30 días</h3>
-          <p class="blog-excerpt">Un plan paso a paso para migrar tus procesos críticos a herramientas más robustas.</p>
-          <div class="blog-meta">
-            <div class="blog-avatar">CT</div>
-            <span class="blog-author">Cristian Torres</span>
-            <span class="blog-date">Ene 2025</span>
-          </div>
-        </div>
-      </div>
-      <!-- Post 3 -->
-      <div class="blog-card reveal reveal-delay-3">
-        <div class="blog-img" style="background:linear-gradient(135deg,#1a0f0a,#150a05);">
-          <div class="blog-img-accent" style="background:radial-gradient(circle at 50% 30%, var(--yellow), transparent 60%);"></div>
-          <span style="position:relative;z-index:1;font-size:2.5rem;">🔧</span>
-        </div>
-        <div class="blog-body">
-          <span class="blog-category">Herramientas</span>
-          <h3 class="blog-title">Make vs Zapier: cuál elegir para tu empresa industrial</h3>
-          <p class="blog-excerpt">Comparamos las dos principales plataformas de automatización para tu contexto.</p>
-          <div class="blog-meta">
-            <div class="blog-avatar">CT</div>
-            <span class="blog-author">Cristian Torres</span>
-            <span class="blog-date">Dic 2024</span>
-          </div>
-        </div>
+      <div style="display:flex;flex-direction:column;gap:12px;align-items:flex-start;">
+        <a href="https://wa.me/573219201708" class="btn-purple">
+          Agendar diagnóstico gratuito
+          <svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+        <a href="mailto:cristian.torres@guai.ai" class="btn-secondary" style="font-size:0.82rem;padding:10px 20px;">
+          cristian.torres@guai.ai
+        </a>
+        <div style="font-size:0.75rem;color:var(--text-3);padding-top:4px;">+57 321 920 1708 · www.guai.ai</div>
       </div>
     </div>
+
   </div>
 </section>
 
-<div class="divider"></div>
 
-<!-- =====================================================
-     CTA
-===================================================== -->
-<section class="cta-section" id="contacto">
-  <div class="container">
-    <div class="cta-inner reveal">
-      <div class="label">¿Listo para empezar?</div>
-      <h2 class="heading-1" style="margin-top:12px;">Automatización hoy. IA para el mañana.</h2>
-      <p class="body-lg">Agenda una consulta gratuita de 30 minutos. Revisamos tus procesos y te mostramos exactamente dónde automatizar y cómo sacar ventaja de la IA en tu sector.</p>
-      <div class="cta-actions">
-        <a href="https://calendar.app.google/hHncXtamjVKs5ye89" class="btn btn-primary" style="font-size:1rem;padding:16px 32px;" target="_blank">
-          Agenda consulta gratuita
-          <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-        </a>
-        <a href="#programa-ia" class="btn" style="background:rgba(167,139,250,0.12);color:#A78BFA;border:1px solid rgba(167,139,250,0.25);border-radius:var(--radius-pill);font-family:var(--font-head);font-size:0.88rem;font-weight:600;padding:13px 26px;display:inline-flex;align-items:center;gap:8px;">
-          Conocer Programa de IA ✦
-        </a>
-        <a href="https://docs.google.com/document/d/1OGP_ZTOVtM64x6QFgaJbyVnuNCJirwLaw-XMmM_XOAg/edit?usp=sharing" class="btn btn-secondary">
-          Acceder al manual
-        </a>
-      </div>
-      <div class="cta-contact">
-        <div class="contact-item">
-          <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 8.81 19.79 19.79 0 01.22 2.18 2 2 0 012.18 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 7.91a16 16 0 006.18 6.18l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7a2 2 0 011.72 2.03z"/></svg>
-          <a href="tel:+573219201708">+57 321 920 1708</a>
-        </div>
-        <div class="contact-item">
-          <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-          <a href="/cdn-cgi/l/email-protection#7d1e0f140e09141c135309120f0f180e3d1a081c14531c14"><span class="__cf_email__" data-cfemail="c7a4b5aeb4b3aea6a9e9b3a8b5b5a2b487a0b2a6aee9a6ae">cristian.torres@guai.ai</span></a>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- =====================================================
+<!-- ══════════════════════════════════════
      FOOTER
-===================================================== -->
-<footer>
-  <div class="container footer-inner">
-    <div>
-      <div class="nav-logo" style="font-size:1.2rem;margin-bottom:6px;">Guai<span style="color:var(--accent)">.</span></div>
-      <div class="footer-copy">© 2025 Guai. Todos los derechos reservados.</div>
-    </div>
-    <div class="footer-links">
-      <a href="#problemas">Problemas</a>
-      <a href="#servicios">Servicios</a>
-      <a href="#programa-ia" style="color:#A78BFA;">Programa de IA</a>
-      <a href="#proceso">Proceso</a>
-      <a href="#blog">Blog</a>
-      <a href="mailto:cristian.torres@guai.ai">Contacto</a>
+═══════════════════════════════════════ -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-inner">
+      <div class="footer-logo">Guai<span>.</span></div>
+      <div class="footer-links">
+        <a href="https://www.guai.ai">www.guai.ai</a>
+        <a href="mailto:cristian.torres@guai.ai">cristian.torres@guai.ai</a>
+        <a href="https://wa.me/573219201708">+57 321 920 1708</a>
+      </div>
+      <div class="footer-copy">Metodología C.R.E.C.E. © Guai 2025</div>
     </div>
   </div>
 </footer>
 
 
-<!-- =====================================================
-     SCRIPTS
-===================================================== -->
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-  // Sticky nav
-  const navbar = document.getElementById('navbar');
+<script>
+  // ── NAV scroll ──
+  const nav = document.getElementById('mainNav');
   window.addEventListener('scroll', () => {
-    navbar.classList.toggle('scrolled', window.scrollY > 40);
+    nav.classList.toggle('scrolled', window.scrollY > 40);
   });
 
-  // Scroll reveal
+  // ── Reading bar ──
+  const bar = document.getElementById('readingBar');
+  window.addEventListener('scroll', () => {
+    const pct = window.scrollY / (document.body.scrollHeight - window.innerHeight);
+    bar.style.transform = `scaleX(${pct})`;
+  });
+
+  // ── Reveal on scroll ──
+  const reveals = document.querySelectorAll('.reveal');
   const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.12 });
+  reveals.forEach(el => observer.observe(el));
+
+  // ── Step side indicator ──
+  const sections = ['hero', 'paso-1', 'paso-2', 'paso-3', 'paso-4', 'paso-5', 'cta'];
+  const spItems = document.querySelectorAll('.sp-item');
+
+  const sectionObserver = new IntersectionObserver((entries) => {
     entries.forEach(e => {
       if (e.isIntersecting) {
-        e.target.classList.add('visible');
-        observer.unobserve(e.target);
+        const idx = sections.indexOf(e.target.id);
+        if (idx !== -1) {
+          spItems.forEach((el, i) => el.classList.toggle('active', i === idx));
+        }
       }
     });
-  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
-  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  }, { rootMargin: '-40% 0px -50% 0px' });
+
+  sections.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) sectionObserver.observe(el);
+  });
+
+  spItems.forEach((item, i) => {
+    item.addEventListener('click', () => {
+      document.getElementById(sections[i])?.scrollIntoView({ behavior: 'smooth' });
+    });
+  });
+
+  // ── Animated step mini cards ──
+  let currentStep = 0;
+  const miniSteps = document.querySelectorAll('.step-mini');
+  setInterval(() => {
+    miniSteps.forEach(s => s.classList.remove('active'));
+    currentStep = (currentStep + 1) % miniSteps.length;
+    miniSteps[currentStep].classList.add('active');
+  }, 1800);
 </script>
 
-
-<!-- =======================================================
-  ██████████████████████████████████████████████████████
-  ██                                                  ██
-  ██   COMPONENT TEMPLATES                            ██
-  ██   Elementos base listos para copiar y usar       ██
-  ██                                                  ██
-  ██████████████████████████████████████████████████████
-
-  Todos los templates están comentados con HTML.
-  Para usarlos:
-  1. Copia el bloque entre los marcadores TEMPLATE START / END
-  2. Pégalo dentro de un <section> o <div class="container">
-  3. Ajusta el contenido
-
-  Índice de templates:
-  T01 — Badge / Chip
-  T02 — Botones (todos los estilos)
-  T03 — Tarjeta de servicio / feature
-  T04 — Tarjeta de estadística (stat card)
-  T05 — Tarjeta de testimonio
-  T06 — Tarjeta de blog post
-  T07 — Tarjeta de herramienta / logo
-  T08 — Sección CTA en banner
-  T09 — Paso de proceso numerado
-  T10 — Barra de progreso
-  T11 — Item de beneficio con ícono
-  T12 — Alert / Notification toast
-  T13 — Tag / Label de categoría
-  T14 — Sección de encabezado (section header)
-  T15 — Separador decorativo
-  T16 — Avatar con nombre y rol
-  T17 — Formulario de contacto
-  T18 — Lista de precio / pricing card
-  T19 — FAQ accordion item
-  T20 — Banner de anuncio (top bar)
-======================================================= -->
-
-<!--
-══════════════════════════════════════════
-T01 — BADGE / CHIP
-══════════════════════════════════════════
-
-<div class="hero-badge">
-  <span class="hero-badge-dot"></span>
-  <span class="label">Tu texto aquí</span>
-</div>
-
-/* Variante amarilla: */
-<div class="hero-badge" style="background:rgba(245,200,66,0.1);border-color:rgba(245,200,66,0.3);">
-  <span class="hero-badge-dot" style="background:var(--yellow)"></span>
-  <span class="label" style="color:var(--yellow)">Novedad</span>
-</div>
-
-══════════════════════════════════════════
-T02 — BOTONES
-══════════════════════════════════════════
--->
-<!-- Primario -->
-<!-- <a href="#" class="btn btn-primary">
-  Acción principal
-  <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-</a> -->
-
-<!-- Secundario -->
-<!-- <a href="#" class="btn btn-secondary">Ver más</a> -->
-
-<!-- Ghost (solo texto + ícono) -->
-<!-- <a href="#" class="btn btn-ghost">
-  Leer artículo
-  <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-</a> -->
-
-<!-- Botón grande -->
-<!-- <a href="#" class="btn btn-primary" style="font-size:1rem;padding:16px 32px;">Botón grande</a> -->
-
-<!-- ══════════════════════════════════════════
-T03 — TARJETA DE SERVICIO / FEATURE CARD
-══════════════════════════════════════════
-
-<div class="service-card">
-  <div class="service-num">01</div>
-  <h3 class="heading-3">Título del servicio</h3>
-  <p class="body-md">Descripción del servicio o característica. Explica brevemente el valor que entrega.</p>
-  <div class="service-tag">🔧 Etiqueta</div>
-</div>
-
-══════════════════════════════════════════
-T04 — STAT CARD (número grande)
-══════════════════════════════════════════
-
-<div style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:28px 24px;">
-  <div class="label" style="margin-bottom:8px;">Título de la métrica</div>
-  <div style="font-family:var(--font-head);font-size:3rem;font-weight:800;color:var(--accent);letter-spacing:-0.04em;line-height:1;">87%</div>
-  <div class="body-sm" style="margin-top:6px;">descripción de la métrica</div>
-</div>
-
-══════════════════════════════════════════
-T05 — TARJETA DE TESTIMONIO
-══════════════════════════════════════════
-
-<div class="testimonial-wrap" style="margin-top:0;">
-  <p class="testimonial-quote">
-    "Texto del testimonio aquí. Puede incluir <em>palabras en acento verde</em> para destacar lo más importante."
-  </p>
-  <div class="testimonial-author">
-    <div class="author-avatar">AB</div>
-    <div>
-      <div class="author-name">Nombre Apellido</div>
-      <div class="author-role">Cargo — Empresa</div>
-    </div>
-  </div>
-</div>
-
-══════════════════════════════════════════
-T06 — BLOG / ARTICLE CARD
-══════════════════════════════════════════
-
-<div class="blog-card">
-  <div class="blog-img" style="background:linear-gradient(135deg,#0d1f1a,#0a1510);">
-    <span style="position:relative;z-index:1;font-size:2.5rem;">📖</span>
-  </div>
-  <div class="blog-body">
-    <span class="blog-category">Categoría</span>
-    <h3 class="blog-title">Título del artículo o post del blog</h3>
-    <p class="blog-excerpt">Breve descripción del artículo que invita al lector a hacer clic y leer más.</p>
-    <div class="blog-meta">
-      <div class="blog-avatar">AB</div>
-      <span class="blog-author">Autor</span>
-      <span class="blog-date">Mar 2025</span>
-    </div>
-  </div>
-</div>
-
-══════════════════════════════════════════
-T07 — TOOL / LOGO CARD
-══════════════════════════════════════════
-
-<div class="tool-card">
-  <div class="tool-icon">🔷</div>
-  <div class="tool-name">Nombre tool</div>
-</div>
-
-══════════════════════════════════════════
-T08 — CTA BANNER (inline, no full section)
-══════════════════════════════════════════
-
-<div style="
-  background:var(--bg-card);
-  border:1px solid var(--border-med);
-  border-radius:var(--radius-lg);
-  padding:40px 48px;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:24px;
-">
-  <div>
-    <h3 class="heading-2">¿Listo para empezar?</h3>
-    <p class="body-md" style="margin-top:8px;">Agenda una llamada gratuita de 30 minutos.</p>
-  </div>
-  <a href="#" class="btn btn-primary" style="white-space:nowrap;">
-    Agendar ahora
-    <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-  </a>
-</div>
-
-══════════════════════════════════════════
-T09 — PASO DE PROCESO NUMERADO
-══════════════════════════════════════════
-
-<div class="step">
-  <div class="step-num">01</div>
-  <div class="step-icon">🔍</div>
-  <h4>Título del paso</h4>
-  <p>Descripción breve de este paso del proceso.</p>
-</div> -->
-
-<!-- ══════════════════════════════════════════
-T10 — BARRA DE PROGRESO
-══════════════════════════════════════════
-
-<div style="margin-bottom:16px;">
-  <div style="display:flex;justify-content:space-between;font-size:0.82rem;margin-bottom:6px;">
-    <span style="color:var(--text-2);">Nombre del ítem</span>
-    <span style="color:var(--text-1);font-weight:600;">↓65%</span>
-  </div>
-  <div class="progress-track">
-    <div class="progress-fill" style="width:65%"></div>
-  </div>
-</div>
-
-══════════════════════════════════════════
-T11 — BENEFIT ITEM (ícono + cifra + descripción)
-══════════════════════════════════════════
-
-<div class="benefit-item">
-  <div class="benefit-icon">⚡</div>
-  <div>
-    <div class="benefit-val">75%</div>
-    <div class="body-sm" style="color:var(--text-2);font-size:0.88rem;">Descripción del beneficio</div>
-  </div>
-</div>
-
-══════════════════════════════════════════
-T12 — ALERT / NOTIFICATION TOAST
-══════════════════════════════════════════ -->
-
-<!-- Toast de éxito -->
-<!-- <div style="
-  display:inline-flex;align-items:center;gap:12px;
-  background:rgba(0,229,160,0.1);
-  border:1px solid rgba(0,229,160,0.25);
-  border-radius:var(--radius);
-  padding:12px 16px;
-  font-size:0.88rem;
-">
-  <span style="color:var(--accent);font-size:1rem;">✓</span>
-  <span style="color:var(--text-1);">Acción completada exitosamente</span>
-</div> -->
-
-<!-- Toast de alerta -->
-<!-- <div style="
-  display:inline-flex;align-items:center;gap:12px;
-  background:rgba(245,200,66,0.1);
-  border:1px solid rgba(245,200,66,0.25);
-  border-radius:var(--radius);
-  padding:12px 16px;
-  font-size:0.88rem;
-">
-  <span style="color:var(--yellow);font-size:1rem;">⚠</span>
-  <span style="color:var(--text-1);">Mensaje de advertencia</span>
-</div> -->
-
-<!-- ══════════════════════════════════════════
-T13 — CATEGORY TAG
-══════════════════════════════════════════
-
-<span class="blog-category">Automatización</span>
-
-/* Variantes de color: */
-<span class="blog-category" style="background:rgba(245,200,66,0.1);color:var(--yellow);">Caso de uso</span>
-<span class="blog-category" style="background:rgba(91,141,239,0.1);color:#5b8def;">Guía técnica</span>
-
-══════════════════════════════════════════
-T14 — SECTION HEADER
-══════════════════════════════════════════
-
-<div class="section-header">
-  <div class="label">Etiqueta de sección</div>
-  <h2 class="heading-1">Título principal de la sección</h2>
-  <p class="body-lg">Subtítulo o descripción que contextualiza el contenido. Máximo 2 líneas.</p>
-</div>
-
-══════════════════════════════════════════
-T15 — SEPARADOR DECORATIVO
-══════════════════════════════════════════
-
-<div class="divider"></div>
-
-/* Versión con ícono centrado: */
-<div style="display:flex;align-items:center;gap:16px;margin:60px 0;">
-  <div class="divider" style="flex:1;margin:0;"></div>
-  <span style="color:var(--accent);font-size:1.2rem;">✦</span>
-  <div class="divider" style="flex:1;margin:0;"></div>
-</div>
-
-══════════════════════════════════════════
-T16 — AVATAR CON NOMBRE Y ROL
-══════════════════════════════════════════
-
-<div style="display:flex;align-items:center;gap:12px;">
-  <div class="author-avatar">AB</div>
-  <div>
-    <div class="author-name">Nombre Apellido</div>
-    <div class="author-role">Cargo — Empresa</div>
-  </div>
-</div>
-
-══════════════════════════════════════════
-T17 — FORMULARIO DE CONTACTO
-══════════════════════════════════════════
-
-<div style="
-  background:var(--bg-card);
-  border:1px solid var(--border-med);
-  border-radius:var(--radius-lg);
-  padding:40px;
-  max-width:520px;
-">
-  <h3 class="heading-2" style="margin-bottom:28px;">Escríbenos</h3>
-  <div style="display:flex;flex-direction:column;gap:16px;">
-    <div>
-      <label class="label" style="display:block;margin-bottom:8px;">Nombre</label>
-      <input type="text" placeholder="Tu nombre" style="
-        width:100%;padding:12px 16px;
-        background:var(--bg-raised);
-        border:1px solid var(--border-med);
-        border-radius:var(--radius);
-        color:var(--text-1);
-        font-family:var(--font-body);
-        font-size:0.9rem;
-        outline:none;
-        transition:border-color 0.2s;
-      " onfocus="this.style.borderColor='var(--accent)'" onblur="this.style.borderColor='var(--border-med)'">
-    </div>
-    <div>
-      <label class="label" style="display:block;margin-bottom:8px;">Email</label>
-      <input type="email" placeholder="tu@email.com" style="
-        width:100%;padding:12px 16px;
-        background:var(--bg-raised);
-        border:1px solid var(--border-med);
-        border-radius:var(--radius);
-        color:var(--text-1);
-        font-family:var(--font-body);
-        font-size:0.9rem;
-        outline:none;
-        transition:border-color 0.2s;
-      " onfocus="this.style.borderColor='var(--accent)'" onblur="this.style.borderColor='var(--border-med)'">
-    </div>
-    <div>
-      <label class="label" style="display:block;margin-bottom:8px;">Mensaje</label>
-      <textarea rows="4" placeholder="¿En qué podemos ayudarte?" style="
-        width:100%;padding:12px 16px;
-        background:var(--bg-raised);
-        border:1px solid var(--border-med);
-        border-radius:var(--radius);
-        color:var(--text-1);
-        font-family:var(--font-body);
-        font-size:0.9rem;
-        outline:none;
-        resize:vertical;
-        transition:border-color 0.2s;
-      " onfocus="this.style.borderColor='var(--accent)'" onblur="this.style.borderColor='var(--border-med)'"></textarea>
-    </div>
-    <button class="btn btn-primary" style="width:100%;justify-content:center;font-size:0.95rem;padding:14px;">
-      Enviar mensaje
-      <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-    </button>
-  </div>
-</div> -->
-<!-- 
-══════════════════════════════════════════
-T18 — PRICING CARD
-══════════════════════════════════════════
-
-<div style="
-  background:var(--bg-card);
-  border:1px solid var(--border-med);
-  border-radius:var(--radius-lg);
-  padding:36px 28px;
-  max-width:300px;
-">
-  <div class="label" style="margin-bottom:8px;">Plan Básico</div>
-  <div style="font-family:var(--font-head);font-size:3rem;font-weight:800;letter-spacing:-0.04em;margin:12px 0;">
-    $X<span style="font-size:1rem;color:var(--text-3);font-weight:400;">/mes</span>
-  </div>
-  <p class="body-sm" style="margin-bottom:24px;">Descripción breve del plan.</p>
-  <ul style="display:flex;flex-direction:column;gap:10px;margin-bottom:28px;">
-    <li style="display:flex;align-items:center;gap:10px;font-size:0.88rem;color:var(--text-2);">
-      <span style="color:var(--accent);">✓</span> Característica 1
-    </li>
-    <li style="display:flex;align-items:center;gap:10px;font-size:0.88rem;color:var(--text-2);">
-      <span style="color:var(--accent);">✓</span> Característica 2
-    </li>
-    <li style="display:flex;align-items:center;gap:10px;font-size:0.88rem;color:var(--text-3);">
-      <span style="color:var(--text-3);">✗</span> <span style="text-decoration:line-through;">No incluida</span>
-    </li>
-  </ul>
-  <a href="#" class="btn btn-secondary" style="width:100%;justify-content:center;">Comenzar</a>
-</div> -->
-
-<!-- ══════════════════════════════════════════
-T19 — FAQ ACCORDION ITEM
-══════════════════════════════════════════
-
-<details style="
-  border:1px solid var(--border);
-  border-radius:var(--radius);
-  overflow:hidden;
-  margin-bottom:8px;
-">
-  <summary style="
-    padding:20px 24px;
-    cursor:pointer;
-    font-family:var(--font-head);
-    font-weight:600;
-    font-size:0.95rem;
-    list-style:none;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    background:var(--bg-card);
-    color:var(--text-1);
-  ">
-    ¿Cuánto tiempo tarda la implementación?
-    <span style="color:var(--accent);font-size:1.2rem;">+</span>
-  </summary>
-  <div style="padding:0 24px 20px;background:var(--bg-card);color:var(--text-2);font-size:0.9rem;line-height:1.65;border-top:1px solid var(--border);">
-    Respuesta detallada a la pregunta frecuente. Puede incluir múltiples párrafos y tanta información como sea necesaria.
-  </div>
-</details>
-
-══════════════════════════════════════════
-T20 — ANNOUNCEMENT TOP BAR
-══════════════════════════════════════════ -->
-
-<!-- Agregar justo después de <body> -->
-<!-- <div style="
-  background:var(--accent-dim);
-  border-bottom:1px solid rgba(0,229,160,0.2);
-  padding:10px 0;
-  text-align:center;
-">
-  <div class="container">
-    <span style="font-size:0.82rem;color:var(--text-2);">
-      🎉 Novedad: Descarga nuestro manual gratuito
-      <a href="#" style="color:var(--accent);font-weight:600;margin-left:8px;">
-        Descargar →
-      </a>
-    </span>
-  </div>
-</d  -->
+</body>
+</html>
